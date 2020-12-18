@@ -17,7 +17,7 @@ public class StudentDatabase{
     }
 
 
-    private List<Student> getStudents() {
+    public List<Student> getStudents() {
         List<Student> listStudents = new ArrayList<>();
         try (
             Statement stmt = con.createStatement(); 
@@ -38,7 +38,7 @@ public class StudentDatabase{
                 listStudents.add(student);
             }
             
-        } catch(ClassNotFoundException | SQLException ex){
+        } catch(SQLException ex){
         }
         return listStudents;
     }

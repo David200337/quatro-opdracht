@@ -1,5 +1,6 @@
 
-import java.sql.Date;
+
+import java.sql.SQLException;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -14,7 +15,7 @@ public class GUIUsers extends Application {
     private StudentDatabase databaseConnection;
 
     @Override
-    public void start(Stage window){
+    public void start(Stage window) throws ClassNotFoundException, SQLException {
         databaseConnection = new StudentDatabase("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         window.setTitle("Courses");
         TableView<Student> studentTable = new TableView<>();
@@ -36,7 +37,8 @@ public class GUIUsers extends Application {
         studentIdCol.setCellValueFactory(new PropertyValueFactory<>("city"));
         TableColumn<Student, String> studentCountryCol = new TableColumn<>("Country");
         studentIdCol.setCellValueFactory(new PropertyValueFactory<>("country"));
-        
+
+
         studentTable.getColumns().addAll(studentIdCol, studentNameCol, studentEmailCol, studentDateOfBirthCol, studentGenderCol, studentAddressCol, studentPostalCodeCol, studentCityCol, studentCountryCol);
         
         studentTable.getItems().addAll(databaseConnection.getStudents());
