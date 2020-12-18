@@ -45,7 +45,7 @@ public class GUIUsers extends Application {
 
         BorderPane root = new BorderPane();
         root.setCenter(studentTable);
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, 750, 400);
         window.setScene(scene);
 
         window.show();
