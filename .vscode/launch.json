@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch GUIUsers",
+            "request": "launch",
+            "mainClass": "GUIUsers",
+            "projectName": "quatro-opdracht_6a5a950e"
+        },
+        {
+            "type": "java",
             "name": "Launch GUICourses",
             "request": "launch",
             "vmArgs": "-p C:\\Dev\\javafx-sdk-11.0.2\\lib --add-modules javafx.controls",
