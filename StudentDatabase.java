@@ -25,9 +25,9 @@ public class StudentDatabase{
         ){
 
             while(rs.next()){
-                int studentId = rs.getInt("CursistId");
-                String name = rs.getString("Name");
-                String email = rs.getString("Email");
+                int studentId = rs.getInt("StudentId");
+                String name = rs.getString("StudentName");
+                String email = rs.getString("StudentEmail");
                 String dateOfBirth = rs.getString("DateOfBirth");
                 String gender = rs.getString("Gender");
                 String address = rs.getString("Address");
