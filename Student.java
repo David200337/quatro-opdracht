@@ -1,133 +1,91 @@
-import javafx.beans.property.StringProperty;
-import javafx.beans.property.SimpleStringProperty;
-
 public class Student {
     private int studentId;
-    private StringProperty name = new SimpleStringProperty(this, "name");
-    private StringProperty email = new SimpleStringProperty(this, "email");
-    private StringProperty dateOfBirth = new SimpleStringProperty(this, "dateOfBirth");
-    private StringProperty gender = new SimpleStringProperty(this, "gender");
-    private StringProperty address = new SimpleStringProperty(this, "address");
-    private StringProperty postalCode = new SimpleStringProperty(this, "postalCode");
-    private StringProperty city = new SimpleStringProperty(this, "city");
-    private StringProperty country = new SimpleStringProperty(this, "country");
+    private String name;
+    private String email;
+    private String dateOfBirth;
+    private String gender;
+    private String address;
+    private String postalCode;
+    private String city;
+    private String country;
     
-   
+    public Student (int studentId, String name, String email, String dateOfBirth, String gender, String address, String postalCode, String city, String country) {
+        this.studentId = studentId;
+        this.name = name;
+        this.email = email;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.city = city;
+        this.country = country;
+    }
 
-    public int getStudentId(){
+    public int getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(int studentId){
-        this.studentId = studentId;
-    }
-
-    public StringProperty studentNameProperty(){
+    public String getName() {
         return name;
     }
 
-    public String getStudentName(){
-        return studentNameProperty().get();
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setStudentName(String name){
-        studentNameProperty().set(name);
-    }
-
-    public StringProperty studentEmailProperty(){
+    public String getEmail() {
         return email;
     }
 
-    public String getStudentEmail(){
-        return studentEmailProperty().get();
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setStudentEmail(String email){
-        studentEmailProperty().set(email);
-    }
-
-    public StringProperty studentDateOfBirthProperty(){
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public String getStudentDateOfBirth(){
-        return studentDateOfBirthProperty().get();
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
-    public void setStudentDateOfBirth(String dateOfBirth){
-        studentDateOfBirthProperty().set(dateOfBirth);
-    }
-
-    public StringProperty studentGenderProperty(){
+    public String getGender() {
         return gender;
     }
 
-    public String getStudentGender(){
-        return studentGenderProperty().get();
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
-    public void setStudentGender(String gender){
-        studentGenderProperty().set(gender);
-    }
-
-    public StringProperty studentAddressProperty(){
+    public String getAddress() {
         return address;
     }
 
-    public String getStudentAddress(){
-        return studentAddressProperty().get();
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public void setStudentAddress(String address){
-        studentAddressProperty().set(address);
-    }
-
-    public StringProperty studentPostalCodeProperty(){
+    public String getPostalCode() {
         return postalCode;
     }
 
-    public String getStudentPostalCode(){
-        return studentPostalCodeProperty().get();
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
-    public void setStudentPostalCode(String postalCode){
-        studentPostalCodeProperty().set(postalCode);
-    }
-
-    public StringProperty studentCityProperty(){
+    public String getCity() {
         return city;
     }
 
-    public String getStudentCity(){
-        return studentCityProperty().get();
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public void setStudentCity(String city){
-        studentCityProperty().set(city);
-    }
-
-    public StringProperty studentCountryProperty(){
+    public String getCountry() {
         return country;
     }
 
-    public String getStudentCountry(){
-        return studentCountryProperty().get();
-    }
-
-    public void setStudentCountry(String country){
-        studentCountryProperty().set(country);
-    }
-
-
-    public Student(int studentId, String name, String email, String dateOfBirth, String gender, String address, String postalCode, String city, String country ){
-        setStudentId(studentId);
-        setStudentEmail(email);
-        setStudentName(name);
-        setStudentAddress(address);
-        setStudentCity(city);
-        setStudentCountry(country);
-        setStudentDateOfBirth(dateOfBirth);
-        setStudentGender(gender);
-        setStudentPostalCode(postalCode);
+    public void setCountry(String country) {
+        this.country = country;
     }
 }
