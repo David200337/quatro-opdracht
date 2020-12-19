@@ -1,12 +1,23 @@
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class DatabaseStudent extends Database {
     private ArrayList<Student> students;
+    private ObservableList<Student> data = FXCollections.observableArrayList();;
     
     public DatabaseStudent(String connectionUrl) {
         super(connectionUrl);
         this.students = new ArrayList<>();
+    }
+
+    public void shutdown() throws SQLException {
+        if (connection != null) {
+            connection.close();
+        }
     }
 
     public void loadStudents() {
@@ -36,7 +47,7 @@ public class DatabaseStudent extends Database {
                 // Add Student object to students arraylist
                 students.add(new Student(studentId, name, email, dateOfBirth, gender, address, postalCode, city, country));
             }
-
+            
         } catch (Exception e) {
             System.out.println("ERROR:\n\n" + e);
         } finally {

@@ -1,6 +1,8 @@
 import java.sql.SQLException;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -11,14 +13,19 @@ import javafx.stage.Stage;
 public class GUIUsers extends Application {
 
     private DatabaseStudent databaseConnection;
+    
 
     @Override
     public void start(Stage window) throws ClassNotFoundException, SQLException {
         databaseConnection = new DatabaseStudent("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseConnection.loadStudents();
+
+       
         
         window.setTitle("Courses");
         TableView<Student> studentTable = new TableView<>();
+
+
         TableColumn<Student, String> studentIdCol = new TableColumn<>("StudentID");
         studentIdCol.setCellValueFactory(new PropertyValueFactory<>("studentId"));
         TableColumn<Student, String> studentNameCol = new TableColumn<>("Name");
@@ -39,14 +46,23 @@ public class GUIUsers extends Application {
         studentIdCol.setCellValueFactory(new PropertyValueFactory<>("country"));
 
         // Print all students' name and email in the console
-        for (Student student : databaseConnection.getStudents()) {
-            System.out.println(student.getStudentName());
-            System.out.println(student.getStudentEmail());
-        }
+        // for (Student student : databaseConnection.getStudents()) {
+        //     System.out.println(student.getStudentId());
+        //     System.out.println(student.getStudentName());
+        //     System.out.println(student.getStudentEmail());
+        //     System.out.println(student.getStudentDateOfBirth());
+        //     System.out.println(student.getStudentGender());
+        //     System.out.println(student.getStudentAddress());
+        //     System.out.println(student.getStudentPostalCode());
+        //     System.out.println(student.getStudentCity());
+        //     System.out.println(student.getStudentCountry());
+        // }
 
         studentTable.getColumns().addAll(studentIdCol, studentNameCol, studentEmailCol, studentDateOfBirthCol, studentGenderCol, studentAddressCol, studentPostalCodeCol, studentCityCol, studentCountryCol);
         
-        studentTable.getItems().addAll(databaseConnection.getStudents());
+        studentTable.getItems().setAll(databaseConnection.getStudents());
+        
+
 
         BorderPane root = new BorderPane();
         root.setCenter(studentTable);
@@ -54,6 +70,13 @@ public class GUIUsers extends Application {
         window.setScene(scene);
 
         window.show();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        if (databaseConnection != null) {
+            databaseConnection.shutdown();
+        }
     }
 
     public static void main(String[] args){
