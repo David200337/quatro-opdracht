@@ -1,23 +1,11 @@
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.collections.*;
 
 public class DatabaseStudent extends Database {
-    private ArrayList<Student> students;
-    private ObservableList<Student> data = FXCollections.observableArrayList();;
+    private ObservableList<Student> students;
     
     public DatabaseStudent(String connectionUrl) {
         super(connectionUrl);
-        this.students = new ArrayList<>();
-    }
-
-    public void shutdown() throws SQLException {
-        if (connection != null) {
-            connection.close();
-        }
+        this.students = FXCollections.observableArrayList();
     }
 
     public void loadStudents() {
@@ -57,7 +45,7 @@ public class DatabaseStudent extends Database {
         }
     }
 
-    public List<Student> getStudents() {
+    public ObservableList<Student> getStudents() {
         // Return students array
         return students;
     }
