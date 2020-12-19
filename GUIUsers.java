@@ -1,5 +1,3 @@
-
-
 import java.sql.SQLException;
 
 import javafx.application.Application;
@@ -12,11 +10,13 @@ import javafx.stage.Stage;
 
 public class GUIUsers extends Application {
 
-    private StudentDatabase databaseConnection;
+    private DatabaseStudent databaseConnection;
 
     @Override
     public void start(Stage window) throws ClassNotFoundException, SQLException {
-        databaseConnection = new StudentDatabase("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
+        databaseConnection = new DatabaseStudent("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
+        databaseConnection.loadStudents();
+        
         window.setTitle("Courses");
         TableView<Student> studentTable = new TableView<>();
         TableColumn<Student, String> studentIdCol = new TableColumn<>("StudentID");
@@ -38,6 +38,11 @@ public class GUIUsers extends Application {
         TableColumn<Student, String> studentCountryCol = new TableColumn<>("Country");
         studentIdCol.setCellValueFactory(new PropertyValueFactory<>("country"));
 
+        // Print all students' name and email in the console
+        for (Student student : databaseConnection.getStudents()) {
+            System.out.println(student.getStudentName());
+            System.out.println(student.getStudentEmail());
+        }
 
         studentTable.getColumns().addAll(studentIdCol, studentNameCol, studentEmailCol, studentDateOfBirthCol, studentGenderCol, studentAddressCol, studentPostalCodeCol, studentCityCol, studentCountryCol);
         
