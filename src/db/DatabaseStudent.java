@@ -1,4 +1,6 @@
+package db;
 import javafx.collections.*;
+import domain.Student;
 
 public class DatabaseStudent extends Database {
     private ObservableList<Student> students;
