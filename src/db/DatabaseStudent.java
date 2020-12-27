@@ -1,9 +1,13 @@
-package db;
+package src.db;
+
+import java.sql.SQLException;
+
 import javafx.collections.*;
-import domain.Student;
+import src.domain.Student;
 
 public class DatabaseStudent extends Database {
     private ObservableList<Student> students;
+    
     
     public DatabaseStudent(String connectionUrl) {
         super(connectionUrl);
@@ -40,15 +44,20 @@ public class DatabaseStudent extends Database {
             
         } catch (Exception e) {
             System.out.println("ERROR:\n\n" + e);
-        } finally {
-            if (resultSet != null) try { resultSet.close(); } catch(Exception e) {}
-            if (statement != null) try { statement.close(); } catch(Exception e) {}
-            if (connection != null) try { connection.close(); } catch(Exception e) {}
-        }
+        } 
+        //finally {
+        //     if (resultSet != null) try { resultSet.close(); } catch(Exception e) {}
+        //     if (statement != null) try { statement.close(); } catch(Exception e) {}
+        //     if (connection != null) try { connection.close(); } catch(Exception e) {}
+        // }
     }
 
     public ObservableList<Student> getStudents() {
         // Return students array
         return students;
+    }
+
+    public void insertStudent(int id, String name, String email, String dateOfBirth, String gender, String address, String postalCode, String city, String country) throws SQLException{
+       statement.executeUpdate("INSERT INTO Student(StudentId, StudentName, StudentEmail, DateOfBirth, Gender, Address, PostalCode, City, Country) VALUES ("+id+","+name+","+email+","+dateOfBirth+","+gender+","+address+","+postalCode+","+city+","+country+")");
     }
 }

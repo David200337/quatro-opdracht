@@ -1,13 +1,18 @@
-package ui;
-import db.*;
-import domain.Student;
+package src.ui;
+
+import src.db.*;
+import src.domain.Student;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 
 public class GUIUsers extends Application {
     private DatabaseStudent databaseStudent;
@@ -69,8 +74,52 @@ public class GUIUsers extends Application {
         VBox vBox = new VBox();
         vBox.getChildren().addAll(studentTable);
 
+        Label lblTitle = new Label("Insert new student");
+
+        Label lblId = new Label("ID");
+        TextField studentId = new TextField();
+        
+        Label lblName = new Label("Name");
+        TextField name = new TextField();
+
+        Label lblEmail = new Label("E-Mail");
+        TextField email = new TextField();
+
+        Label lblDateOfBirth = new Label("DateOfBirth");
+        TextField dateOfBirth = new TextField();
+
+        Label lblGender = new Label("Gender");
+        TextField gender = new TextField();
+
+        Label lblAddress = new Label("Address");
+        TextField address = new TextField();
+
+        Label lblPostalCode = new Label("Postal Code");
+        TextField postalCode = new TextField();
+
+        Label lblCity = new Label("City");
+        TextField city = new TextField();
+
+        Label lblCountry = new Label("Country");
+        TextField country = new TextField();
+
+        Button btnInsert = new Button("Insert");
+
+        vBox.getChildren().addAll(lblTitle, lblId, studentId, lblName, name, lblEmail, email, lblDateOfBirth, dateOfBirth, lblGender, gender, lblAddress, address, lblPostalCode, postalCode, lblCity, city, lblCountry, country, btnInsert);
+
+        btnInsert.setOnAction((event) -> {
+            try{ 
+                databaseStudent.insertStudent(Integer.parseInt(studentId.getText()), name.getText(), email.getText(), dateOfBirth.getText(), gender.getText(), address.getText(), postalCode.getText(), city.getText(), country.getText());
+                System.out.println("It worked!");
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+
         Scene scene = new Scene(vBox);
         window.setScene(scene);
         window.show();
     }
+    
 } 
