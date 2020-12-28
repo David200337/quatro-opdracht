@@ -14,9 +14,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -136,7 +138,15 @@ public class GUIUsers extends Application {
 
 
         Label lblGender = new Label("Gender");
-        TextField gender = new TextField();
+        //Radio buttons for gender
+        ToggleGroup genderGroup = new ToggleGroup();
+        
+        RadioButton rbMale = new RadioButton("Male");
+        rbMale.setToggleGroup(genderGroup);
+
+        RadioButton rbFemale = new RadioButton("Female");
+        rbFemale.setToggleGroup(genderGroup);
+        
 
         Label lblAddress = new Label("Address");
         TextField address = new TextField();
@@ -152,12 +162,17 @@ public class GUIUsers extends Application {
 
         Button btnInsert = new Button("Insert");
 
-        vBox.getChildren().addAll(lblTitle, lblId, studentId, lblName, name, lblEmail, email, pickerBox, lblGender, gender, lblAddress, address, lblPostalCode, postalCode, lblCity, city, lblCountry, country, btnInsert);
+        vBox.getChildren().addAll(lblTitle, lblId, studentId, lblName, name, lblEmail, email, pickerBox, lblGender, rbMale, rbFemale, lblAddress, address, lblPostalCode, postalCode, lblCity, city, lblCountry, country, btnInsert);
 
         btnInsert.setOnAction((event) -> {
             try{ 
+                //Set date of birth
                 LocalDate dateOfBirth = datePicker.getValue();
-                databaseStudent.insertStudent(Integer.parseInt(studentId.getText()), name.getText(), email.getText(), Date.valueOf(dateOfBirth), gender.getText(), address.getText(), postalCode.getText(), city.getText(), country.getText());
+
+                //Set gender
+                RadioButton selectedRadioButton = (RadioButton) genderGroup.getSelectedToggle();
+
+                databaseStudent.insertStudent(Integer.parseInt(studentId.getText()), name.getText(), email.getText(), Date.valueOf(dateOfBirth), selectedRadioButton.getText(), address.getText(), postalCode.getText(), city.getText(), country.getText());
                 // System.out.println("It worked!");
             } catch(Exception e) {
                 e.printStackTrace();
