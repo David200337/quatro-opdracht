@@ -1,23 +1,35 @@
 package src.ui;
 
 import src.db.*;
+import src.domain.DatePickerConverter;
 import src.domain.Student;
+
+import java.sql.Date;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 
 public class GUIUsers extends Application {
     private DatabaseStudent databaseStudent;
     private Stage window;
     TableView<Student> studentTable;
+    LocalDate dateOfBirth;
 
     public static void main(String[] args){
         launch(args);
@@ -85,8 +97,43 @@ public class GUIUsers extends Application {
         Label lblEmail = new Label("E-Mail");
         TextField email = new TextField();
 
-        Label lblDateOfBirth = new Label("DateOfBirth");
-        TextField dateOfBirth = new TextField();
+        
+        String pattern = "yyyy-MM-dd";
+        
+        DatePicker datePicker = new DatePicker();
+        // LocalDate dateOfBirth = null;
+
+        //Create the DateConverter
+        DatePickerConverter converter = new DatePickerConverter(pattern);
+        //Add the converter to the DatePicker
+        datePicker.setConverter(converter);
+        //Set the date in the prompt
+        datePicker.setPromptText(pattern.toLowerCase());
+
+        //Create a day cell factory
+        Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>(){
+            public DateCell call(final DatePicker datePicker){
+                return new DateCell(){
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty){
+                        super.updateItem(item, empty);
+
+                        //Show weekends in blue color
+                        DayOfWeek day = DayOfWeek.from(item);
+                        if(day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY){
+                            this.setTextFill(Color.BLUE);
+                        }
+                    }
+                };
+            }
+        };
+
+        //Set the day cell factory to the DatePicker
+        datePicker.setDayCellFactory(dayCellFactory);
+        Label lblDateOfBirth = new Label("Date of birth");
+        //Create the HBox for the DatePicker
+        HBox pickerBox = new HBox(lblDateOfBirth, datePicker);
+
 
         Label lblGender = new Label("Gender");
         TextField gender = new TextField();
@@ -105,12 +152,13 @@ public class GUIUsers extends Application {
 
         Button btnInsert = new Button("Insert");
 
-        vBox.getChildren().addAll(lblTitle, lblId, studentId, lblName, name, lblEmail, email, lblDateOfBirth, dateOfBirth, lblGender, gender, lblAddress, address, lblPostalCode, postalCode, lblCity, city, lblCountry, country, btnInsert);
+        vBox.getChildren().addAll(lblTitle, lblId, studentId, lblName, name, lblEmail, email, pickerBox, lblGender, gender, lblAddress, address, lblPostalCode, postalCode, lblCity, city, lblCountry, country, btnInsert);
 
         btnInsert.setOnAction((event) -> {
             try{ 
-                databaseStudent.insertStudent(Integer.parseInt(studentId.getText()), name.getText(), email.getText(), dateOfBirth.getText(), gender.getText(), address.getText(), postalCode.getText(), city.getText(), country.getText());
-                System.out.println("It worked!");
+                LocalDate dateOfBirth = datePicker.getValue();
+                databaseStudent.insertStudent(Integer.parseInt(studentId.getText()), name.getText(), email.getText(), Date.valueOf(dateOfBirth), gender.getText(), address.getText(), postalCode.getText(), city.getText(), country.getText());
+                // System.out.println("It worked!");
             } catch(Exception e) {
                 e.printStackTrace();
             }

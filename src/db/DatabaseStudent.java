@@ -1,8 +1,11 @@
 package src.db;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 import javafx.collections.*;
+// import src.domain.DatePickerConverter;
 import src.domain.Student;
 
 public class DatabaseStudent extends Database {
@@ -57,7 +60,7 @@ public class DatabaseStudent extends Database {
         return students;
     }
 
-    public void insertStudent(int id, String name, String email, String dateOfBirth, String gender, String address, String postalCode, String city, String country) throws SQLException{
-       statement.executeUpdate("INSERT INTO Student(StudentId, StudentName, StudentEmail, DateOfBirth, Gender, Address, PostalCode, City, Country) VALUES ("+id+","+name+","+email+","+dateOfBirth+","+gender+","+address+","+postalCode+","+city+","+country+")");
+    public void insertStudent(int id, String name, String email, Date dateOfBirth, String gender, String address, String postalCode, String city, String country) throws SQLException{
+       statement.executeUpdate("INSERT INTO Student(StudentId, StudentName, StudentEmail, DateOfBirth, Gender, Address, PostalCode, City, Country) VALUES ('"+id+"','"+name+"','"+email+"','"+dateOfBirth+"','"+gender+"','"+address+"','"+postalCode+"','"+city+"','"+country+"')");
     }
 }
