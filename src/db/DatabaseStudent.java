@@ -3,8 +3,10 @@ package src.db;
 import java.sql.Date;
 import java.sql.SQLException;
 
-
 import javafx.collections.*;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
+import javafx.scene.control.TableView;
 // import src.domain.DatePickerConverter;
 import src.domain.Student;
 
@@ -34,7 +36,7 @@ public class DatabaseStudent extends Database {
                 int studentId = resultSet.getInt("StudentId");
                 String name = resultSet.getString("StudentName");
                 String email = resultSet.getString("StudentEmail");
-                String dateOfBirth = resultSet.getString("DateOfBirth");
+                Date dateOfBirth = resultSet.getDate("DateOfBirth");
                 String gender = resultSet.getString("Gender");
                 String address = resultSet.getString("Address");
                 String postalCode = resultSet.getString("PostalCode");
@@ -66,5 +68,13 @@ public class DatabaseStudent extends Database {
 
     public void deleteStudent(Student selectedItem) throws SQLException{
         statement.executeUpdate("DELETE FROM Student WHERE StudentId = '"+selectedItem.getStudentId()+"'");
+    }
+
+    public void updateStudent(String column, String newValue, int id){
+        try{
+            statement.executeUpdate("UPDATE Student SET "+column+" = '"+newValue+"' WHERE StudentId = "+id);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

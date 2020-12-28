@@ -1,17 +1,20 @@
 package src.domain;
 
+import java.sql.Date;
+
+
 public class Student {
     private int studentId;
     private String name;
     private String email;
-    private String dateOfBirth;
+    private Date dateOfBirth;
     private String gender;
     private String address;
     private String postalCode;
     private String city;
     private String country;
     
-    public Student (int studentId, String name, String email, String dateOfBirth, String gender, String address, String postalCode, String city, String country) {
+    public Student (int studentId, String name, String email, Date dateOfBirth, String gender, String address, String postalCode, String city, String country) {
         this.studentId = studentId;
         this.name = name;
         this.email = email;
@@ -25,6 +28,10 @@ public class Student {
 
     public int getStudentId() {
         return studentId;
+    }
+
+    public void setStudentId(int id){
+        this.studentId = id;
     }
 
     public String getName() {
@@ -43,11 +50,12 @@ public class Student {
         this.email = email;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
