@@ -80,13 +80,38 @@ public class GUIUsers extends Application {
         TableColumn<Student, String> studentCountryColumn = new TableColumn<>("Country");
         studentCountryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
 
+        
+
+
         // Setup table, load data & add columns
         studentTable = new TableView<>();
         studentTable.setItems(databaseStudent.getStudents());
         studentTable.getColumns().addAll(studentIdColumn, studentNameColumn, studentEmailColumn, studentDateOfBirthColumn, studentGenderColumn, studentAddressColumn, studentPostalCodeColumn, studentCityColumn, studentCountryColumn);
 
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(studentTable);
+        // Button refreshButton = new Button("Refresh");
+        // refreshButton.setOnAction((event) -> {
+        //     refreshTable();
+        // });
+
+        //Delete button - removes selected item
+        Button deleteButton = new Button("Delete");
+        deleteButton.setOnAction((event) -> {
+            try{
+                Student selectedItem = studentTable.getSelectionModel().getSelectedItem();
+                studentTable.getItems().remove(selectedItem);
+                databaseStudent.deleteStudent(selectedItem);
+            }catch(Exception e) {
+                e.printStackTrace();
+            } 
+        });
+        vBox.getChildren().addAll(studentTable, deleteButton);
+
+
+
+
+
+
 
         Label lblTitle = new Label("Insert new student");
 
@@ -174,6 +199,7 @@ public class GUIUsers extends Application {
 
                 databaseStudent.insertStudent(Integer.parseInt(studentId.getText()), name.getText(), email.getText(), Date.valueOf(dateOfBirth), selectedRadioButton.getText(), address.getText(), postalCode.getText(), city.getText(), country.getText());
                 // System.out.println("It worked!");
+                
             } catch(Exception e) {
                 e.printStackTrace();
             }
@@ -184,5 +210,6 @@ public class GUIUsers extends Application {
         window.setScene(scene);
         window.show();
     }
+    
     
 } 
