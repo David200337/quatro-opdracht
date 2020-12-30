@@ -13,9 +13,6 @@ public class Webcast extends Content {
         this.duration = duration;
     }
 
-    
-
-
     public String getUrl() {
         return url;
     }
