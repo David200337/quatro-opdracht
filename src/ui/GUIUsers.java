@@ -1,7 +1,7 @@
 package src.ui;
 
 import src.db.*;
-import src.domain.DateEditingCell;
+// import src.domain.DateEditingCell;
 import src.domain.DatePickerConverter;
 import src.domain.EditingCell;
 import src.domain.Student;
@@ -22,7 +22,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -30,14 +29,13 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-
 public class GUIUsers extends Application {
     private DatabaseStudent databaseStudent;
     private Stage window;
     TableView<Student> studentTable;
     LocalDate dateOfBirth;
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         launch(args);
     }
 
@@ -45,63 +43,63 @@ public class GUIUsers extends Application {
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
         window.setTitle("Students");
-        databaseStudent = new DatabaseStudent("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
+        databaseStudent = new DatabaseStudent(
+                "jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseStudent.loadStudents();
+
+        //Buttons to switch between table and insert
+        Button switchToTable = new Button("To table");
+        Button switchToInsert = new Button("To insert");
 
         studentTable = new TableView<>();
         studentTable.setEditable(true);
-        Callback<TableColumn<Student, String>, TableCell<Student, String>> stringCellFactory
-                = (TableColumn<Student, String> param) -> new EditingCell();
-        // Callback<TableColumn<Student, Integer>, TableCell<Student, Integer>> integerCellFactory
-        //         = (TableColumn<Student, Integer> param) -> new IntegerEditingCell();
-        // Callback<TableColumn<Student, Date>, TableCell<Student, Date>> dateCellFactory
-        //         = (TableColumn<Student, Date> param) -> new DateEditingCell();
-        // Callback<TableColumn<Student, RadioButton>, TableCell<Student, RadioButton>> radioButtonCellFactory
-        //         = (TableColumn<Student, RadioButton> param) -> new RadioButtonEditingCell();
+        Callback<TableColumn<Student, String>, TableCell<Student, String>> stringCellFactory = (
+                TableColumn<Student, String> param) -> new EditingCell();
+        // Callback<TableColumn<Student, Date>, TableCell<Student, Date>> dateCellFactory = (
+        //         TableColumn<Student, Date> param) -> new DateEditingCell();
+        // Callback<TableColumn<Student, RadioButton>, TableCell<Student, RadioButton>>
+        // radioButtonCellFactory
+        // = (TableColumn<Student, RadioButton> param) -> new RadioButtonEditingCell();
 
         // ID Column
         TableColumn<Student, Integer> studentIdColumn = new TableColumn<>("ID");
         studentIdColumn.setCellValueFactory(new PropertyValueFactory<>("studentId"));
-        //ID kan nog niet veranderd worden
+        
 
         // Name Column
         TableColumn<Student, String> studentNameColumn = new TableColumn<>("Name");
         studentNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         studentNameColumn.setCellFactory(stringCellFactory);
-        studentNameColumn.setOnEditCommit(
-                (TableColumn.CellEditEvent<Student, String> t) -> {
-                    ((Student) t.getTableView().getItems()
-                    .get(t.getTablePosition().getRow()))
-                    .setName(t.getNewValue());
+        studentNameColumn.setOnEditCommit((TableColumn.CellEditEvent<Student, String> t) -> {
+            ((Student) t.getTableView().getItems().get(t.getTablePosition().getRow())).setName(t.getNewValue());
 
-                    Student student = t.getRowValue();
-                    student.setName(t.getNewValue());
-                    databaseStudent.updateStudent("StudentName", t.getNewValue(), student.getStudentId());
-                });
-
+            Student student = t.getRowValue();
+            student.setName(t.getNewValue());
+            databaseStudent.updateStudentString("StudentName", t.getNewValue(), student.getStudentId());
+        });
 
         // Email Column
         TableColumn<Student, String> studentEmailColumn = new TableColumn<>("Email");
         studentEmailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
         studentEmailColumn.setCellFactory(stringCellFactory);
-        studentEmailColumn.setOnEditCommit(
-                (TableColumn.CellEditEvent<Student, String> t) -> {
-                    ((Student) t.getTableView().getItems()
-                    .get(t.getTablePosition().getRow()))
-                    .setEmail(t.getNewValue());
+        studentEmailColumn.setOnEditCommit((TableColumn.CellEditEvent<Student, String> t) -> {
+            ((Student) t.getTableView().getItems().get(t.getTablePosition().getRow())).setEmail(t.getNewValue());
 
-                    Student student = t.getRowValue();
-                    student.setEmail(t.getNewValue());
-                    databaseStudent.updateStudent("StudentEmail", t.getNewValue(), student.getStudentId());
-                });
+            Student student = t.getRowValue();
+            student.setEmail(t.getNewValue());
+            databaseStudent.updateStudentString("StudentEmail", t.getNewValue(), student.getStudentId());
+        });
 
         // Date of birth Column
-        TableColumn<Student, String> studentDateOfBirthColumn = new TableColumn<>("Date of birth");
+        TableColumn<Student, Date> studentDateOfBirthColumn = new TableColumn<>("Date of birth");
         studentDateOfBirthColumn.setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
+        studentDateOfBirthColumn.setEditable(true);
+        //Date of birth kan nog niet aangepast worden
 
         // Gender Column
         TableColumn<Student, String> studentGenderColumn = new TableColumn<>("Gender");
         studentGenderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        //gender kan nog niet aangepast worden
 
         // Address Column
         TableColumn<Student, String> studentAddressColumn = new TableColumn<>("Address");
@@ -115,7 +113,7 @@ public class GUIUsers extends Application {
 
                     Student student = t.getRowValue();
                     student.setAddress(t.getNewValue());
-                    databaseStudent.updateStudent("Address", t.getNewValue(), student.getStudentId());
+                    databaseStudent.updateStudentString("Address", t.getNewValue(), student.getStudentId());
                 });
 
         // Postal Code Column
@@ -130,7 +128,7 @@ public class GUIUsers extends Application {
 
                     Student student = t.getRowValue();
                     student.setPostalCode(t.getNewValue());
-                    databaseStudent.updateStudent("PostalCode", t.getNewValue(), student.getStudentId());
+                    databaseStudent.updateStudentString("PostalCode", t.getNewValue(), student.getStudentId());
                 });
 
         // City Column
@@ -145,7 +143,7 @@ public class GUIUsers extends Application {
 
                     Student student = t.getRowValue();
                     student.setCity(t.getNewValue());
-                    databaseStudent.updateStudent("City", t.getNewValue(), student.getStudentId());
+                    databaseStudent.updateStudentString("City", t.getNewValue(), student.getStudentId());
                 });
 
         // Country Column
@@ -160,7 +158,7 @@ public class GUIUsers extends Application {
 
                     Student student = t.getRowValue();
                     student.setCountry(t.getNewValue());
-                    databaseStudent.updateStudent("Country", t.getNewValue(), student.getStudentId());
+                    databaseStudent.updateStudentString("Country", t.getNewValue(), student.getStudentId());
                 });
 
         // Setup table, load data & add columns
@@ -168,11 +166,8 @@ public class GUIUsers extends Application {
         studentTable.setItems(databaseStudent.getStudents());
         studentTable.getColumns().addAll(studentIdColumn, studentNameColumn, studentEmailColumn, studentDateOfBirthColumn, studentGenderColumn, studentAddressColumn, studentPostalCodeColumn, studentCityColumn, studentCountryColumn);
 
-        VBox vBox = new VBox();
-        // Button refreshButton = new Button("Refresh");
-        // refreshButton.setOnAction((event) -> {
-        //     refreshTable();
-        // });
+        VBox vBoxTable = new VBox();
+        
 
         //Delete button - removes selected item
         Button deleteButton = new Button("Delete");
@@ -185,14 +180,13 @@ public class GUIUsers extends Application {
                 e.printStackTrace();
             } 
         });
-        vBox.getChildren().addAll(studentTable, deleteButton);
+        vBoxTable.getChildren().addAll(switchToInsert, studentTable, deleteButton);
 
-
-
-
-
+        Scene tableScene = new Scene(vBoxTable);
 
         //Insert a new student
+        VBox vBoxInsert = new VBox();
+
         Label lblTitle = new Label("Insert new student");
 
         //Insert ID
@@ -265,7 +259,7 @@ public class GUIUsers extends Application {
         //Insert button
         Button btnInsert = new Button("Insert");
 
-        vBox.getChildren().addAll(lblTitle, lblId, studentId, lblName, name, lblEmail, email, pickerBox, lblGender, rbMale, rbFemale, lblAddress, address, lblPostalCode, postalCode, lblCity, city, lblCountry, country, btnInsert);
+        vBoxInsert.getChildren().addAll(switchToTable, lblTitle, lblId, studentId, lblName, name, lblEmail, email, pickerBox, lblGender, rbMale, rbFemale, lblAddress, address, lblPostalCode, postalCode, lblCity, city, lblCountry, country, btnInsert);
         //Insert button action
         btnInsert.setOnAction((event) -> {
             try{ 
@@ -295,8 +289,18 @@ public class GUIUsers extends Application {
         });
 
 
-        Scene scene = new Scene(vBox);
-        window.setScene(scene);
+        Scene insertScene = new Scene(vBoxInsert);
+        
+
+        switchToTable.setOnAction((event) -> {
+            window.setScene(tableScene);
+        });
+
+        switchToInsert.setOnAction((event) -> {
+            window.setScene(insertScene);
+        });
+
+        window.setScene(tableScene);
         window.show();
     }
     

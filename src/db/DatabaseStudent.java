@@ -4,9 +4,6 @@ import java.sql.Date;
 import java.sql.SQLException;
 
 import javafx.collections.*;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
-import javafx.scene.control.TableView;
 // import src.domain.DatePickerConverter;
 import src.domain.Student;
 
@@ -70,7 +67,15 @@ public class DatabaseStudent extends Database {
         statement.executeUpdate("DELETE FROM Student WHERE StudentId = '"+selectedItem.getStudentId()+"'");
     }
 
-    public void updateStudent(String column, String newValue, int id){
+    public void updateStudentString(String column, String newValue, int id){
+        try{
+            statement.executeUpdate("UPDATE Student SET "+column+" = '"+newValue+"' WHERE StudentId = "+id);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void updateStudentDate(String column, Date newValue, int id){
         try{
             statement.executeUpdate("UPDATE Student SET "+column+" = '"+newValue+"' WHERE StudentId = "+id);
         } catch (Exception e){
