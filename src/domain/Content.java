@@ -7,17 +7,31 @@ abstract class Content {
     private Date publicationDate;
     private String theme;
     private String title;
-    private int percentage;
-    private Status status;
+    private String description;
+    // private int percentage;
+    private String status;
     private ContentCreator creator;
 
-    public Content(int contentId, Date publicationDate, String theme, String title, int percentage, Status status, ContentCreator creator){
+    public Content(int contentId, Date publicationDate, String theme, String title, String description, String status, ContentCreator creator){
         this.contentId = contentId;
-        this.percentage = percentage;
+        // this.percentage = percentage;
         this.publicationDate = publicationDate;
         this.status = status;
         this.theme = theme;
         this.title = title;
+        this.creator = creator;
+        this.description = description;
+    }
+
+    public Content(){
+        
+    }
+
+    public ContentCreator getCreator() {
+        return creator;
+    }
+
+    public void setCreator(ContentCreator creator){
         this.creator = creator;
     }
 
@@ -54,19 +68,27 @@ abstract class Content {
         this.title = title;
     }
 
-    public Integer getPercentage(){
-        return percentage;
-    }
+    // public Integer getPercentage(){
+    //     return percentage;
+    // }
 
-    public void setPercentage(int percentage){
-        this.percentage = percentage;
-    }
+    // public void setPercentage(int percentage){
+    //     this.percentage = percentage;
+    // }
 
-    public Status getStatus(){
+    public String getStatus(){
         return status;
     }
 
-    public void setStatus(Status status){
+    public void setStatus(String status){
         this.status = status;
+    }
+
+    public String getDescription(){
+        return description;
+    }
+
+    public void setDescription(String description){
+        this.description = description;
     }
 }

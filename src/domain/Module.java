@@ -5,13 +5,12 @@ import java.sql.Date;
 public class Module extends Content {
     private int serialNumber;
     
-    public Module(int contentId, Date publicationDate, String theme, String title, int percentage, Status status,
+    public Module(int contentId, Date publicationDate, String theme, String title, String description, String status,
             ContentCreator creator, int number) {
-        super(contentId, publicationDate, theme, title, percentage, status, creator);
+        super(contentId, publicationDate, theme, title, description, status, creator);
         this.serialNumber = number;
     }
 
-    
 
     public Integer getSerialNumber(){
         return serialNumber;

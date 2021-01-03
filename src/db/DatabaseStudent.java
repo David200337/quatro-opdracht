@@ -21,11 +21,11 @@ public class DatabaseStudent extends Database {
             connect();
 
             // Define SQL query
-            String SQL = "SELECT * FROM Student";
+            String sql = "SELECT * FROM Student";
             statement = connection.createStatement();
 
             // Run query
-            resultSet = statement.executeQuery(SQL);
+            resultSet = statement.executeQuery(sql);
 
             // Save data
             while (resultSet.next()) {

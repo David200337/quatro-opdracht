@@ -1,16 +1,21 @@
 package src.domain;
 
 import java.sql.Date;
+import java.sql.Time;
 
 public class Webcast extends Content {
     private String url;
-    private int duration;
+    private Time duration;
     
-    public Webcast(int contentId, Date publicationDate, String theme, String title, int percentage, Status status,
-            ContentCreator creator, String url, int duration) {
-        super(contentId, publicationDate, theme, title, percentage, status, creator);
+    public Webcast(int contentId, Date publicationDate, String theme, String title, String description, String status,
+            ContentCreator creator, String url, Time duration) {
+        super(contentId, publicationDate, theme, title, description, status, creator);
         this.url = url;
         this.duration = duration;
+    }
+
+
+    public Webcast(){
     }
 
     public String getUrl() {
@@ -21,13 +26,15 @@ public class Webcast extends Content {
         this.url = url;
     }
 
-    public Integer getDuration(){
+    public Time getDuration(){
         return duration;
     }
 
-    public void setDuration(int duration){
+    public void setDuration(Time duration){
         this.duration = duration;
     }
+
+    
 
     
 }
