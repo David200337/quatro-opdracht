@@ -2,8 +2,6 @@ package src.db;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.List;
 
 import javafx.collections.*;
 import src.domain.*;
@@ -50,15 +48,16 @@ public class DatabaseWebcast extends Database{
                 webcast.setDuration(duration);
                 
                 int creatorId = resultSet.getInt("CreatorId");
-                String creatorName = resultSet.getString("Name");
-                String creatorEmail = resultSet.getString("Email");
-                String creatorOrganisation = resultSet.getString("Organisation");
+                String name = resultSet.getString("Name");
+                String email = resultSet.getString("Email");
+                String organisation = resultSet.getString("Organisation");
 
-                ContentCreator creator = new ContentCreator(creatorId, creatorName, creatorEmail, creatorOrganisation);
-                webcast.setCreator(creator);
+                webcast.setCreatorId(creatorId);
+                webcast.setName(name);
+                webcast.setEmail(email);
+                webcast.setOrganisation(organisation);
                 // Webcast webcast = new Webcast(contentId, publicationDate, theme, title, description, status, creator, url, duration); 
                 webcasts.add(webcast); 
-
             }
         } catch (Exception e) {
             e.printStackTrace();

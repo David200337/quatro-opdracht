@@ -63,14 +63,14 @@ public class GUIWebcasts extends Application {
 
         
         TableColumn<Webcast, String> creatorNameColumn = new TableColumn<>("Creator Name");
-        creatorNameColumn.setCellValueFactory(new PropertyValueFactory<>("creatorName"));
+        creatorNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         
         TableColumn<Webcast, String> creatorEmailColumn = new TableColumn<>("Creator E-mail");
-        creatorEmailColumn.setCellValueFactory(new PropertyValueFactory<>("creatorEmail"));
+        creatorEmailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 
         
         TableColumn<Webcast, String> creatorOrganisationColumn = new TableColumn<>("Creator Organisation");
-        creatorOrganisationColumn.setCellValueFactory(new PropertyValueFactory<>("creatorOrganisation"));
+        creatorOrganisationColumn.setCellValueFactory(new PropertyValueFactory<>("organisation"));
 
         webcastTable.setItems(databaseWebcast.getWebcasts());
         webcastTable.getColumns().addAll(webcastIdColumn, publicationDateColumn,statusColumn, themeColumn,titleColumn, descriptionColumn, urlColumn, durationColumn, creatorIdColumn, creatorNameColumn, creatorEmailColumn, creatorOrganisationColumn);

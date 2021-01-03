@@ -8,8 +8,8 @@ public class Webcast extends Content {
     private Time duration;
     
     public Webcast(int contentId, Date publicationDate, String theme, String title, String description, String status,
-            ContentCreator creator, String url, Time duration) {
-        super(contentId, publicationDate, theme, title, description, status, creator);
+        int creatorId, String name, String email, String organisation, String url, Time duration) {
+        super(contentId, publicationDate, theme, title, description, status, creatorId, name, email, organisation);
         this.url = url;
         this.duration = duration;
     }
@@ -33,6 +33,8 @@ public class Webcast extends Content {
     public void setDuration(Time duration){
         this.duration = duration;
     }
+
+    
 
     
 
