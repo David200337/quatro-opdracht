@@ -1,0 +1,43 @@
+
+
+.root {
+    -fx-font-family: 'Montserrat';
+    -fx-font-size: 13pt;
+}
+
+.alert-title {
+    -fx-font-weight: 700;
+}
+
+.button {
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #141C3A;
+    -fx-border-color: #141C3A ;
+    -fx-border-width: 2;
+}
+
+.button:hover {
+    -fx-background-color: #141C3A;
+    -fx-border-color: #141C3A ;
+    -fx-text-fill: #FFFFFF;
+}
+
+.menu {
+    -fx-background-color: #F6FAFB;
+}
+
+.menu-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #7D7D7D;
+}
+
+.menu-button:hover,
+.menu-button:selected {
+    -fx-text-fill: #141C3A;
+}
+
+.view-title {
+    -fx-font-size: 22pt;
+    -fx-font-family: 'Montserrat';
+    -fx-font-weight: 700;
+}
