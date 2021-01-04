@@ -10,23 +10,24 @@ abstract class Content {
     private String description;
     // private int percentage;
     private String status;
-    // private ContentCreator creator;
-    private int creatorId;
-    private String name;
-    private String email;
-    private String organisation;
+    private ContentCreator creator;
+    // private int creatorId;
+    // private String name;
+    // private String email;
+    // private String organisation;
 
-    public Content(int contentId, Date publicationDate, String theme, String title, String description, String status, int creatorId, String name, String email, String organisation){
+    public Content(int contentId, Date publicationDate, String theme, String title, String description, String status, ContentCreator creator){
         this.contentId = contentId;
         // this.percentage = percentage;
         this.publicationDate = publicationDate;
         this.status = status;
         this.theme = theme;
         this.title = title;
-        this.creatorId = creatorId;
-        this.name=name;
-        this.email = email;
-        this.organisation = organisation;
+        this.creator = creator;
+        // this.creatorId = creatorId;
+        // this.name=name;
+        // this.email = email;
+        // this.organisation = organisation;
         this.description = description;
     }
 
@@ -92,35 +93,35 @@ abstract class Content {
         this.description = description;
     }
 
-    public int getCreatorId(){
-        return creatorId;
-    }
+    // public int getCreatorId(){
+    //     return creatorId;
+    // }
 
-    public void setCreatorId(int id){
-        this.creatorId = id;
-    }
+    // public void setCreatorId(int id){
+    //     this.creatorId = id;
+    // }
 
-    public String getName(){
-        return name;
-    }
+    // public String getName(){
+    //     return name;
+    // }
 
-    public void setName(String name){
-        this.name = name;
-    }
+    // public void setName(String name){
+    //     this.name = name;
+    // }
 
-    public String getEmail(){
-        return email;
-    }
+    // public String getEmail(){
+    //     return email;
+    // }
 
-    public void setEmail(String email){
-        this.email = email;
-    }
+    // public void setEmail(String email){
+    //     this.email = email;
+    // }
 
-    public String getOrganisation(){
-        return organisation;
-    }
+    // public String getOrganisation(){
+    //     return organisation;
+    // }
 
-    public void setOrganisation(String organisation){
-        this.organisation = organisation;
-    }
+    // public void setOrganisation(String organisation){
+    //     this.organisation = organisation;
+    // }
 }

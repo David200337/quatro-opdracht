@@ -4,7 +4,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 
-public class EditingCell extends TableCell<Student, String> {
+public class EditingCell<T> extends TableCell<T, String> {
     private TextField textField;
 
     public EditingCell(){

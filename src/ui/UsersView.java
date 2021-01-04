@@ -48,7 +48,7 @@ public class UsersView {
         });
 
         usersTableView.setEditable(true);
-        Callback<TableColumn<Student, String>, TableCell<Student, String>> stringCellFactory = (TableColumn<Student, String> param) -> new EditingCell();
+        Callback<TableColumn<Student, String>, TableCell<Student, String>> stringCellFactory = (TableColumn<Student, String> param) -> new EditingCell<Student>();
 
         // ID Column
         TableColumn<Student, Integer> studentIdColumn = new TableColumn<>("ID");

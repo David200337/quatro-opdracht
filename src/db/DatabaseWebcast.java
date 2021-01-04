@@ -52,10 +52,10 @@ public class DatabaseWebcast extends Database{
                 String email = resultSet.getString("Email");
                 String organisation = resultSet.getString("Organisation");
 
-                webcast.setCreatorId(creatorId);
-                webcast.setName(name);
-                webcast.setEmail(email);
-                webcast.setOrganisation(organisation);
+                // webcast.setCreatorId(creatorId);
+                // webcast.setName(name);
+                // webcast.setEmail(email);
+                // webcast.setOrganisation(organisation);
                 // Webcast webcast = new Webcast(contentId, publicationDate, theme, title, description, status, creator, url, duration); 
                 webcasts.add(webcast); 
             }
