@@ -4,8 +4,12 @@ import src.db.*;
 import src.domain.EditingCell;
 import src.domain.Student;
 
+import java.beans.EventHandler;
 import java.sql.Date;
+import java.util.List;
 
+import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -13,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -23,12 +28,27 @@ import javafx.util.Callback;
 public class UsersView {
     private DatabaseStudent databaseStudent;
     private UsersAddView usersAddView;
+    private TableView<Student> usersTableView = new TableView<>();
 
     public UsersView() {
         databaseStudent = new DatabaseStudent("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseStudent.loadStudents();
         usersAddView = new UsersAddView();
+        
     }
+
+    // void refreshTable() {
+    //     final List<Student> items = usersTableView.getItems();
+    //     if( items == null || items.size() == 0) return;
+    //     final Student item = usersTableView.getItems().get(0);
+    //     items.remove(0);
+    //     Platform.runLater(new Runnable(){
+    //         @Override
+    //         public void run() {
+    //             items.add(0, item);
+    //         }
+    //     });
+    //  }
 
     public Parent getView() {
         VBox layout = new VBox();
@@ -40,15 +60,30 @@ public class UsersView {
         titleLabel.setPadding(new Insets(0, 0, 10, 0));
         Button addUserButton = new Button("Add user");
         Button removeUserButton = new Button("Remove user");
-        TableView<Student> usersTableView = new TableView<>();
+
+
 
         addUserButton.setOnAction(e -> {
             layout.getChildren().clear();
             layout.getChildren().add(usersAddView.getView());
         });
 
+
+        removeUserButton.setOnAction((event) -> {
+            try{
+                Student selectedItem = usersTableView.getSelectionModel().getSelectedItem();
+                usersTableView.getItems().remove(selectedItem);
+                databaseStudent.deleteStudent(selectedItem);
+            }catch(Exception e) {
+                e.printStackTrace();
+            } 
+        });
+
         usersTableView.setEditable(true);
         Callback<TableColumn<Student, String>, TableCell<Student, String>> stringCellFactory = (TableColumn<Student, String> param) -> new EditingCell<Student>();
+        // Callback<TableColumn<Student, String>, TableCell<Student, String>> comboBoxCellFactory
+        //         = (TableColumn<Student, String> param) -> new ComboBoxEditingCell();
+
 
         // ID Column
         TableColumn<Student, Integer> studentIdColumn = new TableColumn<>("ID");
@@ -87,7 +122,14 @@ public class UsersView {
         // Gender Column
         TableColumn<Student, String> studentGenderColumn = new TableColumn<>("Gender");
         studentGenderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
-        //gender kan nog niet aangepast worden
+        // studentEmailColumn.setCellFactory(stringCellFactory);
+        // studentEmailColumn.setOnEditCommit((TableColumn.CellEditEvent<Student, String> t) -> {
+        //     ((Student) t.getTableView().getItems().get(t.getTablePosition().getRow())).setGender(t.getNewValue());
+
+        //     Student student = t.getRowValue();
+        //     student.setGender(t.getNewValue());
+        //     databaseStudent.updateStudentString("Gender", t.getNewValue(), student.getStudentId());
+        // });
 
         // Address Column
         TableColumn<Student, String> studentAddressColumn = new TableColumn<>("Address");
@@ -157,7 +199,8 @@ public class UsersView {
         topLayout.getChildren().addAll(titleLabel, filler, addUserButton, removeUserButton);
         layout.getChildren().addAll(topLayout, usersTableView);
         layout.setPadding(new Insets(10, 10, 10, 15));
-
+        
+    
         return layout;
     }
 }

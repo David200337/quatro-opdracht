@@ -2,11 +2,15 @@ package src.ui;
 
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import src.db.DatabaseCourseModule;
@@ -15,21 +19,47 @@ import src.domain.EditingCell;
 
 public class CoursesView {
     DatabaseCourseModule databaseCourses;
+    private CourseAddView courseAddView;
+    TableView<CourseModule> coursesTableView = new TableView<>();
 
 
     public CoursesView() {
         databaseCourses = new DatabaseCourseModule("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseCourses.loadCourseModules();
+        courseAddView = new CourseAddView();
     }
 
     public Parent getView() {
         VBox layout = new VBox();
+        HBox topLayout = new HBox(10);
+        Region filler = new Region(); 
 
         Label titleLabel = new Label("Courses");
         titleLabel.getStyleClass().add("view-title");
         titleLabel.setPadding(new Insets(10, 10, 10, 15));
 
-        TableView<CourseModule> coursesTableView = new TableView<>();
+        Button addCourseButton = new Button("Add course");
+        Button removeCourseButton = new Button("Remove course");
+
+
+
+        addCourseButton.setOnAction(e -> {
+            layout.getChildren().clear();
+            layout.getChildren().add(courseAddView.getView());
+        });
+
+
+        removeCourseButton.setOnAction((event) -> {
+            try{
+                CourseModule courseModule = coursesTableView.getSelectionModel().getSelectedItem();
+                coursesTableView.getItems().remove(courseModule);
+                databaseCourses.deleteCourseModule(courseModule);
+            }catch(Exception e) {
+                e.printStackTrace();
+            } 
+        });
+
+        
         coursesTableView.setEditable(true);
         Callback<TableColumn<CourseModule, String>, TableCell<CourseModule, String>> stringCellFactory = (TableColumn<CourseModule, String> param) -> new EditingCell<CourseModule>();
 
@@ -59,10 +89,10 @@ public class CoursesView {
         introductionTextCol.setCellValueFactory(new PropertyValueFactory<>("introductionText"));
         introductionTextCol.setCellFactory(stringCellFactory);
         introductionTextCol.setOnEditCommit((TableColumn.CellEditEvent<CourseModule, String> t) -> {
-            ((CourseModule) t.getTableView().getItems().get(t.getTablePosition().getRow())).setModuleDescription(t.getNewValue());
+            ((CourseModule) t.getTableView().getItems().get(t.getTablePosition().getRow())).setIntroductionText(t.getNewValue());
 
             CourseModule course = t.getRowValue();
-            course.setModuleDescription(t.getNewValue());
+            course.setIntroductionText(t.getNewValue());
             databaseCourses.updateCourseModuleString("Description", t.getNewValue(), course.getCourseId());
         });
 
@@ -77,10 +107,20 @@ public class CoursesView {
             ((CourseModule) t.getTableView().getItems().get(t.getTablePosition().getRow())).setModuleTitle(t.getNewValue());
 
             CourseModule course = t.getRowValue();
-            course.setModuleDescription(t.getNewValue());
+            course.setModuleTitle(t.getNewValue());
             databaseCourses.updateCourseModuleString("Title", t.getNewValue(), course.getContentId());
         });
 
+        TableColumn<CourseModule, String> themeCol = new TableColumn<>("Module Theme");
+        titleCol.setCellValueFactory(new PropertyValueFactory<>("moduleTheme"));
+        titleCol.setCellFactory(stringCellFactory);
+        titleCol.setOnEditCommit((TableColumn.CellEditEvent<CourseModule, String> t) -> {
+            ((CourseModule) t.getTableView().getItems().get(t.getTablePosition().getRow())).setModuleTheme(t.getNewValue());
+
+            CourseModule course = t.getRowValue();
+            course.setModuleTheme(t.getNewValue());
+            databaseCourses.updateCourseModuleString("Theme", t.getNewValue(), course.getContentId());
+        });
 
         TableColumn<CourseModule, String> descriptionCol = new TableColumn<>("Module Description");
         descriptionCol.setCellValueFactory(new PropertyValueFactory<>("moduleDescription"));
@@ -102,10 +142,16 @@ public class CoursesView {
         //Mag niet veranderd worden
 
         coursesTableView.setItems(databaseCourses.getCourseModules());
-        coursesTableView.getColumns().addAll(courseNameCol, subjectCol, introductionTextCol, levelCol, titleCol, descriptionCol, statusCol, serialNumberCol);
+        coursesTableView.getColumns().addAll(courseNameCol, subjectCol, introductionTextCol, levelCol, themeCol, titleCol, descriptionCol, statusCol, serialNumberCol);
 
 
-        layout.getChildren().addAll(titleLabel, coursesTableView);
+        // Add layout
+        HBox.setHgrow(filler, Priority.ALWAYS);
+        topLayout.getChildren().addAll(titleLabel, filler, addCourseButton, removeCourseButton);
+        layout.getChildren().addAll(topLayout, coursesTableView);
+        layout.setPadding(new Insets(10, 10, 10, 15));
+
+
 
         return layout;
     }

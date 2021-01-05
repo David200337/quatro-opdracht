@@ -1,5 +1,7 @@
 package src.domain;
 
+import java.sql.Date;
+
 public class CourseModule {
     private Module module;
     private Course course;
@@ -10,14 +12,17 @@ public class CourseModule {
     private String subject;
     private String introductionText;
     private String level;
+    private Date publicationDate;
     private String moduleTitle;
+    private String moduleTheme;
     private String moduleDescription;
     private String status;
     private int moduleSerialNumber;
 
     public CourseModule(int contentId, int courseId, String courseName, String subject, String introductionText,
-            String level, String moduleTitle, String moduleDescription, String status, int moduleSerialNumber) {
-        this.contentId = contentId;
+            String level, Date publicationDate, String moduleTitle, String moduleTheme, String moduleDescription,
+            String status, int moduleSerialNumber) {
+        this.setContentId(contentId);
         this.setCourseId(courseId);
         this.setCourseName(courseName);
         this.setSubject(subject);
@@ -27,6 +32,24 @@ public class CourseModule {
         this.setModuleDescription(moduleDescription);
         this.setStatus(status);
         this.setModuleSerialNumber(moduleSerialNumber);
+        this.setModuleTheme(moduleTheme);
+        this.setPublicationDate(publicationDate);
+    }
+
+    public String getModuleTheme() {
+        return moduleTheme;
+    }
+
+    public void setModuleTheme(String moduleTheme) {
+        this.moduleTheme = moduleTheme;
+    }
+
+    public Date getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(Date publicationDate) {
+        this.publicationDate = publicationDate;
     }
 
     public int getContentId() {

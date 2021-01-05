@@ -26,6 +26,7 @@ import src.domain.DatePickerConverter;
 public class UsersAddView {
     private DatabaseStudent databaseStudent;
 
+
     public UsersAddView() {
         databaseStudent = new DatabaseStudent("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseStudent.loadStudents();
@@ -113,7 +114,7 @@ public class UsersAddView {
                 // Object gender = genderComboBox.getValue();
                 
                 
-                databaseStudent.insertStudent(Integer.parseInt(studentId.getText()), name.getText(), email.getText(), Date.valueOf(dateOfBirth), genderComboBox.getValue(), address.getText(), postalCode.getText(), city.getText(), country.getText());
+                databaseStudent.insertStudent(Integer.parseInt(studentId.getText()), name.getText(), email.getText(), Date.valueOf(dateOfBirth), String.valueOf(genderComboBox.getValue()), address.getText(), postalCode.getText(), city.getText(), country.getText());
                 // System.out.println("It worked!");
                 studentId.clear();
                 name.clear();
@@ -123,6 +124,7 @@ public class UsersAddView {
                 postalCode.clear();
                 city.clear();
                 country.clear();
+
             } catch(Exception e) {
                 e.printStackTrace();
             }
