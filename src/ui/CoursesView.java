@@ -18,15 +18,18 @@ import src.domain.CourseModule;
 import src.domain.EditingCell;
 
 public class CoursesView {
-    DatabaseCourseModule databaseCourses;
+    private DatabaseCourseModule databaseCourses;
     private CourseAddView courseAddView;
+    private CourseDetailView courseDetailView;
     TableView<CourseModule> coursesTableView = new TableView<>();
 
 
     public CoursesView() {
         databaseCourses = new DatabaseCourseModule("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
-        databaseCourses.loadCourseModules();
+        // databaseCourses.loadCourseModules();
+        databaseCourses.loadCourse();
         courseAddView = new CourseAddView();
+        courseDetailView = new CourseDetailView();
     }
 
     public Parent getView() {
@@ -39,7 +42,8 @@ public class CoursesView {
         titleLabel.setPadding(new Insets(10, 10, 10, 15));
 
         Button addCourseButton = new Button("Add course");
-        Button removeCourseButton = new Button("Remove course");
+        Button detailCourseButton = new Button("Go to details");
+        Button removeCourseButton = new Button("Delete Course");
 
 
 
@@ -49,11 +53,21 @@ public class CoursesView {
         });
 
 
+        detailCourseButton.setOnAction((event) -> {
+            try{
+                CourseModule courseModule = coursesTableView.getSelectionModel().getSelectedItem();
+                layout.getChildren().clear();
+                layout.getChildren().add(courseDetailView.getView(courseModule));
+            }catch(Exception e) {
+                e.printStackTrace();
+            } 
+        });
+
         removeCourseButton.setOnAction((event) -> {
             try{
                 CourseModule courseModule = coursesTableView.getSelectionModel().getSelectedItem();
                 coursesTableView.getItems().remove(courseModule);
-                databaseCourses.deleteCourseModule(courseModule);
+                databaseCourses.deleteCourse(courseModule);
             }catch(Exception e) {
                 e.printStackTrace();
             } 
@@ -100,54 +114,54 @@ public class CoursesView {
         levelCol.setCellValueFactory(new PropertyValueFactory<>("level"));
         //Editen met combobox
 
-        TableColumn<CourseModule, String> titleCol = new TableColumn<>("Module title");
-        titleCol.setCellValueFactory(new PropertyValueFactory<>("moduleTitle"));
-        titleCol.setCellFactory(stringCellFactory);
-        titleCol.setOnEditCommit((TableColumn.CellEditEvent<CourseModule, String> t) -> {
-            ((CourseModule) t.getTableView().getItems().get(t.getTablePosition().getRow())).setModuleTitle(t.getNewValue());
+        // TableColumn<CourseModule, String> titleCol = new TableColumn<>("Module title");
+        // titleCol.setCellValueFactory(new PropertyValueFactory<>("moduleTitle"));
+        // titleCol.setCellFactory(stringCellFactory);
+        // titleCol.setOnEditCommit((TableColumn.CellEditEvent<CourseModule, String> t) -> {
+        //     ((CourseModule) t.getTableView().getItems().get(t.getTablePosition().getRow())).setModuleTitle(t.getNewValue());
 
-            CourseModule course = t.getRowValue();
-            course.setModuleTitle(t.getNewValue());
-            databaseCourses.updateCourseModuleString("Title", t.getNewValue(), course.getContentId());
-        });
+        //     CourseModule course = t.getRowValue();
+        //     course.setModuleTitle(t.getNewValue());
+        //     databaseCourses.updateCourseModuleString("Title", t.getNewValue(), course.getContentId());
+        // });
 
-        TableColumn<CourseModule, String> themeCol = new TableColumn<>("Module Theme");
-        titleCol.setCellValueFactory(new PropertyValueFactory<>("moduleTheme"));
-        titleCol.setCellFactory(stringCellFactory);
-        titleCol.setOnEditCommit((TableColumn.CellEditEvent<CourseModule, String> t) -> {
-            ((CourseModule) t.getTableView().getItems().get(t.getTablePosition().getRow())).setModuleTheme(t.getNewValue());
+        // TableColumn<CourseModule, String> themeCol = new TableColumn<>("Module Theme");
+        // titleCol.setCellValueFactory(new PropertyValueFactory<>("moduleTheme"));
+        // titleCol.setCellFactory(stringCellFactory);
+        // titleCol.setOnEditCommit((TableColumn.CellEditEvent<CourseModule, String> t) -> {
+        //     ((CourseModule) t.getTableView().getItems().get(t.getTablePosition().getRow())).setModuleTheme(t.getNewValue());
 
-            CourseModule course = t.getRowValue();
-            course.setModuleTheme(t.getNewValue());
-            databaseCourses.updateCourseModuleString("Theme", t.getNewValue(), course.getContentId());
-        });
+        //     CourseModule course = t.getRowValue();
+        //     course.setModuleTheme(t.getNewValue());
+        //     databaseCourses.updateCourseModuleString("Theme", t.getNewValue(), course.getContentId());
+        // });
 
-        TableColumn<CourseModule, String> descriptionCol = new TableColumn<>("Module Description");
-        descriptionCol.setCellValueFactory(new PropertyValueFactory<>("moduleDescription"));
-        descriptionCol.setCellFactory(stringCellFactory);
-        descriptionCol.setOnEditCommit((TableColumn.CellEditEvent<CourseModule, String> t) -> {
-            ((CourseModule) t.getTableView().getItems().get(t.getTablePosition().getRow())).setModuleDescription(t.getNewValue());
+        // TableColumn<CourseModule, String> descriptionCol = new TableColumn<>("Module Description");
+        // descriptionCol.setCellValueFactory(new PropertyValueFactory<>("moduleDescription"));
+        // descriptionCol.setCellFactory(stringCellFactory);
+        // descriptionCol.setOnEditCommit((TableColumn.CellEditEvent<CourseModule, String> t) -> {
+        //     ((CourseModule) t.getTableView().getItems().get(t.getTablePosition().getRow())).setModuleDescription(t.getNewValue());
 
-            CourseModule course = t.getRowValue();
-            course.setModuleDescription(t.getNewValue());
-            databaseCourses.updateCourseModuleString("Description", t.getNewValue(), course.getContentId());
-        });
+        //     CourseModule course = t.getRowValue();
+        //     course.setModuleDescription(t.getNewValue());
+        //     databaseCourses.updateCourseModuleString("Description", t.getNewValue(), course.getContentId());
+        // });
 
-        TableColumn<CourseModule, String> statusCol = new TableColumn<>("Status");
-        statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
-        //Editen met combobox
+        // TableColumn<CourseModule, String> statusCol = new TableColumn<>("Status");
+        // statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
+        // //Editen met combobox
 
-        TableColumn<CourseModule, Integer> serialNumberCol = new TableColumn<>("Module serialnumber");
-        serialNumberCol.setCellValueFactory(new PropertyValueFactory<>("moduleSerialNumber"));
+        // TableColumn<CourseModule, Integer> serialNumberCol = new TableColumn<>("Module serialnumber");
+        // serialNumberCol.setCellValueFactory(new PropertyValueFactory<>("moduleSerialNumber"));
         //Mag niet veranderd worden
 
         coursesTableView.setItems(databaseCourses.getCourseModules());
-        coursesTableView.getColumns().addAll(courseNameCol, subjectCol, introductionTextCol, levelCol, themeCol, titleCol, descriptionCol, statusCol, serialNumberCol);
+        coursesTableView.getColumns().addAll(courseNameCol, subjectCol, introductionTextCol, levelCol);
 
 
         // Add layout
         HBox.setHgrow(filler, Priority.ALWAYS);
-        topLayout.getChildren().addAll(titleLabel, filler, addCourseButton, removeCourseButton);
+        topLayout.getChildren().addAll(titleLabel, filler, addCourseButton, detailCourseButton, removeCourseButton);
         layout.getChildren().addAll(topLayout, coursesTableView);
         layout.setPadding(new Insets(10, 10, 10, 15));
 

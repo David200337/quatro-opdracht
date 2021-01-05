@@ -36,6 +36,23 @@ public class CourseModule {
         this.setPublicationDate(publicationDate);
     }
 
+    public CourseModule(int courseId, String courseName, String subject, String introductionText,
+            String level) {
+        this.setCourseId(courseId);
+        this.setCourseName(courseName);
+        this.setSubject(subject);
+        this.setIntroductionText(introductionText);
+        this.setLevel(level);
+    }
+
+
+    // public Course createCourse(int courseId, String courseName, String subject, String introductionText, Level level){
+    //     Course course = new Course(courseId, courseName, subject, introductionText, level);
+    //     return course;
+    // }
+
+
+
     public String getModuleTheme() {
         return moduleTheme;
     }

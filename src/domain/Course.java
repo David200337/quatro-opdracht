@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Course {
     private Module module;
     private ArrayList<Module> modules;
+    private int courseId;
     private String courseName;
     private String subject;
     private String introductionText;
@@ -12,17 +13,32 @@ public class Course {
 
     private ArrayList<Course> interestingOtherCourses;
 
-    public Course(Module module, String courseName, String subject, String introductionText, Level level){
+    public Course(int courseId, String courseName, String subject, String introductionText,
+            Level level) {
+        this.courseId = courseId;
         this.courseName = courseName;
         this.subject = subject;
         this.introductionText = introductionText;
         this.level = level;
         this.modules = new ArrayList<>();
         this.interestingOtherCourses = new ArrayList<>();
-        this.modules.add(module);
     }
 
-    public void addInterestingOtherCourse(Course course){
+    public void putModuleInList(Module module){
+        modules.add(module);
+    }
+    
+
+
+    public int getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
+    }
+
+    public void addInterestingOtherCourse(Course course) {
         this.interestingOtherCourses.add(course);
     }
 
