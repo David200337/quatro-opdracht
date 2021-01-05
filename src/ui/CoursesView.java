@@ -68,18 +68,38 @@ public class CoursesView {
 
         TableColumn<CourseModule, String> levelCol = new TableColumn<>("Level");
         levelCol.setCellValueFactory(new PropertyValueFactory<>("level"));
+        //Editen met combobox
 
         TableColumn<CourseModule, String> titleCol = new TableColumn<>("Module title");
         titleCol.setCellValueFactory(new PropertyValueFactory<>("moduleTitle"));
+        titleCol.setCellFactory(stringCellFactory);
+        titleCol.setOnEditCommit((TableColumn.CellEditEvent<CourseModule, String> t) -> {
+            ((CourseModule) t.getTableView().getItems().get(t.getTablePosition().getRow())).setModuleTitle(t.getNewValue());
+
+            CourseModule course = t.getRowValue();
+            course.setModuleDescription(t.getNewValue());
+            databaseCourses.updateCourseModuleString("Title", t.getNewValue(), course.getContentId());
+        });
+
 
         TableColumn<CourseModule, String> descriptionCol = new TableColumn<>("Module Description");
         descriptionCol.setCellValueFactory(new PropertyValueFactory<>("moduleDescription"));
+        descriptionCol.setCellFactory(stringCellFactory);
+        descriptionCol.setOnEditCommit((TableColumn.CellEditEvent<CourseModule, String> t) -> {
+            ((CourseModule) t.getTableView().getItems().get(t.getTablePosition().getRow())).setModuleDescription(t.getNewValue());
+
+            CourseModule course = t.getRowValue();
+            course.setModuleDescription(t.getNewValue());
+            databaseCourses.updateCourseModuleString("Description", t.getNewValue(), course.getContentId());
+        });
 
         TableColumn<CourseModule, String> statusCol = new TableColumn<>("Status");
         statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
+        //Editen met combobox
 
-        TableColumn<CourseModule, String> serialNumberCol = new TableColumn<>("Module serialnumber");
+        TableColumn<CourseModule, Integer> serialNumberCol = new TableColumn<>("Module serialnumber");
         serialNumberCol.setCellValueFactory(new PropertyValueFactory<>("moduleSerialNumber"));
+        //Mag niet veranderd worden
 
         coursesTableView.setItems(databaseCourses.getCourseModules());
         coursesTableView.getColumns().addAll(courseNameCol, subjectCol, introductionTextCol, levelCol, titleCol, descriptionCol, statusCol, serialNumberCol);

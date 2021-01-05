@@ -11,8 +11,10 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -236,13 +238,7 @@ public class GUIUsers extends Application {
 
         Label lblGender = new Label("Gender");
         //Radio buttons for gender
-        ToggleGroup genderGroup = new ToggleGroup();
-        
-        RadioButton rbMale = new RadioButton("Male");
-        rbMale.setToggleGroup(genderGroup);
-
-        RadioButton rbFemale = new RadioButton("Female");
-        rbFemale.setToggleGroup(genderGroup);
+        ComboBox genderComboBox = new ComboBox<String>(FXCollections.observableArrayList("Female", "Male"));
         
         //Insert address
         Label lblAddress = new Label("Address");
@@ -259,24 +255,22 @@ public class GUIUsers extends Application {
         //Insert button
         Button btnInsert = new Button("Insert");
 
-        vBoxInsert.getChildren().addAll(switchToTable, lblTitle, lblId, studentId, lblName, name, lblEmail, email, pickerBox, lblGender, rbMale, rbFemale, lblAddress, address, lblPostalCode, postalCode, lblCity, city, lblCountry, country, btnInsert);
+        vBoxInsert.getChildren().addAll(switchToTable, lblTitle, lblId, studentId, lblName, name, lblEmail, email, pickerBox, lblGender, genderComboBox, lblAddress, address, lblPostalCode, postalCode, lblCity, city, lblCountry, country, btnInsert);
         //Insert button action
         btnInsert.setOnAction((event) -> {
             try{ 
                 //Set date of birth
                 LocalDate dateOfBirth = datePicker.getValue();
 
-                //Set gender
-                RadioButton selectedRadioButton = (RadioButton) genderGroup.getSelectedToggle();
+             
 
-                databaseStudent.insertStudent(Integer.parseInt(studentId.getText()), name.getText(), email.getText(), Date.valueOf(dateOfBirth), selectedRadioButton.getText(), address.getText(), postalCode.getText(), city.getText(), country.getText());
+                databaseStudent.insertStudent(Integer.parseInt(studentId.getText()), name.getText(), email.getText(), Date.valueOf(dateOfBirth),genderComboBox.getValue(), address.getText(), postalCode.getText(), city.getText(), country.getText());
                 // System.out.println("It worked!");
                 studentId.clear();
                 name.clear();
                 email.clear();
                 datePicker.setValue(null);
-                rbMale.setSelected(false);
-                rbFemale.setSelected(false);
+                
                 address.clear();
                 postalCode.clear();
                 city.clear();

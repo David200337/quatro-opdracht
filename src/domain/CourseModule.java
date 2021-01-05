@@ -4,6 +4,7 @@ public class CourseModule {
     private Module module;
     private Course course;
 
+    private int contentId;
     private int courseId;
     private String courseName;
     private String subject;
@@ -14,8 +15,9 @@ public class CourseModule {
     private String status;
     private int moduleSerialNumber;
 
-    public CourseModule(int courseId, String courseName, String subject, String introductionText, String level,
-            String moduleTitle, String moduleDescription, String status, int moduleSerialNumber) {
+    public CourseModule(int contentId, int courseId, String courseName, String subject, String introductionText,
+            String level, String moduleTitle, String moduleDescription, String status, int moduleSerialNumber) {
+        this.contentId = contentId;
         this.setCourseId(courseId);
         this.setCourseName(courseName);
         this.setSubject(subject);
@@ -25,6 +27,14 @@ public class CourseModule {
         this.setModuleDescription(moduleDescription);
         this.setStatus(status);
         this.setModuleSerialNumber(moduleSerialNumber);
+    }
+
+    public int getContentId() {
+        return contentId;
+    }
+
+    public void setContentId(int contentId) {
+        this.contentId = contentId;
     }
 
     public int getCourseId() {

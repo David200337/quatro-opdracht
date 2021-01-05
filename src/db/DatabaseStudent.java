@@ -59,7 +59,7 @@ public class DatabaseStudent extends Database {
         return students;
     }
 
-    public void insertStudent(int id, String name, String email, Date dateOfBirth, String gender, String address, String postalCode, String city, String country) throws SQLException{
+    public void insertStudent(int id, String name, String email, Date dateOfBirth, Object gender, String address, String postalCode, String city, String country) throws SQLException{
        statement.executeUpdate("INSERT INTO Student(StudentId, StudentName, StudentEmail, DateOfBirth, Gender, Address, PostalCode, City, Country) VALUES ('"+id+"','"+name+"','"+email+"','"+dateOfBirth+"','"+gender+"','"+address+"','"+postalCode+"','"+city+"','"+country+"')");
     }
 

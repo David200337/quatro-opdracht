@@ -4,9 +4,12 @@ import java.sql.Date;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -25,6 +28,7 @@ public class UsersAddView {
 
     public UsersAddView() {
         databaseStudent = new DatabaseStudent("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
+        databaseStudent.loadStudents();
     }
 
     public Parent getView() {
@@ -80,14 +84,8 @@ public class UsersAddView {
 
 
         Label lblGender = new Label("Gender");
-        //Radio buttons for gender
-        ToggleGroup genderGroup = new ToggleGroup();
-        
-        RadioButton rbMale = new RadioButton("Male");
-        rbMale.setToggleGroup(genderGroup);
-
-        RadioButton rbFemale = new RadioButton("Female");
-        rbFemale.setToggleGroup(genderGroup);
+        //Combobox for gender
+        ComboBox genderComboBox = new ComboBox<String>(FXCollections.observableArrayList("Female", "Male"));
         
         //Insert address
         Label lblAddress = new Label("Address");
@@ -104,7 +102,7 @@ public class UsersAddView {
         //Insert button
         Button btnInsert = new Button("Insert");
 
-        layout.getChildren().addAll(titleLabel, lblId, studentId, lblName, name, lblEmail, email, pickerBox, lblGender, rbMale, rbFemale, lblAddress, address, lblPostalCode, postalCode, lblCity, city, lblCountry, country, btnInsert);
+        layout.getChildren().addAll(titleLabel, lblId, studentId, lblName, name, lblEmail, email, pickerBox, lblGender, genderComboBox, lblAddress, address, lblPostalCode, postalCode, lblCity, city, lblCountry, country, btnInsert);
         //Insert button action
         btnInsert.setOnAction((event) -> {
             try{ 
@@ -112,16 +110,15 @@ public class UsersAddView {
                 LocalDate dateOfBirth = datePicker.getValue();
 
                 //Set gender
-                RadioButton selectedRadioButton = (RadioButton) genderGroup.getSelectedToggle();
-
-                databaseStudent.insertStudent(Integer.parseInt(studentId.getText()), name.getText(), email.getText(), Date.valueOf(dateOfBirth), selectedRadioButton.getText(), address.getText(), postalCode.getText(), city.getText(), country.getText());
+                // Object gender = genderComboBox.getValue();
+                
+                
+                databaseStudent.insertStudent(Integer.parseInt(studentId.getText()), name.getText(), email.getText(), Date.valueOf(dateOfBirth), genderComboBox.getValue(), address.getText(), postalCode.getText(), city.getText(), country.getText());
                 // System.out.println("It worked!");
                 studentId.clear();
                 name.clear();
                 email.clear();
                 datePicker.setValue(null);
-                rbMale.setSelected(false);
-                rbFemale.setSelected(false);
                 address.clear();
                 postalCode.clear();
                 city.clear();

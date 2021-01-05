@@ -21,6 +21,7 @@ public class DatabaseCourseModule extends Database{
 
             
             while(resultSet.next()){
+                int contentId = resultSet.getInt("ContentId");
                 int courseId = resultSet.getInt("CourseId");
                 String courseName = resultSet.getString("CourseName");
                 String subject = resultSet.getString("Subject");
@@ -31,7 +32,7 @@ public class DatabaseCourseModule extends Database{
                 String status = resultSet.getString("Status");
                 int moduleSerialNumber = resultSet.getInt("SerialNumber");
 
-                CourseModule courseModule = new CourseModule(courseId, courseName, subject, introductionText, level, moduleTitle, moduleDescription, status, moduleSerialNumber);
+                CourseModule courseModule = new CourseModule(contentId, courseId, courseName, subject, introductionText, level, moduleTitle, moduleDescription, status, moduleSerialNumber);
                 courseModuleList.add(courseModule);
             }
         } catch (Exception e) {
