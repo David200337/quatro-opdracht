@@ -17,7 +17,7 @@ public class DatabaseCourseModule extends Database{
         try {
             connect();
 
-            String sql = "SELECT Course.CourseId, Course.CourseName, Course.Subject, Course.IntroductionText, Course.Level, Content.ContentId, Content.PublicationDate,  Content.Theme, Content.Title, Content.Description, Content.Status, Module.SerialNumber FROM Module INNER JOIN Content ON Module.ContentId = Content.ContentId INNER JOIN Course ON Module.CourseId = Course.CourseId";
+            String sql = "SELECT Course.CourseId, Course.CourseName, Course.Subject, Course.IntroductionText, Course.Level, Content.ContentId, Content.PublicationDate,  Content.Theme, Content.Title, Content.Description, Content.Status, Module.SerialNumber, ContentCreator.CreatorId, ContentCreator.Name AS CreatorName, ContentCreator.Email, ContentCreator.Organisation FROM Module  INNER JOIN Content ON Module.ContentId = Content.ContentId  INNER JOIN Course ON Module.CourseId = Course.CourseId INNER JOIN ContentCreator ON Content.CreatorId = ContentCreator.CreatorId;";
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
 
@@ -35,8 +35,13 @@ public class DatabaseCourseModule extends Database{
                 String moduleDescription = resultSet.getString("Description");
                 String status = resultSet.getString("Status");
                 int moduleSerialNumber = resultSet.getInt("SerialNumber");
+                int creatorId = resultSet.getInt("CreatorId");
+                String creatorName = resultSet.getString("CreatorName");
+                String creatorEmail = resultSet.getString("Email");
+                String creatorOrganisation = resultSet.getString("Organisation");
 
-                CourseModule courseModule = new CourseModule(contentId, courseId, courseName, subject, introductionText, level, publicationDate, moduleTitle, moduleTheme, moduleDescription, status, moduleSerialNumber);
+
+                CourseModule courseModule = new CourseModule(contentId, courseId, courseName, subject, introductionText, level, publicationDate, moduleTitle, moduleTheme, moduleDescription, status, moduleSerialNumber, creatorId, creatorName, creatorEmail, creatorOrganisation);
                 courseModuleList.add(courseModule);
             }
         } catch (Exception e) {
@@ -94,10 +99,16 @@ public class DatabaseCourseModule extends Database{
         statement.executeUpdate("DELETE FROM Course WHERE CourseId = '"+selectedItem.getCourseId()+"'");
     }
          
+
+    // public int getCreatorIdWithName(String name) throws SQLException {
+    //     String sql = "SELECT CreatorId FROM ContentCreator WHERE Name = '"+name+"'";
+    //     int creatorId = statement.executeUpdate(sql);
+    //     return creatorId;
+    // }
     
-    public void insertModule(int courseId, int contentId, Date publicationDate, String title, String theme, String description, String status, int serialNumber) throws SQLException{
-        statement.executeUpdate("INSERT INTO Content(PublicationDate, Status, Theme, Title, Description, CreatorId) VALUES ('"+publicationDate+"','"+status+"','"+theme+"','"+title+"',"+description+"','1')");
-        statement.executeUpdate("INSERT INTO Module(SerialNumber, CourseId) VALUES ('"+serialNumber+"','"+courseId+"')");
+    public void insertModule(int courseId, int contentId, Date publicationDate, String title, String theme, String description, String status, int serialNumber, String creatorId) throws SQLException{
+        statement.executeUpdate("INSERT INTO Content(ContentId, PublicationDate, Status, Theme, Title, Description, CreatorId) VALUES ('"+contentId+"','"+publicationDate+"','"+status+"','"+theme+"','"+title+"','"+description+"','"+creatorId+"')");
+        statement.executeUpdate("INSERT INTO Module(ContentId, SerialNumber, CourseId) VALUES ('"+contentId+"','"+serialNumber+"','"+courseId+"')");
     }
 }
 

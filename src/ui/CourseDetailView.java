@@ -18,50 +18,49 @@ import src.domain.Course;
 import src.domain.CourseModule;
 import src.domain.EditingCell;
 
-
 public class CourseDetailView {
     DatabaseCourseModule databaseCoursesModule;
     private ModuleAddView moduleAddView;
 
-
-    public CourseDetailView(){
-        databaseCoursesModule = new DatabaseCourseModule("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
+    public CourseDetailView() {
+        databaseCoursesModule = new DatabaseCourseModule(
+                "jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseCoursesModule.loadCourseModules();
         moduleAddView = new ModuleAddView();
     }
 
-
     public Parent getView(CourseModule courseModule) {
         // databaseCoursesModule.loadCourseDetails(courseModule);
-        
+
         VBox layout = new VBox();
         HBox topLayout = new HBox(10);
-        Region filler = new Region(); 
+        Region filler = new Region();
 
         Label titleLabel = new Label("Course:");
         titleLabel.getStyleClass().add("view-title");
         titleLabel.setPadding(new Insets(10, 10, 10, 15));
-
-        
 
         Label lblCourseName = new Label("Course Name: " + courseModule.getCourseName());
         Label lblSubject = new Label("Subject: " + courseModule.getSubject());
         Label lblIntroductionText = new Label("Introduction Text: " + courseModule.getIntroductionText());
         Label lblLevel = new Label("Level: " + courseModule.getLevel());
 
-
         TableView<CourseModule> moduleList = new TableView<>();
 
         moduleList.setEditable(true);
-        Callback<TableColumn<CourseModule, String>, TableCell<CourseModule, String>> stringCellFactory = (TableColumn<CourseModule, String> param) -> new EditingCell<CourseModule>();
-        
+        Callback<TableColumn<CourseModule, String>, TableCell<CourseModule, String>> stringCellFactory = (
+                TableColumn<CourseModule, String> param) -> new EditingCell<CourseModule>();
+
         Button addModuleButton = new Button("Add module");
         Button removeModuleButton = new Button("Remove");
 
-
         addModuleButton.setOnAction(e -> {
             layout.getChildren().clear();
-            layout.getChildren().add(moduleAddView.getView(courseModule));
+            try {
+                layout.getChildren().add(moduleAddView.getView(courseModule));
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
         });
 
         removeModuleButton.setOnAction((event) -> {
@@ -114,6 +113,9 @@ public class CourseDetailView {
         TableColumn<CourseModule, Integer> serialNumberCol = new TableColumn<>("Module serialnumber");
         serialNumberCol.setCellValueFactory(new PropertyValueFactory<>("moduleSerialNumber"));
         //Mag niet veranderd worden
+
+        TableColumn<CourseModule, String> creatorCol = new TableColumn<>("Module creator");
+        serialNumberCol.setCellValueFactory(new PropertyValueFactory<>("creatorName"));
 
         moduleList.setItems(databaseCoursesModule.getCourseModules());
         moduleList.getColumns().addAll(themeCol, titleCol, descriptionCol, statusCol, serialNumberCol);

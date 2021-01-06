@@ -18,10 +18,15 @@ public class CourseModule {
     private String moduleDescription;
     private String status;
     private int moduleSerialNumber;
+    private int creatorId;
+    private String creatorName;
+    private String creatorEmail;
+    private String creatorOrganisation;
 
     public CourseModule(int contentId, int courseId, String courseName, String subject, String introductionText,
             String level, Date publicationDate, String moduleTitle, String moduleTheme, String moduleDescription,
-            String status, int moduleSerialNumber) {
+            String status, int moduleSerialNumber, int creatorId, String creatorName, String creatorEmail,
+            String creatorOrganisation) {
         this.setContentId(contentId);
         this.setCourseId(courseId);
         this.setCourseName(courseName);
@@ -34,6 +39,10 @@ public class CourseModule {
         this.setModuleSerialNumber(moduleSerialNumber);
         this.setModuleTheme(moduleTheme);
         this.setPublicationDate(publicationDate);
+        this.setCreatorId(creatorId);
+        this.setCreatorName(creatorName);
+        this.setCreatorEmail(creatorEmail);
+        this.setCreatorOrganisation(creatorOrganisation);
     }
 
     public CourseModule(int courseId, String courseName, String subject, String introductionText,
@@ -44,6 +53,41 @@ public class CourseModule {
         this.setIntroductionText(introductionText);
         this.setLevel(level);
     }
+
+    public String getCreatorOrganisation() {
+        return creatorOrganisation;
+    }
+
+    public void setCreatorOrganisation(String creatorOrganisation) {
+        this.creatorOrganisation = creatorOrganisation;
+    }
+
+    public String getCreatorEmail() {
+        return creatorEmail;
+    }
+
+    public void setCreatorEmail(String creatorEmail) {
+        this.creatorEmail = creatorEmail;
+    }
+
+    public String getCreatorName() {
+        return creatorName;
+    }
+
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
+    }
+
+    public int getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(int creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    
+    
 
 
     // public Course createCourse(int courseId, String courseName, String subject, String introductionText, Level level){
