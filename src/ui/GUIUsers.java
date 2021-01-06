@@ -264,7 +264,7 @@ public class GUIUsers extends Application {
 
              
 
-                databaseStudent.insertStudent(Integer.parseInt(studentId.getText()), name.getText(), email.getText(), Date.valueOf(dateOfBirth),String.valueOf(genderComboBox.getValue()), address.getText(), postalCode.getText(), city.getText(), country.getText());
+                databaseStudent.insertStudent(name.getText(), email.getText(), Date.valueOf(dateOfBirth),String.valueOf(genderComboBox.getValue()), address.getText(), postalCode.getText(), city.getText(), country.getText());
                 // System.out.println("It worked!");
                 studentId.clear();
                 name.clear();

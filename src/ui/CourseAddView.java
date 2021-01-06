@@ -55,62 +55,6 @@ public class CourseAddView {
         ComboBox<Level> levelComboBox = new ComboBox<>();
         levelComboBox.getItems().setAll(Level.values());
 
-        // //Insert date of publication
-        // String pattern = "yyyy-MM-dd";
-        // DatePicker datePicker = new DatePicker();
-        // //Create the DateConverter
-        // DatePickerConverter converter = new DatePickerConverter(pattern);
-        // //Add the converter to the DatePicker
-        // datePicker.setConverter(converter);
-        // //Set the date in the prompt
-        // datePicker.setPromptText(pattern.toLowerCase());
-
-        // //Create a day cell factory
-        // Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>(){
-        //     public DateCell call(final DatePicker datePicker){
-        //         return new DateCell(){
-        //             @Override
-        //             public void updateItem(LocalDate item, boolean empty){
-        //                 super.updateItem(item, empty);
-
-        //                 //Show weekends in blue color
-        //                 DayOfWeek day = DayOfWeek.from(item);
-        //                 if(day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY){
-        //                     this.setTextFill(Color.BLUE);
-        //                 }
-        //             }
-        //         };
-        //     }
-        // };
-
-        // //Set the day cell factory to the DatePicker
-        // datePicker.setDayCellFactory(dayCellFactory);
-        // Label lblPublicationDate = new Label("Publication Date");
-        // //Create the HBox for the DatePicker
-        // HBox pickerBox = new HBox(lblPublicationDate, datePicker);
-        
-        
-        // //Insert module title
-        // Label lblModuleTitle = new Label("Module Title");
-        // TextField moduleTitle = new TextField();
-
-        // //Insert module title
-        // Label lblModuleTheme = new Label("Module Theme");
-        // TextField moduleTheme = new TextField();
-        
-        // //Insert module description
-        // Label lblModuleDescription = new Label("Module Description");
-        // TextField moduleDescription = new TextField();
-        
-        // //Insert status
-        // Label lblStatus = new Label("Status");
-        // ComboBox<Status> statusComboBox = new ComboBox<>();
-        // statusComboBox.getItems().setAll(Status.values());
-
-        //  //Insert module serialNumber
-        //  Label lblModuleSerialNumber = new Label("Module Serial Number");
-        //  TextField moduleSerialNumber = new TextField();
-         
         
         Button btnInsert = new Button("Insert");
 

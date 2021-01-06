@@ -28,13 +28,14 @@ import javafx.util.Callback;
 public class UsersView {
     private DatabaseStudent databaseStudent;
     private UsersAddView usersAddView;
+    private UsersDetailView usersDetailView;
     private TableView<Student> usersTableView = new TableView<>();
 
     public UsersView() {
         databaseStudent = new DatabaseStudent("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseStudent.loadStudents();
         usersAddView = new UsersAddView();
-        
+        usersDetailView = new UsersDetailView();
     }
 
     // void refreshTable() {
@@ -58,8 +59,11 @@ public class UsersView {
         Label titleLabel = new Label("Users");
         titleLabel.getStyleClass().add("view-title");
         titleLabel.setPadding(new Insets(0, 0, 10, 0));
+
         Button addUserButton = new Button("Add user");
         Button removeUserButton = new Button("Remove user");
+        Button detailUserButton = new Button("Go to details");
+
 
 
 
@@ -74,6 +78,16 @@ public class UsersView {
                 Student selectedItem = usersTableView.getSelectionModel().getSelectedItem();
                 usersTableView.getItems().remove(selectedItem);
                 databaseStudent.deleteStudent(selectedItem);
+            }catch(Exception e) {
+                e.printStackTrace();
+            } 
+        });
+
+        detailUserButton.setOnAction((event) -> {
+            try{
+                Student student = usersTableView.getSelectionModel().getSelectedItem();
+                layout.getChildren().clear();
+                layout.getChildren().add(usersDetailView.getView(student));
             }catch(Exception e) {
                 e.printStackTrace();
             } 
@@ -196,7 +210,7 @@ public class UsersView {
 
         // Add layout
         HBox.setHgrow(filler, Priority.ALWAYS);
-        topLayout.getChildren().addAll(titleLabel, filler, addUserButton, removeUserButton);
+        topLayout.getChildren().addAll(titleLabel, filler, addUserButton, removeUserButton, detailUserButton);
         layout.getChildren().addAll(topLayout, usersTableView);
         layout.setPadding(new Insets(10, 10, 10, 15));
         

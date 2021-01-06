@@ -39,9 +39,9 @@ public class UsersAddView {
         titleLabel.getStyleClass().add("view-title");
         titleLabel.setPadding(new Insets(0, 0, 10, 0));
 
-        //Insert ID
-        Label lblId = new Label("ID");
-        TextField studentId = new TextField();
+        // //Insert ID
+        // Label lblId = new Label("ID");
+        // TextField studentId = new TextField();
         //Insert name
         Label lblName = new Label("Name");
         TextField name = new TextField();
@@ -103,7 +103,7 @@ public class UsersAddView {
         //Insert button
         Button btnInsert = new Button("Insert");
 
-        layout.getChildren().addAll(titleLabel, lblId, studentId, lblName, name, lblEmail, email, pickerBox, lblGender, genderComboBox, lblAddress, address, lblPostalCode, postalCode, lblCity, city, lblCountry, country, btnInsert);
+        layout.getChildren().addAll(titleLabel, lblName, name, lblEmail, email, pickerBox, lblGender, genderComboBox, lblAddress, address, lblPostalCode, postalCode, lblCity, city, lblCountry, country, btnInsert);
         //Insert button action
         btnInsert.setOnAction((event) -> {
             try{ 
@@ -114,9 +114,9 @@ public class UsersAddView {
                 // Object gender = genderComboBox.getValue();
                 
                 
-                databaseStudent.insertStudent(Integer.parseInt(studentId.getText()), name.getText(), email.getText(), Date.valueOf(dateOfBirth), String.valueOf(genderComboBox.getValue()), address.getText(), postalCode.getText(), city.getText(), country.getText());
+                databaseStudent.insertStudent(name.getText(), email.getText(), Date.valueOf(dateOfBirth), String.valueOf(genderComboBox.getValue()), address.getText(), postalCode.getText(), city.getText(), country.getText());
                 // System.out.println("It worked!");
-                studentId.clear();
+                
                 name.clear();
                 email.clear();
                 datePicker.setValue(null);
