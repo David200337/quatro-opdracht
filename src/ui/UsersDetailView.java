@@ -46,6 +46,10 @@ public class UsersDetailView {
         Label lblCity = new Label("City: " + student.getCity());
         Label lblCountry = new Label("Country: " + student.getCountry());
 
+
+
+        
+
         // Add layout
         HBox.setHgrow(filler, Priority.ALWAYS);
         topLayout.getChildren().addAll(titleLabel, filler);

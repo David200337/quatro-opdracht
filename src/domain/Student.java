@@ -3,6 +3,7 @@ package src.domain;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -19,6 +20,7 @@ public class Student {
     private String city;
     private String country;
     ObservableValue<String> genderValue;
+    ArrayList<Registration> registrations;
 
     public Student(int studentId, String name, String email, Date dateOfBirth, String gender, String address,
             String postalCode, String city, String country) {
@@ -31,11 +33,17 @@ public class Student {
         this.postalCode = postalCode;
         this.city = city;
         this.country = country;
+        this.registrations = new ArrayList<>();
     }
 
     public Student(){
 
     }
+
+    public void putRegistrationInList(Registration registration){
+        registrations.add(registration);
+    }
+
 
     public int getStudentId() {
         return studentId;
