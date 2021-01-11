@@ -18,10 +18,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
-import src.domain.ContentCreator;
 import src.domain.CourseModule;
 import src.domain.DatePickerConverter;
-import src.domain.Level;
 import src.domain.Status;
 import src.db.DatabaseCourseModule;
 import src.db.FillComboBox;
@@ -111,7 +109,7 @@ public class ModuleAddView {
 
         //Insert creator
         Label lblCreator = new Label("Creator");
-        ComboBox creatorComboBox = new ComboBox<String>();
+        ComboBox<String> creatorComboBox = new ComboBox<String>();
         ObservableList<String> listCreators = FXCollections.observableArrayList();
         fcb.fillListFromDataBaseString(listCreators, "Name","ContentCreator");
         creatorComboBox.setItems(listCreators);

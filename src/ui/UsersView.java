@@ -4,12 +4,9 @@ import src.db.*;
 import src.domain.EditingCell;
 import src.domain.Student;
 
-import java.beans.EventHandler;
-import java.sql.Date;
-import java.util.List;
 
-import javafx.application.Platform;
-import javafx.event.Event;
+import java.sql.Date;
+
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -17,7 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;

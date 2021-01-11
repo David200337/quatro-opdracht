@@ -47,10 +47,10 @@ public class DatabaseWebcast extends Database{
                 webcast.setUrl(url);
                 webcast.setDuration(duration);
                 
-                int creatorId = resultSet.getInt("CreatorId");
-                String name = resultSet.getString("Name");
-                String email = resultSet.getString("Email");
-                String organisation = resultSet.getString("Organisation");
+                // int creatorId = resultSet.getInt("CreatorId");
+                // String name = resultSet.getString("Name");
+                // String email = resultSet.getString("Email");
+                // String organisation = resultSet.getString("Organisation");
 
                 // webcast.setCreatorId(creatorId);
                 // webcast.setName(name);

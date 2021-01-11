@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import src.domain.Registration;
-import src.domain.Student;
 
 public class DatabaseRegistration extends Database {
     //Student, Course, Registration & Certificate

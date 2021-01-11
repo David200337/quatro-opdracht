@@ -14,7 +14,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import src.db.DatabaseCourseModule;
-import src.domain.Course;
 import src.domain.CourseModule;
 import src.domain.EditingCell;
 
@@ -115,10 +114,10 @@ public class CourseDetailView {
         //Mag niet veranderd worden
 
         TableColumn<CourseModule, String> creatorCol = new TableColumn<>("Module creator");
-        serialNumberCol.setCellValueFactory(new PropertyValueFactory<>("creatorName"));
+        creatorCol.setCellValueFactory(new PropertyValueFactory<>("creatorName"));
 
         moduleList.setItems(databaseCoursesModule.getCourseModules());
-        moduleList.getColumns().addAll(themeCol, titleCol, descriptionCol, statusCol, serialNumberCol);
+        moduleList.getColumns().addAll(themeCol, titleCol, descriptionCol, statusCol, serialNumberCol, creatorCol);
 
 
         // Add layout

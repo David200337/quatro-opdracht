@@ -18,7 +18,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -46,7 +45,7 @@ public class RegistrationAddView {
 
         //Link registration to a course
         Label lblCourse = new Label("Course");
-        ComboBox courseComboBox = new ComboBox<String>();
+        ComboBox<String> courseComboBox = new ComboBox<String>();
         ObservableList<String> listCourses = FXCollections.observableArrayList();
         fcb.fillListFromDataBaseString(listCourses, "CourseName","Course");
         courseComboBox.setItems(listCourses);

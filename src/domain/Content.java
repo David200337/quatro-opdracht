@@ -16,14 +16,15 @@ abstract class Content {
     // private String email;
     // private String organisation;
 
-    public Content(int contentId, Date publicationDate, String theme, String title, String description, String status, ContentCreator creator){
+    public Content(int contentId, Date publicationDate, String theme, String title, String description, String status,
+            ContentCreator creator) {
         this.contentId = contentId;
-        this.percentage = percentage;
+        // this.percentage = percentage;
         this.publicationDate = publicationDate;
         this.status = status;
         this.theme = theme;
         this.title = title;
-        this.creator = creator;
+        this.setCreator(creator);
         // this.creatorId = creatorId;
         // this.name=name;
         // this.email = email;
@@ -31,7 +32,15 @@ abstract class Content {
         this.description = description;
     }
 
-    public Content(){
+    public ContentCreator getCreator() {
+        return creator;
+    }
+
+    public void setCreator(ContentCreator creator) {
+        this.creator = creator;
+    }
+
+    public Content() {
 
     }
 

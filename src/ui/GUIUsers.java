@@ -18,12 +18,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -56,7 +54,7 @@ public class GUIUsers extends Application {
         studentTable = new TableView<>();
         studentTable.setEditable(true);
         Callback<TableColumn<Student, String>, TableCell<Student, String>> stringCellFactory = (
-                TableColumn<Student, String> param) -> new EditingCell();
+                TableColumn<Student, String> param) -> new EditingCell<Student>();
         // Callback<TableColumn<Student, Date>, TableCell<Student, Date>> dateCellFactory = (
         //         TableColumn<Student, Date> param) -> new DateEditingCell();
         // Callback<TableColumn<Student, RadioButton>, TableCell<Student, RadioButton>>
@@ -238,7 +236,7 @@ public class GUIUsers extends Application {
 
         Label lblGender = new Label("Gender");
         //Radio buttons for gender
-        ComboBox genderComboBox = new ComboBox<String>(FXCollections.observableArrayList("Female", "Male"));
+        ComboBox<String> genderComboBox = new ComboBox<String>(FXCollections.observableArrayList("Female", "Male"));
         
         //Insert address
         Label lblAddress = new Label("Address");

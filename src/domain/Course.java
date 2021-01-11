@@ -13,8 +13,7 @@ public class Course {
 
     private ArrayList<Course> interestingOtherCourses;
 
-    public Course(int courseId, String courseName, String subject, String introductionText,
-            Level level) {
+    public Course(int courseId, String courseName, String subject, String introductionText, Level level) {
         this.courseId = courseId;
         this.courseName = courseName;
         this.subject = subject;
@@ -24,7 +23,15 @@ public class Course {
         this.interestingOtherCourses = new ArrayList<>();
     }
 
-    public void putModuleInList(Module module){
+    public Module getModule() {
+        return module;
+    }
+
+    public void setModule(Module module) {
+        this.module = module;
+    }
+
+    public void putModuleInList(Module module) {
         modules.add(module);
     }
     

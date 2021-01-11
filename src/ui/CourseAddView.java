@@ -1,25 +1,14 @@
 package src.ui;
 
-import java.sql.Date;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-
 
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DateCell;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.util.Callback;
-import src.domain.DatePickerConverter;
 import src.domain.Level;
-import src.domain.Status;
 import src.db.DatabaseCourseModule;
 
 public class CourseAddView {

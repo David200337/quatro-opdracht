@@ -5,7 +5,6 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -13,9 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -86,7 +83,7 @@ public class UsersAddView {
 
         Label lblGender = new Label("Gender");
         //Combobox for gender
-        ComboBox genderComboBox = new ComboBox<String>(FXCollections.observableArrayList("Female", "Male"));
+        ComboBox<String> genderComboBox = new ComboBox<String>(FXCollections.observableArrayList("Female", "Male"));
         
         //Insert address
         Label lblAddress = new Label("Address");
