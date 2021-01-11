@@ -106,8 +106,8 @@ public class DatabaseCourseModule extends Database{
     //     return creatorId;
     // }
     
-    public void insertModule(int courseId, int contentId, Date publicationDate, String title, String theme, String description, String status, int serialNumber, String creatorId) throws SQLException{
-        statement.executeUpdate("INSERT INTO Content(ContentId, PublicationDate, Status, Theme, Title, Description, CreatorId) VALUES ('"+contentId+"','"+publicationDate+"','"+status+"','"+theme+"','"+title+"','"+description+"','"+creatorId+"')");
+    public void insertModule(int courseId, int contentId, Date publicationDate, String title, String theme, String description, String status, int serialNumber, String name) throws SQLException{
+        statement.executeUpdate("INSERT INTO Content(ContentId, PublicationDate, Status, Theme, Title, Description, CreatorId) VALUES ('"+contentId+"','"+publicationDate+"','"+status+"','"+theme+"','"+title+"','"+description+"',(SELECT CreatorId FROM ContentCreator WHERE Name = '"+name+"'))");
         statement.executeUpdate("INSERT INTO Module(ContentId, SerialNumber, CourseId) VALUES ('"+contentId+"','"+serialNumber+"','"+courseId+"')");
     }
 }

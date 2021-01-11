@@ -85,9 +85,9 @@ public class CourseDetailView {
         });
 
         TableColumn<CourseModule, String> themeCol = new TableColumn<>("Module Theme");
-        titleCol.setCellValueFactory(new PropertyValueFactory<>("moduleTheme"));
-        titleCol.setCellFactory(stringCellFactory);
-        titleCol.setOnEditCommit((TableColumn.CellEditEvent<CourseModule, String> t) -> {
+        themeCol.setCellValueFactory(new PropertyValueFactory<>("moduleTheme"));
+        themeCol.setCellFactory(stringCellFactory);
+        themeCol.setOnEditCommit((TableColumn.CellEditEvent<CourseModule, String> t) -> {
             ((CourseModule) t.getTableView().getItems().get(t.getTablePosition().getRow())).setModuleTheme(t.getNewValue());
 
             CourseModule course = t.getRowValue();

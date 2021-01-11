@@ -6,8 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 
 public class Student {
     private int studentId;

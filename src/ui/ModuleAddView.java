@@ -40,7 +40,7 @@ public class ModuleAddView {
     public Parent getView(CourseModule selectedCourseModule) throws Exception {
         VBox layout = new VBox();
 
-        Label titleLabel = new Label("Add Course");
+        Label titleLabel = new Label("Add Module");
         titleLabel.getStyleClass().add("view-title");
         titleLabel.setPadding(new Insets(0, 0, 10, 0));
 
@@ -113,7 +113,7 @@ public class ModuleAddView {
         Label lblCreator = new Label("Creator");
         ComboBox creatorComboBox = new ComboBox<String>();
         ObservableList<String> listCreators = FXCollections.observableArrayList();
-        fcb.fillListFromDataBaseString(listCreators, "CreatorId","ContentCreator");
+        fcb.fillListFromDataBaseString(listCreators, "Name","ContentCreator");
         creatorComboBox.setItems(listCreators);
         
 
