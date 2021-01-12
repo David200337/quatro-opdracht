@@ -1,12 +1,13 @@
 package src.ui;
 
-
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import src.domain.Level;
 import src.db.DatabaseCourseModule;
@@ -52,13 +53,28 @@ public class CourseAddView {
         //Insert button action
         btnInsert.setOnAction((event) -> {
             try{             
+                if(courseName.getText().isEmpty() || subject.getText().isEmpty() || levelComboBox.getValue() == null){
+                    Alert missingAlert = new Alert(AlertType.ERROR);
+                    missingAlert.setTitle("Error");
+                    missingAlert.setHeaderText("Missing field error");
+                    missingAlert.setContentText("You didn't fill in all the necessary fields!");
+                    missingAlert.showAndWait();
+                } else {
+                    databaseCourses.insertCourse(courseName.getText(), subject.getText(), introductionText.getText(), String.valueOf(levelComboBox.getValue()));
                 
-                databaseCourses.insertCourse(courseName.getText(), subject.getText(), introductionText.getText(), String.valueOf(levelComboBox.getValue()));
-                // System.out.println("It worked!");  Date.valueOf(datePicker.getValue()), moduleTitle.getText(), moduleTheme.getText(), moduleDescription.getText(), String.valueOf(statusComboBox.getValue()), Integer.parseInt(moduleSerialNumber.getText())
-                courseName.clear();
-                subject.clear();
-                introductionText.clear();
-                levelComboBox.setValue(null);
+                    courseName.clear();
+                    subject.clear();
+                    introductionText.clear();
+                    levelComboBox.setValue(null);
+
+                    Alert succesAlert = new Alert(AlertType.CONFIRMATION);
+                    succesAlert.setTitle("Registrated");
+                    succesAlert.setHeaderText("Success!");
+                    succesAlert.setContentText("The course is added!");
+                    succesAlert.showAndWait();
+                }
+                
+               
 
             } catch(Exception e) {
                 e.printStackTrace();

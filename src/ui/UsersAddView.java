@@ -114,7 +114,7 @@ public class UsersAddView {
                     Alert missingAlert = new Alert(AlertType.ERROR);
                     missingAlert.setTitle("Error");
                     missingAlert.setHeaderText("Missing field error");
-                    missingAlert.setContentText("You didn't fill all the fields!");
+                    missingAlert.setContentText("You didn't fill in all the necessary fields!");
                     missingAlert.showAndWait();
                 }else if(email.getText().isEmpty() || !EmailValidator.isValid(email.getText())){
                     Alert emailAlert = new Alert(AlertType.ERROR);
@@ -149,7 +149,7 @@ public class UsersAddView {
                     Alert succesAlert = new Alert(AlertType.CONFIRMATION);
                     succesAlert.setTitle("Registrated");
                     succesAlert.setHeaderText("Success!");
-                    succesAlert.setContentText("Your student is added!");
+                    succesAlert.setContentText("The student is added!");
                     succesAlert.showAndWait();
                     
                 }
