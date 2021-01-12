@@ -122,6 +122,12 @@ public class UsersAddView {
                     emailAlert.setHeaderText("Error in the email field");
                     emailAlert.setContentText("Your email address is invalid");
                     emailAlert.showAndWait();
+                } else if(datePicker.getValue() == null || dateOfBirth.isAfter(LocalDate.now())) {
+                    Alert dateAlert = new Alert(AlertType.ERROR);
+                    dateAlert.setTitle("Error");
+                    dateAlert.setHeaderText("Error in the date picker");
+                    dateAlert.setContentText("Your date of birth is invalid");
+                    dateAlert.showAndWait();
                 } else if (postalCode.getText().isEmpty() || !PostalCodeValidator.isValid(postalCode.getText())){
                     Alert postalCodeAlert = new Alert(AlertType.ERROR);
                     postalCodeAlert.setTitle("Error");
@@ -147,9 +153,6 @@ public class UsersAddView {
                     succesAlert.showAndWait();
                     
                 }
-                
-                
-               
 
             } catch(Exception e) {
                 e.printStackTrace();
