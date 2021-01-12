@@ -4,13 +4,17 @@ import src.db.DatabaseRegistration;
 import src.db.DatabaseStudent;
 
 import java.sql.Date;
+import java.util.Optional;
 
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -75,9 +79,20 @@ public class UsersDetailView {
 
         removeRegistrationButton.setOnAction((event) -> {
             try{
-                Registration registration = registrationList.getSelectionModel().getSelectedItem();
-                registrationList.getItems().remove(registration);
-                databaseRegistration.deleteRegistration(registration);
+                Alert removeAlert = new Alert(AlertType.CONFIRMATION);
+                removeAlert.setTitle("Delete");
+                removeAlert.setHeaderText("Are you sure you want to delete this registration?");
+                removeAlert.setContentText("");
+                
+
+                Optional<ButtonType> result = removeAlert.showAndWait();
+	            if(!result.isPresent() || result.get() != ButtonType.OK) {
+		            
+	            } else {
+                    Registration registration = registrationList.getSelectionModel().getSelectedItem();
+                    registrationList.getItems().remove(registration);
+                    databaseRegistration.deleteRegistration(registration);
+                }
             }catch(Exception e) {
                 e.printStackTrace();
             } 
@@ -121,9 +136,20 @@ public class UsersDetailView {
 
         removeButton.setOnAction((event) -> {
             try{
-                Registration registration = registrationsTable.getSelectionModel().getSelectedItem();
-                registrationsTable.getItems().remove(registration);
-                databaseRegistration.deleteRegistration(registration);
+                Alert removeAlert = new Alert(AlertType.CONFIRMATION);
+                removeAlert.setTitle("Delete");
+                removeAlert.setHeaderText("Are you sure you want to delete this registration?");
+                removeAlert.setContentText("");
+                
+
+                Optional<ButtonType> result = removeAlert.showAndWait();
+	            if(!result.isPresent() || result.get() != ButtonType.OK) {
+		            
+	            } else {
+                    Registration registration = registrationsTable.getSelectionModel().getSelectedItem();
+                    registrationsTable.getItems().remove(registration);
+                    databaseRegistration.deleteRegistration(registration);
+                }
             }catch(Exception e) {
                 e.printStackTrace();
             } 

@@ -8,12 +8,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -54,6 +56,9 @@ public class ModuleAddView {
         //Insert module title
         Label lblModuleTitle = new Label("Module Title");
         TextField moduleTitle = new TextField();
+
+        Label lblModuleVersion = new Label("Module Version");
+        TextField moduleVersion = new TextField();
 
         //Insert module title
         Label lblModuleTheme = new Label("Module Theme");
@@ -117,22 +122,31 @@ public class ModuleAddView {
 
         Button btnInsert = new Button("Insert");
 
-        layout.getChildren().addAll(titleLabel, lblContent, contentId, lblModuleTitle, moduleTitle, lblModuleTheme, moduleTheme, lblModuleDescription, moduleDescription, pickerBox, lblStatus, statusComboBox, lblModuleSerialNumber, moduleSerialNumber, lblCreator, creatorComboBox, btnInsert);
+        layout.getChildren().addAll(titleLabel, lblContent, contentId, lblModuleTitle, moduleTitle, lblModuleVersion, moduleVersion, lblModuleTheme, moduleTheme, lblModuleDescription, moduleDescription, pickerBox, lblStatus, statusComboBox, lblModuleSerialNumber, moduleSerialNumber, lblCreator, creatorComboBox, btnInsert);
 
         //Insert button action
         btnInsert.setOnAction((event) -> {
             try{             
-                
-                databaseCourses.insertModule(selectedCourseModule.getCourseId(), Integer.parseInt(contentId.getText()), Date.valueOf(datePicker.getValue()), moduleTitle.getText(), moduleTheme.getText(), moduleDescription.getText(), String.valueOf(statusComboBox.getValue()), Integer.parseInt(moduleSerialNumber.getText()), String.valueOf(creatorComboBox.getValue()));
-                // System.out.println("It worked!");  
-                contentId.clear();
-                datePicker.setValue(null);
-                moduleTitle.clear();
-                moduleTheme.clear();
-                moduleDescription.clear();
-                statusComboBox.setValue(null);
-                moduleSerialNumber.clear();
-                creatorComboBox.setValue(null);
+                if(moduleTitle.getText().isEmpty() || moduleVersion.getText().isEmpty() || statusComboBox.getValue() == null || moduleSerialNumber.getText().isEmpty() || creatorComboBox.getValue() == null){
+                    Alert missingAlert = new Alert(AlertType.ERROR);
+                    missingAlert.setTitle("Error");
+                    missingAlert.setHeaderText("Missing field error");
+                    missingAlert.setContentText("You didn't fill in all the necessary fields!");
+                    missingAlert.showAndWait();
+                } else {
+
+                    databaseCourses.insertModule(selectedCourseModule.getCourseId(), Integer.parseInt(contentId.getText()), Date.valueOf(datePicker.getValue()), moduleTitle.getText(), moduleTheme.getText(), moduleDescription.getText(), String.valueOf(statusComboBox.getValue()), Integer.parseInt(moduleSerialNumber.getText()), String.valueOf(creatorComboBox.getValue()), Integer.parseInt(moduleVersion.getText()));
+                    
+                    contentId.clear();
+                    datePicker.setValue(null);
+                    moduleTitle.clear();
+                    moduleTheme.clear();
+                    moduleDescription.clear();
+                    statusComboBox.setValue(null);
+                    moduleSerialNumber.clear();
+                    creatorComboBox.setValue(null);
+                    moduleVersion.clear();
+                }
 
             } catch(Exception e) {
                 e.printStackTrace();

@@ -21,7 +21,7 @@ public class DatabaseWebcast extends Database{
             connect();
 
             // String sql = "SELECT Webcast.ContentId, Webcast.PublicationDate, Webcast.Status, Webcast.Theme, Webcast.Title, Webcast.Description, ContentCreator.CreatorId, ContentCreator.Name, ContentCreator.Email, ContentCreator.Organisation FROM ContentCreator INNER JOIN Webcast ON Webcast.CreatorId = ContentCreator.CreatorId";
-            String sql = "SELECT Content.ContentId, Content.PublicationDate, Content.Status, Content.Title, Content.Theme, Content.Description, Webcast.URL, Webcast.Duration, ContentCreator.CreatorId, ContentCreator.Name, ContentCreator.Email, ContentCreator.Organisation FROM Content JOIN Webcast ON Webcast.ContentId = Content.ContentId FULL OUTER JOIN ContentCreator ON Content.CreatorId = ContentCreator.CreatorId;";
+            String sql = "SELECT Content.ContentId, Content.PublicationDate, Content.Status, Content.Theme, Content.Description, Webcast.Title, Webcast.URL, Webcast.Duration, ContentCreator.CreatorId, ContentCreator.Name, ContentCreator.Email, ContentCreator.Organisation FROM Content INNER JOIN Webcast ON Webcast.ContentId = Content.ContentId INNER JOIN ContentCreator ON Content.CreatorId = ContentCreator.CreatorId;";
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
 
@@ -46,17 +46,12 @@ public class DatabaseWebcast extends Database{
                 webcast.setDescription(description);
                 webcast.setUrl(url);
                 webcast.setDuration(duration);
+              
+                String creatorName = resultSet.getString("Name");
                 
-                // int creatorId = resultSet.getInt("CreatorId");
-                // String name = resultSet.getString("Name");
-                // String email = resultSet.getString("Email");
-                // String organisation = resultSet.getString("Organisation");
 
-                // webcast.setCreatorId(creatorId);
-                // webcast.setName(name);
-                // webcast.setEmail(email);
-                // webcast.setOrganisation(organisation);
-                // Webcast webcast = new Webcast(contentId, publicationDate, theme, title, description, status, creator, url, duration); 
+                webcast.setCreatorName(creatorName);
+
                 webcasts.add(webcast); 
             }
         } catch (Exception e) {

@@ -1,12 +1,17 @@
 package src.ui;
 
+import java.util.Optional;
+
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -55,9 +60,10 @@ public class CoursesView {
 
         detailCourseButton.setOnAction((event) -> {
             try{
-                CourseModule courseModule = coursesTableView.getSelectionModel().getSelectedItem();
+		        CourseModule courseModule = coursesTableView.getSelectionModel().getSelectedItem();
                 layout.getChildren().clear();
                 layout.getChildren().add(courseDetailView.getView(courseModule));
+	            
             }catch(Exception e) {
                 e.printStackTrace();
             } 
@@ -65,9 +71,20 @@ public class CoursesView {
 
         removeCourseButton.setOnAction((event) -> {
             try{
-                CourseModule courseModule = coursesTableView.getSelectionModel().getSelectedItem();
-                coursesTableView.getItems().remove(courseModule);
-                databaseCourses.deleteCourse(courseModule);
+                Alert removeAlert = new Alert(AlertType.CONFIRMATION);
+                removeAlert.setTitle("Delete");
+                removeAlert.setHeaderText("Are you sure you want to delete this course?");
+                removeAlert.setContentText("");
+                
+
+                Optional<ButtonType> result = removeAlert.showAndWait();
+	            if(!result.isPresent() || result.get() != ButtonType.OK) {
+		            
+	            } else {
+                    CourseModule courseModule = coursesTableView.getSelectionModel().getSelectedItem();
+                    coursesTableView.getItems().remove(courseModule);
+                    databaseCourses.deleteCourse(courseModule);
+                }
             }catch(Exception e) {
                 e.printStackTrace();
             } 
@@ -114,46 +131,6 @@ public class CoursesView {
         levelCol.setCellValueFactory(new PropertyValueFactory<>("level"));
         //Editen met combobox
 
-        // TableColumn<CourseModule, String> titleCol = new TableColumn<>("Module title");
-        // titleCol.setCellValueFactory(new PropertyValueFactory<>("moduleTitle"));
-        // titleCol.setCellFactory(stringCellFactory);
-        // titleCol.setOnEditCommit((TableColumn.CellEditEvent<CourseModule, String> t) -> {
-        //     ((CourseModule) t.getTableView().getItems().get(t.getTablePosition().getRow())).setModuleTitle(t.getNewValue());
-
-        //     CourseModule course = t.getRowValue();
-        //     course.setModuleTitle(t.getNewValue());
-        //     databaseCourses.updateCourseModuleString("Title", t.getNewValue(), course.getContentId());
-        // });
-
-        // TableColumn<CourseModule, String> themeCol = new TableColumn<>("Module Theme");
-        // titleCol.setCellValueFactory(new PropertyValueFactory<>("moduleTheme"));
-        // titleCol.setCellFactory(stringCellFactory);
-        // titleCol.setOnEditCommit((TableColumn.CellEditEvent<CourseModule, String> t) -> {
-        //     ((CourseModule) t.getTableView().getItems().get(t.getTablePosition().getRow())).setModuleTheme(t.getNewValue());
-
-        //     CourseModule course = t.getRowValue();
-        //     course.setModuleTheme(t.getNewValue());
-        //     databaseCourses.updateCourseModuleString("Theme", t.getNewValue(), course.getContentId());
-        // });
-
-        // TableColumn<CourseModule, String> descriptionCol = new TableColumn<>("Module Description");
-        // descriptionCol.setCellValueFactory(new PropertyValueFactory<>("moduleDescription"));
-        // descriptionCol.setCellFactory(stringCellFactory);
-        // descriptionCol.setOnEditCommit((TableColumn.CellEditEvent<CourseModule, String> t) -> {
-        //     ((CourseModule) t.getTableView().getItems().get(t.getTablePosition().getRow())).setModuleDescription(t.getNewValue());
-
-        //     CourseModule course = t.getRowValue();
-        //     course.setModuleDescription(t.getNewValue());
-        //     databaseCourses.updateCourseModuleString("Description", t.getNewValue(), course.getContentId());
-        // });
-
-        // TableColumn<CourseModule, String> statusCol = new TableColumn<>("Status");
-        // statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
-        // //Editen met combobox
-
-        // TableColumn<CourseModule, Integer> serialNumberCol = new TableColumn<>("Module serialnumber");
-        // serialNumberCol.setCellValueFactory(new PropertyValueFactory<>("moduleSerialNumber"));
-        //Mag niet veranderd worden
 
         coursesTableView.setItems(databaseCourses.getCourseModules());
         coursesTableView.getColumns().addAll(courseNameCol, subjectCol, introductionTextCol, levelCol);

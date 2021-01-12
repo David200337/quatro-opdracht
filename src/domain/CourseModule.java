@@ -18,6 +18,7 @@ public class CourseModule {
     private String moduleDescription;
     private String status;
     private int moduleSerialNumber;
+    private int moduleVersion;
     private int creatorId;
     private String creatorName;
     private String creatorEmail;
@@ -25,8 +26,8 @@ public class CourseModule {
 
     public CourseModule(int contentId, int courseId, String courseName, String subject, String introductionText,
             String level, Date publicationDate, String moduleTitle, String moduleTheme, String moduleDescription,
-            String status, int moduleSerialNumber, int creatorId, String creatorName, String creatorEmail,
-            String creatorOrganisation) {
+            String status, int moduleVersion, int moduleSerialNumber, int creatorId, String creatorName,
+            String creatorEmail, String creatorOrganisation) {
         this.setContentId(contentId);
         this.setCourseId(courseId);
         this.setCourseName(courseName);
@@ -43,6 +44,15 @@ public class CourseModule {
         this.setCreatorName(creatorName);
         this.setCreatorEmail(creatorEmail);
         this.setCreatorOrganisation(creatorOrganisation);
+        this.setModuleVersion(moduleVersion);
+    }
+
+    public int getModuleVersion() {
+        return moduleVersion;
+    }
+
+    public void setModuleVersion(int moduleVersion) {
+        this.moduleVersion = moduleVersion;
     }
 
     public CourseModule(int courseId, String courseName, String subject, String introductionText,

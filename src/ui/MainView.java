@@ -22,6 +22,7 @@ public class MainView extends Application {
         GeneralView generalView = new GeneralView();
         CoursesView coursesView = new CoursesView();
         UsersView usersView = new UsersView();
+        WebcastsView webcastsView = new WebcastsView();
         
         // Instantiate higher level layout
         BorderPane layout = new BorderPane();
@@ -56,8 +57,12 @@ public class MainView extends Application {
         usersMenuButton.setToggleGroup(menuGroup);
         usersMenuButton.getStyleClass().add("menu-button");
 
+        ToggleButton webcastsMenuButton = new ToggleButton("Webcasts");
+        webcastsMenuButton.setToggleGroup(menuGroup);
+        webcastsMenuButton.getStyleClass().add("menu-button");
+
         // Add elements to menu layout and set some padding
-        menu.getChildren().addAll(codecademyLogoImageView, generalMenuButton, coursesMenuButton, usersMenuButton);
+        menu.getChildren().addAll(codecademyLogoImageView, generalMenuButton, usersMenuButton, coursesMenuButton, webcastsMenuButton);
         menu.setPadding(new Insets(0, 0, 0, 15));
 
         // Add menu to layout
@@ -74,6 +79,10 @@ public class MainView extends Application {
 
         usersMenuButton.setOnAction(e -> {
             layout.setCenter(usersView.getView());
+        });
+        
+        webcastsMenuButton.setOnAction(e -> {
+            layout.setCenter(webcastsView.getView());
         });
 
         // Set initial view to center of BorderPane

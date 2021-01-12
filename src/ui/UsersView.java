@@ -4,16 +4,19 @@ import src.db.*;
 import src.domain.EditingCell;
 import src.domain.Student;
 
-
 import java.sql.Date;
+import java.util.Optional;
 
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -71,9 +74,20 @@ public class UsersView {
 
         removeUserButton.setOnAction((event) -> {
             try{
-                Student selectedItem = usersTableView.getSelectionModel().getSelectedItem();
-                usersTableView.getItems().remove(selectedItem);
-                databaseStudent.deleteStudent(selectedItem);
+                Alert removeAlert = new Alert(AlertType.CONFIRMATION);
+                removeAlert.setTitle("Delete");
+                removeAlert.setHeaderText("Are you sure you want to delete this student?");
+                removeAlert.setContentText("");
+                // removeAlert.showAndWait();
+
+                Optional<ButtonType> result = removeAlert.showAndWait();
+	            if(!result.isPresent() || result.get() != ButtonType.OK) {
+		            
+	            } else {
+		            Student selectedItem = usersTableView.getSelectionModel().getSelectedItem();
+                    usersTableView.getItems().remove(selectedItem);
+                    databaseStudent.deleteStudent(selectedItem);
+	            }
             }catch(Exception e) {
                 e.printStackTrace();
             } 
@@ -94,10 +108,6 @@ public class UsersView {
         // Callback<TableColumn<Student, String>, TableCell<Student, String>> comboBoxCellFactory
         //         = (TableColumn<Student, String> param) -> new ComboBoxEditingCell();
 
-
-        // ID Column
-        TableColumn<Student, Integer> studentIdColumn = new TableColumn<>("ID");
-        studentIdColumn.setCellValueFactory(new PropertyValueFactory<>("studentId"));
 
         // Name column
         TableColumn<Student, String> studentNameColumn = new TableColumn<>("Name");
@@ -202,7 +212,7 @@ public class UsersView {
                 });
 
         usersTableView.setItems(databaseStudent.getStudents());
-        usersTableView.getColumns().addAll(studentIdColumn, studentNameColumn, studentEmailColumn, studentDateOfBirthColumn, studentGenderColumn, studentAddressColumn, studentPostalCodeColumn, studentCityColumn, studentCountryColumn);
+        usersTableView.getColumns().addAll(studentNameColumn, studentEmailColumn, studentDateOfBirthColumn, studentGenderColumn, studentAddressColumn, studentPostalCodeColumn, studentCityColumn, studentCountryColumn);
 
         // Add layout
         HBox.setHgrow(filler, Priority.ALWAYS);

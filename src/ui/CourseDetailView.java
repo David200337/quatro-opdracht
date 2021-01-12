@@ -1,12 +1,17 @@
 package src.ui;
 
+import java.util.Optional;
+
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -64,9 +69,20 @@ public class CourseDetailView {
 
         removeModuleButton.setOnAction((event) -> {
             try{
-                CourseModule module = moduleList.getSelectionModel().getSelectedItem();
-                moduleList.getItems().remove(module);
-                databaseCoursesModule.deleteCourse(module);
+                Alert removeAlert = new Alert(AlertType.CONFIRMATION);
+                removeAlert.setTitle("Delete");
+                removeAlert.setHeaderText("Are you sure you want to delete this module?");
+                removeAlert.setContentText("");
+                // removeAlert.showAndWait();
+
+                Optional<ButtonType> result = removeAlert.showAndWait();
+	            if(!result.isPresent() || result.get() != ButtonType.OK) {
+		            
+	            } else {
+                    CourseModule module = moduleList.getSelectionModel().getSelectedItem();
+                    moduleList.getItems().remove(module);
+                    databaseCoursesModule.deleteCourse(module);
+                }
             }catch(Exception e) {
                 e.printStackTrace();
             } 
@@ -82,6 +98,11 @@ public class CourseDetailView {
             course.setModuleTitle(t.getNewValue());
             databaseCoursesModule.updateCourseModuleString("Title", t.getNewValue(), course.getContentId());
         });
+
+        
+        TableColumn<CourseModule, String> versionCol = new TableColumn<>("Module Version");
+        versionCol.setCellValueFactory(new PropertyValueFactory<>("moduleVersion"));
+
 
         TableColumn<CourseModule, String> themeCol = new TableColumn<>("Module Theme");
         themeCol.setCellValueFactory(new PropertyValueFactory<>("moduleTheme"));
@@ -117,7 +138,7 @@ public class CourseDetailView {
         creatorCol.setCellValueFactory(new PropertyValueFactory<>("creatorName"));
 
         moduleList.setItems(databaseCoursesModule.getCourseModules());
-        moduleList.getColumns().addAll(themeCol, titleCol, descriptionCol, statusCol, serialNumberCol, creatorCol);
+        moduleList.getColumns().addAll(themeCol, titleCol, versionCol, descriptionCol, statusCol, serialNumberCol, creatorCol);
 
 
         // Add layout
