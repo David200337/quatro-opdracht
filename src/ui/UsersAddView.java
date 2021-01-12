@@ -7,18 +7,22 @@ import java.time.LocalDate;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import src.db.DatabaseStudent;
 import src.domain.DatePickerConverter;
+import src.validators.EmailValidator;
+import src.validators.PostalCodeValidator;
 
 public class UsersAddView {
     private DatabaseStudent databaseStudent;
@@ -27,6 +31,7 @@ public class UsersAddView {
     public UsersAddView() {
         databaseStudent = new DatabaseStudent("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseStudent.loadStudents();
+
     }
 
     public Parent getView() {
@@ -36,9 +41,6 @@ public class UsersAddView {
         titleLabel.getStyleClass().add("view-title");
         titleLabel.setPadding(new Insets(0, 0, 10, 0));
 
-        // //Insert ID
-        // Label lblId = new Label("ID");
-        // TextField studentId = new TextField();
         //Insert name
         Label lblName = new Label("Name");
         TextField name = new TextField();
@@ -107,20 +109,47 @@ public class UsersAddView {
                 //Set date of birth
                 LocalDate dateOfBirth = datePicker.getValue();
 
-                //Set gender
-                // Object gender = genderComboBox.getValue();
+                //Check input
+                if(name.getText().isEmpty() || genderComboBox.getValue().isEmpty() || address.getText().isEmpty() || city.getText().isEmpty() || country.getText().isEmpty()){
+                    Alert missingAlert = new Alert(AlertType.ERROR);
+                    missingAlert.setTitle("Error");
+                    missingAlert.setHeaderText("Missing field error");
+                    missingAlert.setContentText("You didn't fill all the fields!");
+                    missingAlert.showAndWait();
+                }else if(email.getText().isEmpty() || !EmailValidator.isValid(email.getText())){
+                    Alert emailAlert = new Alert(AlertType.ERROR);
+                    emailAlert.setTitle("Error");
+                    emailAlert.setHeaderText("Error in the email field");
+                    emailAlert.setContentText("Your email address is invalid");
+                    emailAlert.showAndWait();
+                } else if (postalCode.getText().isEmpty() || !PostalCodeValidator.isValid(postalCode.getText())){
+                    Alert postalCodeAlert = new Alert(AlertType.ERROR);
+                    postalCodeAlert.setTitle("Error");
+                    postalCodeAlert.setHeaderText("Error in the postal code field");
+                    postalCodeAlert.setContentText("Your postal code is invalid");
+                    postalCodeAlert.showAndWait();
+                } else{
+                    databaseStudent.insertStudent(name.getText(), email.getText(), Date.valueOf(dateOfBirth), String.valueOf(genderComboBox.getValue()), address.getText(), postalCode.getText(), city.getText(), country.getText());
+                
+                    name.clear();
+                    email.clear();
+                    datePicker.setValue(null);
+                    genderComboBox.setValue(null);
+                    address.clear();
+                    postalCode.clear();
+                    city.clear();
+                    country.clear();
+
+                    Alert succesAlert = new Alert(AlertType.CONFIRMATION);
+                    succesAlert.setTitle("Registrated");
+                    succesAlert.setHeaderText("Success!");
+                    succesAlert.setContentText("Your student is added!");
+                    succesAlert.showAndWait();
+                    
+                }
                 
                 
-                databaseStudent.insertStudent(name.getText(), email.getText(), Date.valueOf(dateOfBirth), String.valueOf(genderComboBox.getValue()), address.getText(), postalCode.getText(), city.getText(), country.getText());
-                // System.out.println("It worked!");
-                
-                name.clear();
-                email.clear();
-                datePicker.setValue(null);
-                address.clear();
-                postalCode.clear();
-                city.clear();
-                country.clear();
+               
 
             } catch(Exception e) {
                 e.printStackTrace();
