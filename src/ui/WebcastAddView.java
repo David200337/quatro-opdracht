@@ -26,6 +26,7 @@ import src.db.FillComboBox;
 import src.domain.DatePickerConverter;
 import src.domain.Status;
 import src.domain.Webcast;
+import src.validators.URLValidator;
 
 public class WebcastAddView {
     private DatabaseWebcast databaseWebcast;
@@ -107,7 +108,7 @@ public class WebcastAddView {
         TextField webcastUrl = new TextField();
 
         //Insert duration
-        Label lblWebcastDuration = new Label("Webcast Duration");
+        Label lblWebcastDuration = new Label("Webcast Duration ('00:00:00'");
         TextField webcastDuration = new TextField();
 
         //Insert creator
@@ -125,16 +126,28 @@ public class WebcastAddView {
         //Insert button action
         btnInsert.setOnAction((event) -> {
             try{             
-                if(webcastTitle.getText().isEmpty() || webcastDuration.getText().isEmpty() || statusComboBox.getValue() == null || webcastUrl.getText().isEmpty() || creatorComboBox.getValue() == null){
+                if(webcastTitle.getText().isEmpty() || webcastDuration.getText().isEmpty() || statusComboBox.getValue() == null || creatorComboBox.getValue() == null){
                     Alert missingAlert = new Alert(AlertType.ERROR);
                     missingAlert.setTitle("Error");
                     missingAlert.setHeaderText("Missing field error");
                     missingAlert.setContentText("You didn't fill in all the necessary fields!");
                     missingAlert.showAndWait();
+                } else if(webcastUrl.getText().isEmpty() || URLValidator.isValid(webcastUrl.getText())){
+                    Alert URLAlert = new Alert(AlertType.ERROR);
+                    URLAlert.setTitle("Error");
+                    URLAlert.setHeaderText("Error in the URL field");
+                    URLAlert.setContentText("Your URL is invalid");
+                    URLAlert.showAndWait();
                 } else {
 
                     databaseWebcast.insertWebcast(Integer.parseInt(contentId.getText()), Date.valueOf(datePicker.getValue()), webcastTitle.getText(), webcastTheme.getText(), webcastDescription.getText(), String.valueOf(statusComboBox.getValue()), Time.valueOf(webcastDuration.getText()), String.valueOf(creatorComboBox.getValue()), webcastUrl.getText());
                     
+                    Alert succesAlert = new Alert(AlertType.CONFIRMATION);
+                    succesAlert.setTitle("Registrated");
+                    succesAlert.setHeaderText("Success!");
+                    succesAlert.setContentText("The webcast is added!");
+                    succesAlert.showAndWait();
+
                     contentId.clear();
                     datePicker.setValue(null);
                     webcastTitle.clear();
