@@ -1,6 +1,7 @@
 package src.db;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.sql.Time;
 
 import javafx.collections.*;
@@ -65,6 +66,14 @@ public class DatabaseWebcast extends Database{
         return webcasts;
     }
 
+    public void deleteWebcast(Webcast selectedItem) throws SQLException{
+        statement.executeUpdate("DELETE FROM Webcast WHERE ContentId = '"+selectedItem.getContentId()+"'");
+    }
+
+    public void insertWebcast(int contentId, Date publicationDate, String title, String theme, String description, String status, Time duration, String name, String url) throws SQLException{
+        statement.executeUpdate("INSERT INTO Content(ContentId, PublicationDate, Status, Theme, Description, CreatorId) VALUES ('"+contentId+"','"+publicationDate+"','"+status+"','"+theme+"','"+description+"',(SELECT CreatorId FROM ContentCreator WHERE Name = '"+name+"'))");
+        statement.executeUpdate("INSERT INTO Webcast(ContentId, Title, URL, Duration) VALUES ('"+contentId+"','"+title+"','"+url+"','"+duration+"')");
+    }
     
 
 }

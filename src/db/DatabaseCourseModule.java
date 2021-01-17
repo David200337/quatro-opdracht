@@ -100,16 +100,10 @@ public class DatabaseCourseModule extends Database{
         statement.executeUpdate("DELETE FROM Course WHERE CourseId = '"+selectedItem.getCourseId()+"'");
     }
          
-
-    // public int getCreatorIdWithName(String name) throws SQLException {
-    //     String sql = "SELECT CreatorId FROM ContentCreator WHERE Name = '"+name+"'";
-    //     int creatorId = statement.executeUpdate(sql);
-    //     return creatorId;
-    // }
     
     public void insertModule(int courseId, int contentId, Date publicationDate, String title, String theme, String description, String status, int serialNumber, String name, int moduleVersion) throws SQLException{
         statement.executeUpdate("INSERT INTO Content(ContentId, PublicationDate, Status, Theme, Description, CreatorId) VALUES ('"+contentId+"','"+publicationDate+"','"+status+"','"+theme+"','"+title+"','"+description+"',(SELECT CreatorId FROM ContentCreator WHERE Name = '"+name+"'))");
-        statement.executeUpdate("INSERT INTO Module(ContentId, Title, VersionNr, SerialNumber, CourseId) VALUES ('"+contentId+"','"+serialNumber+"','"+courseId+"')");
+        statement.executeUpdate("INSERT INTO Module(ContentId, Title, VersionNr, SerialNumber, CourseId) VALUES ('"+contentId+"','"+title+"','"+moduleVersion+"','"+serialNumber+"','"+courseId+"')");
     }
 }
 
