@@ -7,10 +7,13 @@ import javafx.collections.*;
 import src.domain.*;
 public class DatabaseCourseModule extends Database{
     private ObservableList<CourseModule> courseModuleList;
+    private ObservableList<CourseModule> recommendedCourseList;
+	public Object courseComboBox;
     
     public DatabaseCourseModule(String connectionUrl) {
         super(connectionUrl);
         this.courseModuleList = FXCollections.observableArrayList();
+        this.recommendedCourseList = FXCollections.observableArrayList();
 	}
     
     public void loadCourseModules() {
@@ -98,6 +101,40 @@ public class DatabaseCourseModule extends Database{
 
     public void deleteCourse(CourseModule selectedItem) throws SQLException{
         statement.executeUpdate("DELETE FROM Course WHERE CourseId = '"+selectedItem.getCourseId()+"'");
+    }
+
+    public void loadRecommendedCourses(CourseModule selectedItem){
+        try {
+            connect();
+            String sql = "SELECT * FROM RecommendedCourse WHERE CourseId = '"+selectedItem.getCourseId()+"'";
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+
+            
+            while(resultSet.next()){
+                int courseId = resultSet.getInt("CourseId");
+                String courseName = resultSet.getString("RecommendedCourseName");
+                
+                CourseModule recommendedCourse = new CourseModule(courseId, courseName);
+                recommendedCourseList.add(recommendedCourse);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        
+    }
+
+    public ObservableList<CourseModule> getRecommendedCourses(){
+        return recommendedCourseList;
+    }
+
+    public void insertRecommendation(int courseId, String courseName) throws SQLException {
+        statement.executeUpdate("INSERT INTO RecommendedCourse(CourseId, RecommendedCourseName) VALUES ('"+courseId+"','"+courseName+"')");
+    }
+
+    public void deleteRecommendation(CourseModule selectedItem) throws SQLException {
+        statement.executeUpdate("DELETE FROM RecommendedCourse WHERE CourseId = '"+selectedItem.getCourseId()+"'");
     }
          
     

@@ -25,16 +25,20 @@ import src.domain.EditingCell;
 public class CourseDetailView {
     DatabaseCourseModule databaseCoursesModule;
     private ModuleAddView moduleAddView;
+    private RecommendedCourseAddView recommendedCourseAddView;
+    TableView<CourseModule> recommendedCourseList;
 
     public CourseDetailView() {
         databaseCoursesModule = new DatabaseCourseModule(
                 "jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseCoursesModule.loadCourseModules();
         moduleAddView = new ModuleAddView();
+        recommendedCourseAddView = new RecommendedCourseAddView();
+
     }
 
     public Parent getView(CourseModule courseModule) {
-        // databaseCoursesModule.loadCourseDetails(courseModule);
+        databaseCoursesModule.loadRecommendedCourses(courseModule);
 
         VBox layout = new VBox();
         HBox topLayout = new HBox(10);
@@ -139,15 +143,64 @@ public class CourseDetailView {
 
         moduleList.setItems(databaseCoursesModule.getCourseModules());
         moduleList.getColumns().addAll(themeCol, titleCol, versionCol, descriptionCol, statusCol, serialNumberCol, creatorCol);
+        
+        
+        HBox recommendedSection = new HBox(10);
+        
+        Button addRecommendedCourse = new Button("Add recommendation");
+        addRecommendedCourse.setOnAction(e -> {
+            layout.getChildren().clear();
+            try {
+                layout.getChildren().add(recommendedCourseAddView.getView(courseModule));
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        Button removeRecommendation = new Button("Remove");
+        removeRecommendation.setOnAction((event) -> {
+            try{
+                Alert removeAlert = new Alert(AlertType.CONFIRMATION);
+                removeAlert.setTitle("Delete");
+                removeAlert.setHeaderText("Are you sure you want to delete this recommendation?");
+                removeAlert.setContentText("");
+                // removeAlert.showAndWait();
+
+                Optional<ButtonType> result = removeAlert.showAndWait();
+	            if(!result.isPresent() || result.get() != ButtonType.OK) {
+		            
+	            } else {
+                    CourseModule recommendation = recommendedCourseList.getSelectionModel().getSelectedItem();
+                    recommendedCourseList.getItems().remove(recommendation);
+                    databaseCoursesModule.deleteRecommendation(recommendation);
+                }
+            }catch(Exception e) {
+                e.printStackTrace();
+            } 
+        });
+
+        Label lblRecommendedTable = new Label("Recommended");
+        lblRecommendedTable.getStyleClass().add("view-title");
+        lblRecommendedTable.setPadding(new Insets(10, 10, 10, 15));
+        recommendedCourseList = new TableView<>();
+                
+        TableColumn<CourseModule, String> courseNameCol = new TableColumn<>("Course Name");
+        courseNameCol.setCellValueFactory(new PropertyValueFactory<>("courseName"));
+
+        recommendedCourseList.setItems(databaseCoursesModule.getRecommendedCourses());
+        recommendedCourseList.getColumns().addAll(courseNameCol);
 
 
+    
         // Add layout
         HBox.setHgrow(filler, Priority.ALWAYS);
+        recommendedSection.getChildren().addAll(lblRecommendedTable, filler, addRecommendedCourse, removeRecommendation);
         topLayout.getChildren().addAll(titleLabel, filler, addModuleButton, removeModuleButton);
-        layout.getChildren().addAll(topLayout, lblCourseName, lblSubject, lblIntroductionText, lblLevel, moduleList);
+        layout.getChildren().addAll(topLayout, lblCourseName, lblSubject, lblIntroductionText, lblLevel, moduleList, recommendedSection, recommendedCourseList);
         layout.setPadding(new Insets(10, 10, 10, 15));
 
 
+       
 
         return layout;
 

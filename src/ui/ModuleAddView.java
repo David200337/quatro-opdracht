@@ -146,6 +146,12 @@ public class ModuleAddView {
                     moduleSerialNumber.clear();
                     creatorComboBox.setValue(null);
                     moduleVersion.clear();
+
+                    Alert succesAlert = new Alert(AlertType.CONFIRMATION);
+                    succesAlert.setTitle("Registrated");
+                    succesAlert.setHeaderText("Success!");
+                    succesAlert.setContentText("The module is added!");
+                    succesAlert.showAndWait();
                 }
 
             } catch(Exception e) {

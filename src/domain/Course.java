@@ -11,7 +11,7 @@ public class Course {
     private String introductionText;
     private Level level;
 
-    private ArrayList<Course> interestingOtherCourses;
+    private ArrayList<CourseModule> interestingOtherCourses;
 
     public Course(int courseId, String courseName, String subject, String introductionText, Level level) {
         this.courseId = courseId;
@@ -23,6 +23,8 @@ public class Course {
         this.interestingOtherCourses = new ArrayList<>();
     }
 
+    
+
     public Module getModule() {
         return module;
     }
@@ -31,9 +33,9 @@ public class Course {
         this.module = module;
     }
 
-    public void putModuleInList(Module module) {
-        modules.add(module);
-    }
+    // public void putModuleInList(Module module) {
+    //     modules.add(module);
+    // }
     
 
 
@@ -45,9 +47,9 @@ public class Course {
         this.courseId = courseId;
     }
 
-    public void addInterestingOtherCourse(Course course) {
-        this.interestingOtherCourses.add(course);
-    }
+    // public void addInterestingOtherCourse(Course course) {
+    //     this.interestingOtherCourses.add(course);
+    // }
 
     public String getName(){
         return courseName;

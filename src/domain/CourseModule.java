@@ -47,6 +47,11 @@ public class CourseModule {
         this.setModuleVersion(moduleVersion);
     }
 
+    public CourseModule(int courseId, String courseName){
+        this.courseName = courseName;
+        this.courseId = courseId;
+    }
+
     public int getModuleVersion() {
         return moduleVersion;
     }
