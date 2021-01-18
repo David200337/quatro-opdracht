@@ -24,6 +24,9 @@ public class MainView extends Application {
         UsersView usersView = new UsersView();
         WebcastsView webcastsView = new WebcastsView();
         
+        //Names and studentnumbers in the title bar
+        primaryStage.setTitle("David van Mourik - ..... , Tristan Maltha - ..... , Janne Sterk - 2173624");
+
         // Instantiate higher level layout
         BorderPane layout = new BorderPane();
 
