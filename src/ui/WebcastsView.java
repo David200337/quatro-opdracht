@@ -93,6 +93,8 @@ public class WebcastsView {
             } 
         });
 
+        TableColumn<Webcast, String> contentIdColumn = new TableColumn<>("ID");
+        contentIdColumn.setCellValueFactory(new PropertyValueFactory<>("contentId"));
 
         TableColumn<Webcast, String> titleColumn = new TableColumn<>("Title");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -192,7 +194,7 @@ public class WebcastsView {
       
 
         webcastTable.setItems(databaseWebcasts.getWebcasts());
-        webcastTable.getColumns().addAll(titleColumn, themeColumn, publicationDateColumn,statusColumn, descriptionColumn, urlColumn, durationColumn, creatorNameColumn);
+        webcastTable.getColumns().addAll(contentIdColumn, titleColumn, themeColumn, publicationDateColumn,statusColumn, descriptionColumn, urlColumn, durationColumn, creatorNameColumn);
         
         // Add layout
         HBox.setHgrow(filler, Priority.ALWAYS);

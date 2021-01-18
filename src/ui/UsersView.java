@@ -45,19 +45,6 @@ public class UsersView {
         usersDetailView = new UsersDetailView();
     }
 
-    // void refreshTable() {
-    //     final List<Student> items = usersTableView.getItems();
-    //     if( items == null || items.size() == 0) return;
-    //     final Student item = usersTableView.getItems().get(0);
-    //     items.remove(0);
-    //     Platform.runLater(new Runnable(){
-    //         @Override
-    //         public void run() {
-    //             items.add(0, item);
-    //         }
-    //     });
-    //  }
-
     public Parent getView() {
         VBox layout = new VBox();
         HBox topLayout = new HBox(10);

@@ -48,10 +48,6 @@ public class ModuleAddView {
         //Insert content
         Label lblContent = new Label("Content Item");
         TextField contentId = new TextField();
-        // ComboBox contentComboBox = new ComboBox<String>();
-        // ObservableList<String> listContent = FXCollections.observableArrayList();
-        // fcb.fillListFromDataBaseString(listContent, "ContentId","Content");
-        // contentComboBox.setItems(listContent);
 
         //Insert module title
         Label lblModuleTitle = new Label("Module Title");

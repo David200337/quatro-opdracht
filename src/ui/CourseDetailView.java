@@ -48,7 +48,6 @@ public class CourseDetailView {
 
     public Parent getView(CourseModule courseModule) {
         databaseCoursesModule.loadRecommendedCourses(courseModule);
-        ObservableList<Status> statusList;
 
         VBox layout = new VBox();
         HBox topLayout = new HBox(10);
@@ -103,7 +102,10 @@ public class CourseDetailView {
             } 
         });
 
-        TableColumn<CourseModule, String> titleCol = new TableColumn<>("Module title");
+        TableColumn<CourseModule, String> contentIdCol = new TableColumn<>("ID");
+        contentIdCol.setCellValueFactory(new PropertyValueFactory<>("contentId"));
+
+        TableColumn<CourseModule, String> titleCol = new TableColumn<>("Title");
         titleCol.setCellValueFactory(new PropertyValueFactory<>("moduleTitle"));
         titleCol.setCellFactory(stringCellFactory);
         titleCol.setOnEditCommit((TableColumn.CellEditEvent<CourseModule, String> t) -> {
@@ -115,11 +117,11 @@ public class CourseDetailView {
         });
 
         
-        TableColumn<CourseModule, String> versionCol = new TableColumn<>("Module Version");
+        TableColumn<CourseModule, String> versionCol = new TableColumn<>("Version");
         versionCol.setCellValueFactory(new PropertyValueFactory<>("moduleVersion"));
 
 
-        TableColumn<CourseModule, String> themeCol = new TableColumn<>("Module Theme");
+        TableColumn<CourseModule, String> themeCol = new TableColumn<>("Theme");
         themeCol.setCellValueFactory(new PropertyValueFactory<>("moduleTheme"));
         themeCol.setCellFactory(stringCellFactory);
         themeCol.setOnEditCommit((TableColumn.CellEditEvent<CourseModule, String> t) -> {
@@ -130,7 +132,7 @@ public class CourseDetailView {
             databaseCoursesModule.updateCourseModuleString("Theme", t.getNewValue(), course.getContentId());
         });
 
-        TableColumn<CourseModule, String> descriptionCol = new TableColumn<>("Module Description");
+        TableColumn<CourseModule, String> descriptionCol = new TableColumn<>("Description");
         descriptionCol.setCellValueFactory(new PropertyValueFactory<>("moduleDescription"));
         descriptionCol.setCellFactory(stringCellFactory);
         descriptionCol.setOnEditCommit((TableColumn.CellEditEvent<CourseModule, String> t) -> {
@@ -175,15 +177,15 @@ public class CourseDetailView {
         });
         //Editen met combobox
 
-        TableColumn<CourseModule, Integer> serialNumberCol = new TableColumn<>("Module serialnumber");
+        TableColumn<CourseModule, Integer> serialNumberCol = new TableColumn<>("Serialnumber");
         serialNumberCol.setCellValueFactory(new PropertyValueFactory<>("moduleSerialNumber"));
         //Mag niet veranderd worden
 
-        TableColumn<CourseModule, String> creatorCol = new TableColumn<>("Module creator");
+        TableColumn<CourseModule, String> creatorCol = new TableColumn<>("Creator");
         creatorCol.setCellValueFactory(new PropertyValueFactory<>("creatorName"));
 
         moduleList.setItems(databaseCoursesModule.getCourseModules());
-        moduleList.getColumns().addAll(themeCol, titleCol, versionCol, descriptionCol, statusCol, serialNumberCol, creatorCol);
+        moduleList.getColumns().addAll(contentIdCol, titleCol, versionCol, themeCol, descriptionCol, statusCol, serialNumberCol, creatorCol);
         
         
         HBox recommendedSection = new HBox(10);
