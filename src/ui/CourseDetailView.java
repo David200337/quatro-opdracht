@@ -2,6 +2,10 @@ package src.ui;
 
 import java.util.Optional;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
@@ -10,8 +14,12 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -21,6 +29,7 @@ import javafx.util.Callback;
 import src.db.DatabaseCourseModule;
 import src.domain.CourseModule;
 import src.domain.EditingCell;
+import src.domain.Status;
 
 public class CourseDetailView {
     DatabaseCourseModule databaseCoursesModule;
@@ -39,6 +48,7 @@ public class CourseDetailView {
 
     public Parent getView(CourseModule courseModule) {
         databaseCoursesModule.loadRecommendedCourses(courseModule);
+        ObservableList<Status> statusList;
 
         VBox layout = new VBox();
         HBox topLayout = new HBox(10);
@@ -58,6 +68,7 @@ public class CourseDetailView {
         moduleList.setEditable(true);
         Callback<TableColumn<CourseModule, String>, TableCell<CourseModule, String>> stringCellFactory = (
                 TableColumn<CourseModule, String> param) -> new EditingCell<CourseModule>();
+        
 
         Button addModuleButton = new Button("Add module");
         Button removeModuleButton = new Button("Remove");
@@ -130,8 +141,38 @@ public class CourseDetailView {
             databaseCoursesModule.updateCourseModuleString("Description", t.getNewValue(), course.getContentId());
         });
 
-        TableColumn<CourseModule, String> statusCol = new TableColumn<>("Status");
+        ObservableList<Status> listStatus = FXCollections.observableArrayList(Status.values());
+        TableColumn<CourseModule, Status> statusCol = new TableColumn<>("Status");
         statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
+        
+        statusCol.setCellValueFactory(new Callback<CellDataFeatures<CourseModule, Status>, ObservableValue<Status>>() {
+            @Override
+
+            public ObservableValue<Status> call(CellDataFeatures<CourseModule, Status> param) {
+                CourseModule course = param.getValue();
+
+                Object statusCode = course.getStatus();
+
+                Status status = Status.getByCode(statusCode);
+
+                return new SimpleObjectProperty<Status>(status);
+            }
+
+        });
+
+        statusCol.setCellFactory(ComboBoxTableCell.forTableColumn(listStatus));
+        statusCol.setOnEditCommit((CellEditEvent<CourseModule, Status> event) -> {
+            TablePosition<CourseModule, Status> pos = event.getTablePosition();
+
+            Status newStatus = event.getNewValue();
+
+            int row = pos.getRow();
+            CourseModule module = event.getTableView().getItems().get(row);
+
+            databaseCoursesModule.updateCourseModuleObject("Status", newStatus, module.getContentId());
+
+            module.setStatus(newStatus.getCode());
+        });
         //Editen met combobox
 
         TableColumn<CourseModule, Integer> serialNumberCol = new TableColumn<>("Module serialnumber");

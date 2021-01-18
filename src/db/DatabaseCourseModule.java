@@ -91,6 +91,22 @@ public class DatabaseCourseModule extends Database{
                 statement.executeUpdate("UPDATE Course SET "+column+" = '"+newValue+"' WHERE CourseId = "+id);
             } else if(column.equals("Theme") || column.equals("Description") || column.equals("Status")){
                 statement.executeUpdate("UPDATE Content SET "+column+" = '"+newValue+"' WHERE ContentId ="+id);
+                System.out.println(newValue.toString());
+            } else {
+                statement.executeUpdate("UPDATE Module SET "+column+" = '"+newValue+"' WHERE ContentId = "+id);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public void updateCourseModuleObject(String column, Object newValue, int id){
+        try{
+            if(column.equals("CourseName") || column.equals("Subject") || column.equals("Level")){
+                statement.executeUpdate("UPDATE Course SET "+column+" = '"+newValue+"' WHERE CourseId = "+id);
+            } else if(column.equals("Theme") || column.equals("Description") || column.equals("Status")){
+                statement.executeUpdate("UPDATE Content SET "+column+" = '"+newValue+"' WHERE ContentId ="+id);
             } else {
                 statement.executeUpdate("UPDATE Module SET "+column+" = '"+newValue+"' WHERE ContentId = "+id);
             }
@@ -138,8 +154,8 @@ public class DatabaseCourseModule extends Database{
     }
          
     
-    public void insertModule(int courseId, int contentId, Date publicationDate, String title, String theme, String description, String status, int serialNumber, String name, int moduleVersion) throws SQLException{
-        statement.executeUpdate("INSERT INTO Content(ContentId, PublicationDate, Status, Theme, Description, CreatorId) VALUES ('"+contentId+"','"+publicationDate+"','"+status+"','"+theme+"','"+title+"','"+description+"',(SELECT CreatorId FROM ContentCreator WHERE Name = '"+name+"'))");
+    public void insertModule(int courseId, int contentId, Date publicationDate, String title, String theme, String description, Object status, int serialNumber, String name, int moduleVersion) throws SQLException{
+        statement.executeUpdate("INSERT INTO Content(ContentId, PublicationDate, Status, Theme, Description, CreatorId) VALUES ('"+contentId+"','"+publicationDate+"','"+status+"','"+theme+"','"+description+"',(SELECT CreatorId FROM ContentCreator WHERE Name = '"+name+"'))");
         statement.executeUpdate("INSERT INTO Module(ContentId, Title, VersionNr, SerialNumber, CourseId) VALUES ('"+contentId+"','"+title+"','"+moduleVersion+"','"+serialNumber+"','"+courseId+"')");
     }
 }

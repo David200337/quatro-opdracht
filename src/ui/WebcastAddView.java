@@ -108,7 +108,7 @@ public class WebcastAddView {
         TextField webcastUrl = new TextField();
 
         //Insert duration
-        Label lblWebcastDuration = new Label("Webcast Duration ('00:00:00'");
+        Label lblWebcastDuration = new Label("Webcast Duration ('hh:mm:ss')");
         TextField webcastDuration = new TextField();
 
         //Insert creator
@@ -132,7 +132,7 @@ public class WebcastAddView {
                     missingAlert.setHeaderText("Missing field error");
                     missingAlert.setContentText("You didn't fill in all the necessary fields!");
                     missingAlert.showAndWait();
-                } else if(webcastUrl.getText().isEmpty() || URLValidator.isValid(webcastUrl.getText())){
+                } else if(webcastUrl.getText().isEmpty() || !URLValidator.isValid(webcastUrl.getText())){
                     Alert URLAlert = new Alert(AlertType.ERROR);
                     URLAlert.setTitle("Error");
                     URLAlert.setHeaderText("Error in the URL field");

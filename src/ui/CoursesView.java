@@ -2,6 +2,8 @@ package src.ui;
 
 import java.util.Optional;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
@@ -21,6 +23,7 @@ import javafx.util.Callback;
 import src.db.DatabaseCourseModule;
 import src.domain.CourseModule;
 import src.domain.EditingCell;
+import src.domain.Level;
 
 public class CoursesView {
     private DatabaseCourseModule databaseCourses;

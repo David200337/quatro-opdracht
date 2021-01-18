@@ -2,6 +2,9 @@ package src.domain;
 
 import java.sql.Date;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class CourseModule {
     private Module module;
     private Course course;
@@ -16,7 +19,7 @@ public class CourseModule {
     private String moduleTitle;
     private String moduleTheme;
     private String moduleDescription;
-    private String status;
+    private Object status;
     private int moduleSerialNumber;
     private int moduleVersion;
     private int creatorId;
@@ -26,7 +29,7 @@ public class CourseModule {
 
     public CourseModule(int contentId, int courseId, String courseName, String subject, String introductionText,
             String level, Date publicationDate, String moduleTitle, String moduleTheme, String moduleDescription,
-            String status, int moduleVersion, int moduleSerialNumber, int creatorId, String creatorName,
+            Object status, int moduleVersion, int moduleSerialNumber, int creatorId, String creatorName,
             String creatorEmail, String creatorOrganisation) {
         this.setContentId(contentId);
         this.setCourseId(courseId);
@@ -153,11 +156,12 @@ public class CourseModule {
     }
 
     public String getStatus() {
-        return status;
+        return String.valueOf(status);
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatus(Object statusObj) {
+        String.valueOf(statusObj);
+        this.status = statusObj;
     }
 
     public String getModuleDescription() {
