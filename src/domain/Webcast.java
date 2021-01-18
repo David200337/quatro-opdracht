@@ -11,10 +11,10 @@ public class Webcast {
     private String theme;
     private String title;
     private String description;
-    private String status;
+    private Object status;
     private String creatorName;
 
-    public Webcast(int contentId, Date publicationDate, String theme, String title, String description, String status,
+    public Webcast(int contentId, Date publicationDate, String theme, String title, String description, Object status,
             String creatorName, String url, Time duration) {
         this.setContentId(contentId);
         this.setPublicationDate(publicationDate);
@@ -35,11 +35,11 @@ public class Webcast {
         this.creatorName = creatorName;
     }
 
-    public String getStatus() {
+    public Object getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Object status) {
         this.status = status;
     }
 

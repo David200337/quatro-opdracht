@@ -7,6 +7,10 @@ import src.domain.Student;
 import java.sql.Date;
 import java.util.Optional;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
@@ -15,8 +19,12 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -105,8 +113,7 @@ public class UsersView {
 
         usersTableView.setEditable(true);
         Callback<TableColumn<Student, String>, TableCell<Student, String>> stringCellFactory = (TableColumn<Student, String> param) -> new EditingCell<Student>();
-        // Callback<TableColumn<Student, String>, TableCell<Student, String>> comboBoxCellFactory
-        //         = (TableColumn<Student, String> param) -> new ComboBoxEditingCell();
+
 
 
         // Name column
@@ -142,14 +149,32 @@ public class UsersView {
         // Gender Column
         TableColumn<Student, String> studentGenderColumn = new TableColumn<>("Gender");
         studentGenderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
-        // studentEmailColumn.setCellFactory(stringCellFactory);
-        // studentEmailColumn.setOnEditCommit((TableColumn.CellEditEvent<Student, String> t) -> {
-        //     ((Student) t.getTableView().getItems().get(t.getTablePosition().getRow())).setGender(t.getNewValue());
+        ObservableList<String> listGender = FXCollections.observableArrayList("Female", "Male");
+        
+        studentGenderColumn.setCellValueFactory(new Callback<CellDataFeatures<Student, String>, ObservableValue<String>>() {
+            @Override
 
-        //     Student student = t.getRowValue();
-        //     student.setGender(t.getNewValue());
-        //     databaseStudent.updateStudentString("Gender", t.getNewValue(), student.getStudentId());
-        // });
+            public ObservableValue<String> call(CellDataFeatures<Student, String> param) {
+                Student student = param.getValue();
+                return new SimpleObjectProperty<String>(student.getGender());
+            }
+
+        });
+
+        studentGenderColumn.setCellFactory(ComboBoxTableCell.forTableColumn(listGender));
+        studentGenderColumn.setOnEditCommit((CellEditEvent<Student, String> event) -> {
+            TablePosition<Student, String> pos = event.getTablePosition();
+
+            String newStatus = event.getNewValue();
+
+            int row = pos.getRow();
+            Student student = event.getTableView().getItems().get(row);
+
+            databaseStudent.updateStudentString("Gender", newStatus, student.getStudentId());
+
+            student.setGender(newStatus);
+        });
+
 
         // Address Column
         TableColumn<Student, String> studentAddressColumn = new TableColumn<>("Address");

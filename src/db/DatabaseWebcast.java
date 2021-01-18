@@ -74,6 +74,32 @@ public class DatabaseWebcast extends Database{
         statement.executeUpdate("INSERT INTO Content(ContentId, PublicationDate, Status, Theme, Description, CreatorId) VALUES ('"+contentId+"','"+publicationDate+"','"+status+"','"+theme+"','"+description+"',(SELECT CreatorId FROM ContentCreator WHERE Name = '"+name+"'))");
         statement.executeUpdate("INSERT INTO Webcast(ContentId, Title, URL, Duration) VALUES ('"+contentId+"','"+title+"','"+url+"','"+duration+"')");
     }
+
+    public void updateWebcastString(String column, String newValue, int id){
+        try{
+            if(column.equals("Theme") || column.equals("Description") || column.equals("Status")){
+                statement.executeUpdate("UPDATE Content SET "+column+" = '"+newValue+"' WHERE ContentId ="+id);
+                System.out.println(newValue.toString());
+            } else {
+                statement.executeUpdate("UPDATE Webcast SET "+column+" = '"+newValue+"' WHERE ContentId = "+id);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public void updateWebcastObject(String column, Object newValue, int id){
+        try{
+            if(column.equals("Theme") || column.equals("Description") || column.equals("Status")){
+                statement.executeUpdate("UPDATE Content SET "+column+" = '"+newValue+"' WHERE ContentId ="+id);
+            } else {
+                statement.executeUpdate("UPDATE Webcast SET "+column+" = '"+newValue+"' WHERE ContentId = "+id);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
     
 
 }
