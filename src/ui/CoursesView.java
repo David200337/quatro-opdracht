@@ -55,9 +55,9 @@ public class CoursesView {
         titleLabel.getStyleClass().add("view-title");
         titleLabel.setPadding(new Insets(10, 10, 10, 15));
 
-        Button addCourseButton = new Button("Add course");
+        Button addCourseButton = new Button("Add");
         Button detailCourseButton = new Button("Go to details");
-        Button removeCourseButton = new Button("Delete Course");
+        Button removeCourseButton = new Button("Delete");
 
 
 
@@ -69,9 +69,19 @@ public class CoursesView {
 
         detailCourseButton.setOnAction((event) -> {
             try{
-		        CourseModule courseModule = coursesTableView.getSelectionModel().getSelectedItem();
-                layout.getChildren().clear();
-                layout.getChildren().add(courseDetailView.getView(courseModule));
+                CourseModule courseModule = coursesTableView.getSelectionModel().getSelectedItem();
+                
+                if(courseModule == null){
+                    Alert missingAlert = new Alert(AlertType.ERROR);
+                    missingAlert.setTitle("Error");
+                    missingAlert.setHeaderText("Missing course");
+                    missingAlert.setContentText("You didn't select a course!");
+                    missingAlert.showAndWait();
+                } else{
+                     layout.getChildren().clear();
+                    layout.getChildren().add(courseDetailView.getView(courseModule));
+                }
+               
 	            
             }catch(Exception e) {
                 e.printStackTrace();
@@ -80,20 +90,31 @@ public class CoursesView {
 
         removeCourseButton.setOnAction((event) -> {
             try{
-                Alert removeAlert = new Alert(AlertType.CONFIRMATION);
-                removeAlert.setTitle("Delete");
-                removeAlert.setHeaderText("Are you sure you want to delete this course?");
-                removeAlert.setContentText("");
-                
+                CourseModule courseModule = coursesTableView.getSelectionModel().getSelectedItem();
 
-                Optional<ButtonType> result = removeAlert.showAndWait();
-	            if(!result.isPresent() || result.get() != ButtonType.OK) {
-		            
-	            } else {
-                    CourseModule courseModule = coursesTableView.getSelectionModel().getSelectedItem();
-                    coursesTableView.getItems().remove(courseModule);
-                    databaseCourses.deleteCourse(courseModule);
+                if(courseModule == null){
+                    Alert missingAlert = new Alert(AlertType.ERROR);
+                    missingAlert.setTitle("Error");
+                    missingAlert.setHeaderText("Missing course");
+                    missingAlert.setContentText("You didn't select a course!");
+                    missingAlert.showAndWait();
+                } else{
+                    Alert removeAlert = new Alert(AlertType.CONFIRMATION);
+                    removeAlert.setTitle("Delete");
+                    removeAlert.setHeaderText("Are you sure you want to delete this course?");
+                    removeAlert.setContentText("");
+                    
+
+                    Optional<ButtonType> result = removeAlert.showAndWait();
+                    if(!result.isPresent() || result.get() != ButtonType.OK) {
+                        
+                    } else {
+                        
+                        coursesTableView.getItems().remove(courseModule);
+                        databaseCourses.deleteCourse(courseModule);
+                    }
                 }
+                
             }catch(Exception e) {
                 e.printStackTrace();
             } 
@@ -177,7 +198,7 @@ public class CoursesView {
 
         // Add layout
         HBox.setHgrow(filler, Priority.ALWAYS);
-        topLayout.getChildren().addAll(titleLabel, filler, addCourseButton, detailCourseButton, removeCourseButton);
+        topLayout.getChildren().addAll(titleLabel, filler, addCourseButton, removeCourseButton, detailCourseButton);
         layout.getChildren().addAll(topLayout, coursesTableView);
         layout.setPadding(new Insets(10, 10, 10, 15));
 

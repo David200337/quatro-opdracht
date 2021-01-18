@@ -1,7 +1,6 @@
 package src.ui;
 
 import src.db.DatabaseWebcast;
-import src.domain.CourseModule;
 import src.domain.EditingCell;
 import src.domain.Status;
 import src.domain.Webcast;
@@ -74,20 +73,28 @@ public class WebcastsView {
 
         removeWebcastButton.setOnAction((event) -> {
             try{
-                Alert removeAlert = new Alert(AlertType.CONFIRMATION);
-                removeAlert.setTitle("Delete");
-                removeAlert.setHeaderText("Are you sure you want to delete this webcast?");
-                removeAlert.setContentText("");
-                // removeAlert.showAndWait();
+                Webcast selectedItem = webcastTable.getSelectionModel().getSelectedItem();
+                if(selectedItem == null){
+                    Alert missingAlert = new Alert(AlertType.ERROR);
+                    missingAlert.setTitle("Error");
+                    missingAlert.setHeaderText("Missing webcast");
+                    missingAlert.setContentText("You didn't select a webcast!");
+                    missingAlert.showAndWait();
+                } else{
+                    Alert removeAlert = new Alert(AlertType.CONFIRMATION);
+                    removeAlert.setTitle("Delete");
+                    removeAlert.setHeaderText("Are you sure you want to delete this webcast?");
+                    removeAlert.setContentText("");
+                    // removeAlert.showAndWait();
 
-                Optional<ButtonType> result = removeAlert.showAndWait();
-	            if(!result.isPresent() || result.get() != ButtonType.OK) {
-		            
-	            } else {
-		            Webcast selectedItem = webcastTable.getSelectionModel().getSelectedItem();
-                    webcastTable.getItems().remove(selectedItem);
-                    databaseWebcasts.deleteWebcast(selectedItem);
-	            }
+                    Optional<ButtonType> result = removeAlert.showAndWait();
+                    if(!result.isPresent() || result.get() != ButtonType.OK) {
+                        
+                    } else {
+                        webcastTable.getItems().remove(selectedItem);
+                        databaseWebcasts.deleteWebcast(selectedItem);
+                    }
+                }
             }catch(Exception e) {
                 e.printStackTrace();
             } 

@@ -54,8 +54,8 @@ public class UsersView {
         titleLabel.getStyleClass().add("view-title");
         titleLabel.setPadding(new Insets(0, 0, 10, 0));
 
-        Button addUserButton = new Button("Add user");
-        Button removeUserButton = new Button("Remove user");
+        Button addUserButton = new Button("Add");
+        Button removeUserButton = new Button("Remove");
         Button detailUserButton = new Button("Go to details");
 
 
@@ -69,20 +69,30 @@ public class UsersView {
 
         removeUserButton.setOnAction((event) -> {
             try{
-                Alert removeAlert = new Alert(AlertType.CONFIRMATION);
-                removeAlert.setTitle("Delete");
-                removeAlert.setHeaderText("Are you sure you want to delete this student?");
-                removeAlert.setContentText("");
-                // removeAlert.showAndWait();
+                Student selectedItem = usersTableView.getSelectionModel().getSelectedItem();
 
-                Optional<ButtonType> result = removeAlert.showAndWait();
-	            if(!result.isPresent() || result.get() != ButtonType.OK) {
-		            
-	            } else {
-		            Student selectedItem = usersTableView.getSelectionModel().getSelectedItem();
-                    usersTableView.getItems().remove(selectedItem);
-                    databaseStudent.deleteStudent(selectedItem);
-	            }
+                if(selectedItem == null){
+                    Alert missingAlert = new Alert(AlertType.ERROR);
+                    missingAlert.setTitle("Error");
+                    missingAlert.setHeaderText("Missing student");
+                    missingAlert.setContentText("You didn't select a student!");
+                    missingAlert.showAndWait();
+                } else{
+                    Alert removeAlert = new Alert(AlertType.CONFIRMATION);
+                    removeAlert.setTitle("Delete");
+                    removeAlert.setHeaderText("Are you sure you want to delete this student?");
+                    removeAlert.setContentText("");
+                  
+
+                    Optional<ButtonType> result = removeAlert.showAndWait();
+                    if(!result.isPresent() || result.get() != ButtonType.OK) {
+                        
+                    } else {
+                        
+                        usersTableView.getItems().remove(selectedItem);
+                        databaseStudent.deleteStudent(selectedItem);
+                    }
+                }
             }catch(Exception e) {
                 e.printStackTrace();
             } 
@@ -91,8 +101,17 @@ public class UsersView {
         detailUserButton.setOnAction((event) -> {
             try{
                 Student student = usersTableView.getSelectionModel().getSelectedItem();
-                layout.getChildren().clear();
-                layout.getChildren().add(usersDetailView.getView(student));
+
+                if(student == null){
+                    Alert missingAlert = new Alert(AlertType.ERROR);
+                    missingAlert.setTitle("Error");
+                    missingAlert.setHeaderText("Missing course");
+                    missingAlert.setContentText("You didn't select a student!");
+                    missingAlert.showAndWait();
+                } else{
+                    layout.getChildren().clear();
+                    layout.getChildren().add(usersDetailView.getView(student));
+                }
             }catch(Exception e) {
                 e.printStackTrace();
             } 

@@ -69,7 +69,7 @@ public class CourseDetailView {
                 TableColumn<CourseModule, String> param) -> new EditingCell<CourseModule>();
         
 
-        Button addModuleButton = new Button("Add module");
+        Button addModuleButton = new Button("Add");
         Button removeModuleButton = new Button("Remove");
 
         addModuleButton.setOnAction(e -> {
@@ -83,19 +83,28 @@ public class CourseDetailView {
 
         removeModuleButton.setOnAction((event) -> {
             try{
-                Alert removeAlert = new Alert(AlertType.CONFIRMATION);
-                removeAlert.setTitle("Delete");
-                removeAlert.setHeaderText("Are you sure you want to delete this module?");
-                removeAlert.setContentText("");
-                // removeAlert.showAndWait();
+                CourseModule module = moduleList.getSelectionModel().getSelectedItem();
 
-                Optional<ButtonType> result = removeAlert.showAndWait();
-	            if(!result.isPresent() || result.get() != ButtonType.OK) {
-		            
-	            } else {
-                    CourseModule module = moduleList.getSelectionModel().getSelectedItem();
-                    moduleList.getItems().remove(module);
-                    databaseCoursesModule.deleteCourse(module);
+                if(courseModule == null){
+                    Alert missingAlert = new Alert(AlertType.ERROR);
+                    missingAlert.setTitle("Error");
+                    missingAlert.setHeaderText("Missing module");
+                    missingAlert.setContentText("You didn't select a module!");
+                    missingAlert.showAndWait();
+                } else{
+                    Alert removeAlert = new Alert(AlertType.CONFIRMATION);
+                    removeAlert.setTitle("Delete");
+                    removeAlert.setHeaderText("Are you sure you want to delete this module?");
+                    removeAlert.setContentText("");
+
+                    Optional<ButtonType> result = removeAlert.showAndWait();
+                    if(!result.isPresent() || result.get() != ButtonType.OK) {
+                        
+                    } else {
+                        
+                        moduleList.getItems().remove(module);
+                        databaseCoursesModule.deleteCourse(module);
+                    }
                 }
             }catch(Exception e) {
                 e.printStackTrace();
@@ -203,19 +212,29 @@ public class CourseDetailView {
         Button removeRecommendation = new Button("Remove");
         removeRecommendation.setOnAction((event) -> {
             try{
-                Alert removeAlert = new Alert(AlertType.CONFIRMATION);
-                removeAlert.setTitle("Delete");
-                removeAlert.setHeaderText("Are you sure you want to delete this recommendation?");
-                removeAlert.setContentText("");
-                // removeAlert.showAndWait();
+                CourseModule recommendation = recommendedCourseList.getSelectionModel().getSelectedItem();
 
-                Optional<ButtonType> result = removeAlert.showAndWait();
-	            if(!result.isPresent() || result.get() != ButtonType.OK) {
-		            
-	            } else {
-                    CourseModule recommendation = recommendedCourseList.getSelectionModel().getSelectedItem();
-                    recommendedCourseList.getItems().remove(recommendation);
-                    databaseCoursesModule.deleteRecommendation(recommendation);
+                if(courseModule == null){
+                    Alert missingAlert = new Alert(AlertType.ERROR);
+                    missingAlert.setTitle("Error");
+                    missingAlert.setHeaderText("Missing course");
+                    missingAlert.setContentText("You didn't select a course!");
+                    missingAlert.showAndWait();
+                } else{
+                    Alert removeAlert = new Alert(AlertType.CONFIRMATION);
+                    removeAlert.setTitle("Delete");
+                    removeAlert.setHeaderText("Are you sure you want to delete this recommendation?");
+                    removeAlert.setContentText("");
+                    // removeAlert.showAndWait();
+
+                    Optional<ButtonType> result = removeAlert.showAndWait();
+                    if(!result.isPresent() || result.get() != ButtonType.OK) {
+                        
+                    } else {
+                        
+                        recommendedCourseList.getItems().remove(recommendation);
+                        databaseCoursesModule.deleteRecommendation(recommendation);
+                    }
                 }
             }catch(Exception e) {
                 e.printStackTrace();
