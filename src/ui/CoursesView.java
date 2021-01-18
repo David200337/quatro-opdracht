@@ -2,6 +2,8 @@ package src.ui;
 
 import java.util.Optional;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -12,8 +14,12 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -130,8 +136,38 @@ public class CoursesView {
             databaseCourses.updateCourseModuleString("Description", t.getNewValue(), course.getCourseId());
         });
 
-        TableColumn<CourseModule, String> levelCol = new TableColumn<>("Level");
+        TableColumn<CourseModule, Level> levelCol = new TableColumn<>("Level");
         levelCol.setCellValueFactory(new PropertyValueFactory<>("level"));
+        ObservableList<Level> listLevel = FXCollections.observableArrayList(Level.values());
+        
+        levelCol.setCellValueFactory(new Callback<CellDataFeatures<CourseModule, Level>, ObservableValue<Level>>() {
+            @Override
+
+            public ObservableValue<Level> call(CellDataFeatures<CourseModule, Level> param) {
+                CourseModule course = param.getValue();
+
+                Object levelCode = course.getLevel();
+
+                Level level = Level.getByCode(levelCode);
+
+                return new SimpleObjectProperty<Level>(level);
+            }
+
+        });
+
+        levelCol.setCellFactory(ComboBoxTableCell.forTableColumn(listLevel));
+        levelCol.setOnEditCommit((CellEditEvent<CourseModule, Level> event) -> {
+            TablePosition<CourseModule, Level> pos = event.getTablePosition();
+
+            Level newStatus = event.getNewValue();
+
+            int row = pos.getRow();
+            CourseModule course = event.getTableView().getItems().get(row);
+
+            databaseCourses.updateCourseModuleObject("Level", newStatus, course.getContentId());
+
+            course.setStatus(newStatus.getCode());
+        });
         //Editen met combobox
 
 
