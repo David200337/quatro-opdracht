@@ -23,8 +23,8 @@ public class MainView extends Application {
         CoursesView coursesView = new CoursesView();
         UsersView usersView = new UsersView();
         WebcastsView webcastsView = new WebcastsView();
-        
-        //Names and studentnumbers in the title bar
+
+        // Names and studentnumbers in the title bar
         primaryStage.setTitle("David van Mourik - 2174508 , Tristan Maltha - 2170581 , Janne Sterk - 2173624");
 
         // Instantiate higher level layout
@@ -65,7 +65,8 @@ public class MainView extends Application {
         webcastsMenuButton.getStyleClass().add("menu-button");
 
         // Add elements to menu layout and set some padding
-        menu.getChildren().addAll(codecademyLogoImageView, generalMenuButton, usersMenuButton, coursesMenuButton, webcastsMenuButton);
+        menu.getChildren().addAll(codecademyLogoImageView, generalMenuButton, usersMenuButton, coursesMenuButton,
+                webcastsMenuButton);
         menu.setPadding(new Insets(0, 0, 0, 15));
 
         // Add menu to layout
@@ -81,7 +82,11 @@ public class MainView extends Application {
         });
 
         usersMenuButton.setOnAction(e -> {
-            layout.setCenter(usersView.getView());
+            try {
+                layout.setCenter(usersView.getView());
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
         });
         
         webcastsMenuButton.setOnAction(e -> {

@@ -9,6 +9,8 @@ import src.domain.Student;
 
 public class DatabaseStudent extends Database {
     private ObservableList<Student> students;
+    private int numberOfFemales;
+    private int numberOfMales;
     
     
     public DatabaseStudent(String connectionUrl) {
@@ -81,5 +83,39 @@ public class DatabaseStudent extends Database {
         } catch (Exception e){
             e.printStackTrace();
         }
-    }                                   
+    }  
+    
+    public int getNumberOfFemales() throws Exception {
+        connect();
+
+        String sql = "SELECT COUNT(*) AS NumberOfFemales FROM Student WHERE Gender = 'Female'";
+        statement = connection.createStatement();
+
+        // Run query
+        resultSet = statement.executeQuery(sql);
+
+        // Save data
+        while (resultSet.next()) {
+            numberOfFemales = resultSet.getInt("NumberOfFemales");
+        }
+
+        return numberOfFemales;
+    }
+
+    public int getNumberOfMales() throws Exception {
+        connect();
+
+        String sql = "SELECT COUNT(*) AS NumberOfMales FROM Student WHERE Gender = 'Male'";
+        statement = connection.createStatement();
+
+        // Run query
+        resultSet = statement.executeQuery(sql);
+
+        // Save data
+        while (resultSet.next()) {
+            numberOfMales = resultSet.getInt("NumberOfMales");
+        }
+
+        return numberOfMales;
+    }
 }

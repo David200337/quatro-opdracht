@@ -120,7 +120,6 @@ public class UsersDetailView {
         certificateGrade.setCellValueFactory(new PropertyValueFactory<>("grade"));
 
 
-
         registrationList.setItems(databaseRegistration.getCompletedRegistrations());
         registrationList.getColumns().addAll(courseNameCol, registrationDateCol, certificateIdCol, certificateStaffName, certificateGrade);
 

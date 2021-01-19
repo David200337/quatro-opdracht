@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -45,7 +46,7 @@ public class UsersView {
         usersDetailView = new UsersDetailView();
     }
 
-    public Parent getView() {
+    public Parent getView() throws Exception {
         VBox layout = new VBox();
         HBox topLayout = new HBox(10);
         Region filler = new Region(); 
@@ -245,10 +246,18 @@ public class UsersView {
         usersTableView.setItems(databaseStudent.getStudents());
         usersTableView.getColumns().addAll(studentNameColumn, studentEmailColumn, studentDateOfBirthColumn, studentGenderColumn, studentAddressColumn, studentPostalCodeColumn, studentCityColumn, studentCountryColumn);
 
+        //Pie chart females/males
+        ObservableList<PieChart.Data> pieChartGender =
+                FXCollections.observableArrayList(
+                new PieChart.Data("Female", databaseStudent.getNumberOfFemales()),
+                new PieChart.Data("Male", databaseStudent.getNumberOfMales()));
+        final PieChart chart = new PieChart(pieChartGender);
+        chart.setTitle("Chart of ditribution of gender");
+
         // Add layout
         HBox.setHgrow(filler, Priority.ALWAYS);
         topLayout.getChildren().addAll(titleLabel, filler, addUserButton, removeUserButton, detailUserButton);
-        layout.getChildren().addAll(topLayout, usersTableView);
+        layout.getChildren().addAll(topLayout, usersTableView, chart);
         layout.setPadding(new Insets(10, 10, 10, 15));
         
     
