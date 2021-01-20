@@ -12,6 +12,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
@@ -252,7 +253,9 @@ public class UsersView {
                 new PieChart.Data("Female", databaseStudent.getNumberOfFemales()),
                 new PieChart.Data("Male", databaseStudent.getNumberOfMales()));
         final PieChart chart = new PieChart(pieChartGender);
-        chart.setTitle("Chart of ditribution of gender");
+        chart.setTitle("Chart of distribution of gender");
+        chart.setLabelLineLength(10);
+        chart.setLegendSide(Side.LEFT);
 
         // Add layout
         HBox.setHgrow(filler, Priority.ALWAYS);

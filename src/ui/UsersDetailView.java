@@ -20,6 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import src.domain.CourseModule;
 import src.domain.Registration;
 import src.domain.Student;
 
@@ -154,7 +155,7 @@ public class UsersDetailView {
             } 
         });
         
-       
+   
 
         TableColumn<Registration, String> regCourseNameCol = new TableColumn<>("Course");
         regCourseNameCol.setCellValueFactory(new PropertyValueFactory<>("courseName"));

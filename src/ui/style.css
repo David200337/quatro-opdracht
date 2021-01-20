@@ -41,3 +41,6 @@
     -fx-font-family: 'Montserrat';
     -fx-font-weight: 700;
 }
+
+.default-color0.chart-pie { -fx-pie-color: #4982ee; }
+.default-color1.chart-pie { -fx-pie-color: #b1adadef; }

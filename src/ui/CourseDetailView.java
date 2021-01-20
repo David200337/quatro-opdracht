@@ -210,6 +210,7 @@ public class CourseDetailView {
         });
 
         Button removeRecommendation = new Button("Remove");
+        
         removeRecommendation.setOnAction((event) -> {
             try{
                 CourseModule recommendation = recommendedCourseList.getSelectionModel().getSelectedItem();

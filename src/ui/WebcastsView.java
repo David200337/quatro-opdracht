@@ -6,7 +6,7 @@ import src.domain.Status;
 import src.domain.Webcast;
 import src.validators.URLValidator;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import javafx.beans.property.SimpleObjectProperty;
@@ -33,7 +33,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.ButtonType;
-
 public class WebcastsView {
     DatabaseWebcast databaseWebcasts;
     WebcastAddView webcastsAddView;
@@ -125,8 +124,11 @@ public class WebcastsView {
             databaseWebcasts.updateWebcastString("Duration", t.getNewValue(), webcast.getContentId());
         });
 
-        TableColumn<Webcast, Date> publicationDateColumn = new TableColumn<>("Publication Date");
+        TableColumn<Webcast, LocalDate> publicationDateColumn = new TableColumn<>("Publication Date");
         publicationDateColumn.setCellValueFactory(new PropertyValueFactory<>("publicationDate"));
+
+
+      
 
         TableColumn<Webcast, Status> statusColumn = new TableColumn<>("Status");
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
