@@ -38,6 +38,8 @@ public class ModuleAddView {
     }
 
     public Parent getView(CourseModule selectedCourseModule) throws Exception {
+        // TODO: Rewrite to new structure
+
         VBox layout = new VBox();
 
         Label titleLabel = new Label("Add Module");

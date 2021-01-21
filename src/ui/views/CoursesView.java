@@ -1,4 +1,4 @@
-package src.ui;
+package src.ui.views;
 
 import java.util.Optional;
 
@@ -7,7 +7,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -22,6 +21,7 @@ import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -30,98 +30,40 @@ import src.db.DatabaseCourseModule;
 import src.domain.CourseModule;
 import src.domain.EditingCell;
 import src.domain.Level;
+import src.ui.GUI;
 
 public class CoursesView {
     private DatabaseCourseModule databaseCourses;
-    private CourseAddView courseAddView;
-    private CourseDetailView courseDetailView;
-    TableView<CourseModule> coursesTableView = new TableView<>();
-
+    private Label viewTitleLabel;
+    private Button addCourseButton;
+    private Button viewDetailsButton;
+    private Button removeCourseButton;
+    private TableView<CourseModule> coursesTableView;
+    private Alert alert;
+    private Region region;
+    private HBox topLayout;
+    private VBox layout;
 
     public CoursesView() {
         databaseCourses = new DatabaseCourseModule("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
-        // databaseCourses.loadCourseModules();
         databaseCourses.loadCourse();
-        courseAddView = new CourseAddView();
-        courseDetailView = new CourseDetailView();
+        
+        viewTitleLabel = new Label("Courses");
+        addCourseButton = new Button("Add");
+        viewDetailsButton = new Button("Go to details");
+        removeCourseButton = new Button("Delete");
+        coursesTableView = new TableView<>();
+
+        region = new Region();
+        topLayout = new HBox(10);
+        layout = new VBox(10);
     }
 
-    public Parent getView() {
-        VBox layout = new VBox();
-        HBox topLayout = new HBox(10);
-        Region filler = new Region(); 
+    private void configureNodes() {
+        viewTitleLabel.getStyleClass().add("view-title");
 
-        Label titleLabel = new Label("Courses");
-        titleLabel.getStyleClass().add("view-title");
-        titleLabel.setPadding(new Insets(10, 10, 10, 15));
-
-        Button addCourseButton = new Button("Add");
-        Button detailCourseButton = new Button("Go to details");
-        Button removeCourseButton = new Button("Delete");
-
-
-
-        addCourseButton.setOnAction(e -> {
-            layout.getChildren().clear();
-            layout.getChildren().add(courseAddView.getView());
-        });
-
-
-        detailCourseButton.setOnAction((event) -> {
-            try{
-                CourseModule courseModule = coursesTableView.getSelectionModel().getSelectedItem();
-                
-                if(courseModule == null){
-                    Alert missingAlert = new Alert(AlertType.ERROR);
-                    missingAlert.setTitle("Error");
-                    missingAlert.setHeaderText("Missing course");
-                    missingAlert.setContentText("You didn't select a course!");
-                    missingAlert.showAndWait();
-                } else{
-                     layout.getChildren().clear();
-                    layout.getChildren().add(courseDetailView.getView(courseModule));
-                }
-               
-	            
-            }catch(Exception e) {
-                e.printStackTrace();
-            } 
-        });
-
-        removeCourseButton.setOnAction((event) -> {
-            try{
-                CourseModule courseModule = coursesTableView.getSelectionModel().getSelectedItem();
-
-                if(courseModule == null){
-                    Alert missingAlert = new Alert(AlertType.ERROR);
-                    missingAlert.setTitle("Error");
-                    missingAlert.setHeaderText("Missing course");
-                    missingAlert.setContentText("You didn't select a course!");
-                    missingAlert.showAndWait();
-                } else{
-                    Alert removeAlert = new Alert(AlertType.CONFIRMATION);
-                    removeAlert.setTitle("Delete");
-                    removeAlert.setHeaderText("Are you sure you want to delete this course?");
-                    removeAlert.setContentText("");
-                    
-
-                    Optional<ButtonType> result = removeAlert.showAndWait();
-                    if(!result.isPresent() || result.get() != ButtonType.OK) {
-                        
-                    } else {
-                        
-                        coursesTableView.getItems().remove(courseModule);
-                        databaseCourses.deleteCourse(courseModule);
-                    }
-                }
-                
-            }catch(Exception e) {
-                e.printStackTrace();
-            } 
-        });
-
-        
         coursesTableView.setEditable(true);
+
         Callback<TableColumn<CourseModule, String>, TableCell<CourseModule, String>> stringCellFactory = (TableColumn<CourseModule, String> param) -> new EditingCell<CourseModule>();
 
         TableColumn<CourseModule, String> courseNameCol = new TableColumn<>("Course Name");
@@ -163,7 +105,6 @@ public class CoursesView {
         
         levelCol.setCellValueFactory(new Callback<CellDataFeatures<CourseModule, Level>, ObservableValue<Level>>() {
             @Override
-
             public ObservableValue<Level> call(CellDataFeatures<CourseModule, Level> param) {
                 CourseModule course = param.getValue();
 
@@ -173,7 +114,6 @@ public class CoursesView {
 
                 return new SimpleObjectProperty<Level>(level);
             }
-
         });
 
         levelCol.setCellFactory(ComboBoxTableCell.forTableColumn(listLevel));
@@ -189,21 +129,80 @@ public class CoursesView {
 
             course.setStatus(newStatus.getCode());
         });
-        //Editen met combobox
-
 
         coursesTableView.setItems(databaseCourses.getCourseModules());
         coursesTableView.getColumns().addAll(courseNameCol, subjectCol, introductionTextCol, levelCol);
+    }
 
-
-        // Add layout
-        HBox.setHgrow(filler, Priority.ALWAYS);
-        topLayout.getChildren().addAll(titleLabel, filler, addCourseButton, removeCourseButton, detailCourseButton);
-        layout.getChildren().addAll(topLayout, coursesTableView);
+    private void configureLayout() {
+        HBox.setHgrow(region, Priority.ALWAYS);
+        topLayout.getChildren().addAll(viewTitleLabel, region, addCourseButton, viewDetailsButton, removeCourseButton);
         layout.setPadding(new Insets(10, 10, 10, 15));
+        layout.getChildren().addAll(topLayout, coursesTableView);
+    }
 
+    private void handleActions() {
+        addCourseButton.setOnAction(e -> {
+            GUI.getLayout().setCenter(new CourseAddView().getView());
+            System.out.println("Add course");
+        });
 
+        viewDetailsButton.setOnAction(e -> {
+            try{
+                CourseModule courseModule = coursesTableView.getSelectionModel().getSelectedItem();
+                
+                if(courseModule == null){
+                    alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Missing course");
+                    alert.setContentText("You didn't select a course!");
+                    alert.showAndWait();
+                } else{
+                    GUI.getLayout().setCenter(new CourseDetailView(courseModule).getView());
+                }
+               
+	            
+            }catch(Exception error) {
+                error.printStackTrace();
+            } 
+        });
 
+        removeCourseButton.setOnAction(e -> {
+            try {
+                CourseModule courseModule = coursesTableView.getSelectionModel().getSelectedItem();
+
+                if (courseModule == null){
+                    alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Missing course");
+                    alert.setContentText("You didn't select a course!");
+                    alert.showAndWait();
+                } else {
+                    alert = new Alert(AlertType.CONFIRMATION);
+                    alert.setTitle("Delete");
+                    alert.setHeaderText("Are you sure you want to delete this course?");
+                    alert.setContentText("");
+                    
+                    Optional<ButtonType> result = alert.showAndWait();
+
+                    if (!result.isPresent() || result.get() != ButtonType.OK) {
+                        // TODO: ??
+                    } else {
+                        coursesTableView.getItems().remove(courseModule);
+                        databaseCourses.deleteCourse(courseModule);
+                    }
+                }
+            }catch(Exception error) {
+                System.out.println(error);
+            } 
+        });
+    }
+
+    public Pane getView() {
+        configureNodes();
+        configureLayout();
+        handleActions();
+        
         return layout;
     }
 }
