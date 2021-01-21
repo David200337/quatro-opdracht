@@ -203,6 +203,10 @@ public class CourseDetailView {
             GUI.getLayout().setCenter(new CoursesView().getView());
         });
 
+        addModuleButton.setOnAction(e -> {
+            GUI.getLayout().setCenter(new ModuleAddView(courseModule).getView());
+        });
+
         addRecommendationButton.setOnAction(e -> {
             GUI.getLayout().setCenter(new RecommendedCourseAddView(courseModule).getView());
         });
