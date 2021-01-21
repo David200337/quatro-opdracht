@@ -106,7 +106,7 @@ public class CourseDetailView {
     private void configureNodes() {
         viewTitleLabel.getStyleClass().add("view-title");
         
-        modulesTitleLabel.getStyleClass().add("view-title");
+        modulesTitleLabel.getStyleClass().add("view-subtitle");
 
         contentIdCol.setCellValueFactory(new PropertyValueFactory<>("contentId"));
 
@@ -176,7 +176,7 @@ public class CourseDetailView {
         modulesCourseTableView.setItems(databaseCourseModule.getCourseModules());
         modulesCourseTableView.getColumns().addAll(contentIdCol, titleCol, versionCol, themeCol, descriptionCol, statusCol, serialNumberCol, creatorCol);
 
-        recommendationsTitleLabel.getStyleClass().add("view-title");
+        recommendationsTitleLabel.getStyleClass().add("view-subtitle");
 
         courseNameCol.setCellValueFactory(new PropertyValueFactory<>("courseName"));
 

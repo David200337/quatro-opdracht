@@ -22,12 +22,19 @@ public class UsersDetailView {
     private Label viewTitleLabel;
     private Button backButton;
     private Label emailLabel;
+    private Label emailValueLabel;
     private Label dateOfBirthLabel;
+    private Label dateOfBirthValueLabel;
     private Label genderLabel;
+    private Label genderValueLabel;
     private Label addressLabel;
+    private Label addressValueLabel;
     private Label postalCodeLabel;
+    private Label postalCodeValueLabel;
     private Label cityLabel;
+    private Label cityValueLabel;
     private Label countryLabel;
+    private Label countryValueLabel;
     private Label registrationsTitleLabel;
     private TableView<Registration> registrationsTableView;
     private TableColumn<Registration, String> regCourseNameCol;
@@ -48,13 +55,20 @@ public class UsersDetailView {
         databaseRegistration = new DatabaseRegistration("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         viewTitleLabel = new Label(student.getName());
         backButton = new Button("Back");
-        emailLabel = new Label("Email: " + student.getEmail());
-        dateOfBirthLabel = new Label("Date of Birth: " + student.getDateOfBirth());
-        genderLabel = new Label("Gender: " + student.getGender());
-        addressLabel = new Label("Address: " + student.getAddress());
-        postalCodeLabel = new Label("Postal Code: " + student.getPostalCode());
-        cityLabel = new Label("City: " + student.getCity());
-        countryLabel = new Label("Country: " + student.getCountry());
+        emailLabel = new Label("Email");
+        emailValueLabel = new Label(student.getEmail());
+        dateOfBirthLabel = new Label("Date of Birth");
+        dateOfBirthValueLabel = new Label(student.getDateOfBirth().toString());
+        genderLabel = new Label("Gender");
+        genderValueLabel = new Label(student.getGender());
+        addressLabel = new Label("Address");
+        addressValueLabel = new Label(student.getAddress());
+        postalCodeLabel = new Label("Postal Code");
+        postalCodeValueLabel = new Label(student.getPostalCode());
+        cityLabel = new Label("City");
+        cityValueLabel = new Label(student.getCity());
+        countryLabel = new Label("Country");
+        countryValueLabel = new Label(student.getCountry());
 
         registrationsTitleLabel = new Label("Registrations");
         registrationsTableView = new TableView<>();
@@ -76,13 +90,20 @@ public class UsersDetailView {
 
     private void configureNodes() {
         viewTitleLabel.getStyleClass().add("view-title");
+        emailLabel.getStyleClass().add("bold-text");
+        dateOfBirthLabel.getStyleClass().add("bold-text");
+        genderLabel.getStyleClass().add("bold-text");
+        addressLabel.getStyleClass().add("bold-text");
+        postalCodeLabel.getStyleClass().add("bold-text");
+        cityLabel.getStyleClass().add("bold-text");
+        countryLabel.getStyleClass().add("bold-text");
 
-        registrationsTitleLabel.getStyleClass().add("view-title");
+        registrationsTitleLabel.getStyleClass().add("view-subtitle");
         regCourseNameCol.setCellValueFactory(new PropertyValueFactory<>("courseName"));
         regRegistrationDateCol.setCellValueFactory(new PropertyValueFactory<>("registrationDate"));
         registrationsTableView.getColumns().addAll(regCourseNameCol, regRegistrationDateCol);
 
-        certificatesTitleLabel.getStyleClass().add("view-title");
+        certificatesTitleLabel.getStyleClass().add("view-subtitle");
         courseNameCol.setCellValueFactory(new PropertyValueFactory<>("courseName"));
         registrationDateCol.setCellValueFactory(new PropertyValueFactory<>("registrationDate"));
         certificateIdCol.setCellValueFactory(new PropertyValueFactory<>("certificateId"));
@@ -97,7 +118,7 @@ public class UsersDetailView {
         topLayout.getChildren().addAll(viewTitleLabel, region, backButton);
 
         layout.setPadding(new Insets(10, 10, 10, 15));
-        layout.getChildren().addAll(topLayout, emailLabel, dateOfBirthLabel, genderLabel, addressLabel, postalCodeLabel, cityLabel, countryLabel, registrationsTitleLabel, registrationsTableView, certificatesTitleLabel, certificatesTableView);
+        layout.getChildren().addAll(topLayout, emailLabel, emailValueLabel, dateOfBirthLabel, dateOfBirthValueLabel, genderLabel, genderValueLabel, addressLabel, addressValueLabel, postalCodeLabel, postalCodeValueLabel, cityLabel, cityValueLabel, countryLabel, countryValueLabel, registrationsTitleLabel, registrationsTableView, certificatesTitleLabel, certificatesTableView);
     }
 
     private void handleActions() {
