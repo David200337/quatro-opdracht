@@ -48,9 +48,9 @@ public class UsersView {
     private TableColumn<Student, String> countryColumn;
     private PieChart genderPieChart;
     private PieChart.Data femaleDataPieChart;
-    private int femaleInteger;
+    private int femalePercentage;
     private PieChart.Data maleDataPieChart;
-    private int maleInteger;
+    private int malePercentage;
     private Alert alert;
     private Region region;
     private HBox topLayout;
@@ -81,15 +81,15 @@ public class UsersView {
 
         // Pie chart
         try {
-            femaleInteger = databaseStudent.getNumberOfFemales();
-            maleInteger = databaseStudent.getNumberOfMales();
+            femalePercentage = databaseStudent.getNumberOfFemales();
+            malePercentage = databaseStudent.getNumberOfMales();
         } catch (Exception e) {
             System.out.println(e);
         }
 
         genderPieChart = new PieChart();
-        femaleDataPieChart = new PieChart.Data("Female", femaleInteger);
-        maleDataPieChart = new PieChart.Data("Male", maleInteger);
+        femaleDataPieChart = new PieChart.Data("Female", femalePercentage);
+        maleDataPieChart = new PieChart.Data("Male", malePercentage);
 
         // Layout
         region = new Region();
