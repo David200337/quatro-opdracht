@@ -181,13 +181,10 @@ public class CoursesView {
                     alert = new Alert(AlertType.CONFIRMATION);
                     alert.setTitle("Delete");
                     alert.setHeaderText("Are you sure you want to delete this course?");
-                    alert.setContentText("");
                     
                     Optional<ButtonType> result = alert.showAndWait();
 
-                    if (!result.isPresent() || result.get() != ButtonType.OK) {
-                        // TODO: ??
-                    } else {
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
                         coursesTableView.getItems().remove(courseModule);
                         databaseCourses.deleteCourse(courseModule);
                     }
