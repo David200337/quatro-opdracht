@@ -15,6 +15,7 @@ public class DatabaseWebcast extends Database{
     public DatabaseWebcast(String connectionUrl) {
         super(connectionUrl);
         this.webcasts = FXCollections.observableArrayList();
+
     }
     
     public void loadWebcasts() {
@@ -64,15 +65,15 @@ public class DatabaseWebcast extends Database{
         try{
             connect();
 
-            String sql = "SELECT TOP 3 Webcast.Title FROM Webcast INNER JOIN ViewStatistics ON Webcast.ContentId = ViewStatistics.ContentId GROUP BY ViewStatistics.ContentId, Webcast.Title ORDER BY COUNT(ViewStatistics.StudentId);";
+            String sql = "SELECT TOP 3 Webcast.Title AS Title FROM Webcast INNER JOIN ViewStatistics ON Webcast.ContentId = ViewStatistics.ContentId GROUP BY ViewStatistics.ContentId, Webcast.Title ORDER BY COUNT(ViewStatistics.StudentId);";
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
 
             
             while(resultSet.next()){
-                String webcastTitle = resultSet.getString("Title");
+                String title = resultSet.getString("Title");
 
-                Webcast webcastTop3 = new Webcast(webcastTitle);
+                Webcast webcastTop3 = new Webcast(title);
 		        webcasts.add(webcastTop3);
             }
         }catch (Exception e) {
@@ -84,6 +85,7 @@ public class DatabaseWebcast extends Database{
         // Return webcasts array
         return webcasts;
     }
+
 
     public void deleteWebcast(Webcast selectedItem) throws SQLException{
         statement.executeUpdate("DELETE FROM Webcast WHERE ContentId = '"+selectedItem.getContentId()+"'");
