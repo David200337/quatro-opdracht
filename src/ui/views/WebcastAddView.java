@@ -101,6 +101,7 @@ public class WebcastAddView {
         urlTextField = new TextField();
         durationLabel = new Label("Duration");
         durationTextField = new TextField();
+        durationTextField.setPromptText("hh:mm:ss");
         creatorLabel = new Label("Creator");
         creatorComboBox = new ComboBox<>();
         creatorsList = FXCollections.observableArrayList();
