@@ -7,6 +7,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -27,6 +28,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import src.db.DatabaseCourseModule;
+import src.db.DatabaseRegistration;
 import src.domain.CourseModule;
 import src.domain.EditingCell;
 import src.domain.Level;
@@ -34,6 +36,7 @@ import src.ui.GUI;
 
 public class CoursesView {
     private DatabaseCourseModule databaseCourses;
+    private DatabaseRegistration databaseRegistrations;
     private Label viewTitleLabel;
     private Button addCourseButton;
     private Button viewDetailsButton;
@@ -44,9 +47,28 @@ public class CoursesView {
     private HBox topLayout;
     private VBox layout;
 
+    private HBox piecharts;
+    private PieChart percentageCertificatesFemalePieChart;
+    private PieChart.Data withCertificateFemaleDataPieChart;
+    private PieChart.Data withoutCertificateFemaleDataPieChart;
+    private int withCertificatePercentageFemale;
+    private int noCertificatePercentageFemale;
+    private float percentageWithCertificateFemale;
+    private float percentageWithoutCertificateFemale;
+
+    private PieChart percentageCertificatesMalePieChart;
+    private PieChart.Data withCertificateMaleDataPieChart;
+    private PieChart.Data withoutCertificateMaleDataPieChart;
+    private int withCertificatePercentageMale;
+    private int noCertificatePercentageMale;
+    private float percentageWithCertificateMale;
+    private float percentageWithoutCertificateMale;
+
     public CoursesView() {
         databaseCourses = new DatabaseCourseModule("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseCourses.loadCourse();
+        databaseRegistrations = new DatabaseRegistration("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
+
         
         viewTitleLabel = new Label("Courses");
         addCourseButton = new Button("Add");
@@ -54,8 +76,39 @@ public class CoursesView {
         removeCourseButton = new Button("Delete");
         coursesTableView = new TableView<>();
 
+        // Pie chart female
+        try {
+            withCertificatePercentageFemale = databaseRegistrations.getNumberOfCertificatesPerGender("Female");
+            noCertificatePercentageFemale = databaseRegistrations.getNumberOfNoneCertificatesPerGender("Female");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        percentageWithCertificateFemale = ((withCertificatePercentageFemale*100/(withCertificatePercentageFemale + noCertificatePercentageFemale)));
+        percentageWithoutCertificateFemale = ((noCertificatePercentageFemale*100/(withCertificatePercentageFemale + noCertificatePercentageFemale)));
+        
+        percentageCertificatesFemalePieChart = new PieChart();
+        withCertificateFemaleDataPieChart = new PieChart.Data("With Certificate (" +percentageWithCertificateFemale+"%)", withCertificatePercentageFemale);
+        withoutCertificateFemaleDataPieChart = new PieChart.Data("Without Certificate ("+percentageWithoutCertificateFemale+"%)", noCertificatePercentageFemale);
+
+        // Pie chart male
+        try {
+            withCertificatePercentageMale = databaseRegistrations.getNumberOfCertificatesPerGender("Male");
+            noCertificatePercentageMale = databaseRegistrations.getNumberOfNoneCertificatesPerGender("Male");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        percentageWithCertificateMale = ((withCertificatePercentageMale*100/(withCertificatePercentageMale + noCertificatePercentageMale)));
+        percentageWithoutCertificateMale = ((noCertificatePercentageMale*100/(withCertificatePercentageMale + noCertificatePercentageMale)));
+        
+        percentageCertificatesMalePieChart = new PieChart();
+        withCertificateMaleDataPieChart = new PieChart.Data("With Certificate (" +percentageWithCertificateMale+"%)", withCertificatePercentageMale);
+        withoutCertificateMaleDataPieChart = new PieChart.Data("Without Certificate ("+percentageWithoutCertificateMale+"%)", noCertificatePercentageMale);
+
         region = new Region();
         topLayout = new HBox(10);
+        piecharts = new HBox(10);
         layout = new VBox(10);
     }
 
@@ -132,13 +185,22 @@ public class CoursesView {
 
         coursesTableView.setItems(databaseCourses.getCourseModules());
         coursesTableView.getColumns().addAll(courseNameCol, subjectCol, introductionTextCol, levelCol);
+
+        //Pie chart female
+        percentageCertificatesFemalePieChart.getData().add(withCertificateFemaleDataPieChart);
+        percentageCertificatesFemalePieChart.getData().add(withoutCertificateFemaleDataPieChart);
+
+        //Pie chart male
+        percentageCertificatesMalePieChart.getData().add(withCertificateMaleDataPieChart);
+        percentageCertificatesMalePieChart.getData().add(withoutCertificateMaleDataPieChart);
     }
 
     private void configureLayout() {
         HBox.setHgrow(region, Priority.ALWAYS);
         topLayout.getChildren().addAll(viewTitleLabel, region, addCourseButton, viewDetailsButton, removeCourseButton);
+        piecharts.getChildren().addAll(percentageCertificatesFemalePieChart, percentageCertificatesMalePieChart);
         layout.setPadding(new Insets(10, 10, 10, 15));
-        layout.getChildren().addAll(topLayout, coursesTableView);
+        layout.getChildren().addAll(topLayout, coursesTableView, piecharts);
     }
 
     private void handleActions() {

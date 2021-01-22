@@ -11,6 +11,8 @@ public class DatabaseRegistration extends Database {
     //Student, Course, Registration & Certificate
     private ObservableList<Registration> completedRegistrationList;
     private ObservableList<Registration> registrationList;
+    private int numberOfCertificates;
+    private int numberOfNoneCertificates;
     
     public DatabaseRegistration(String connectionUrl) {
         super(connectionUrl);
@@ -88,6 +90,40 @@ public class DatabaseRegistration extends Database {
 
         public void insertRegistration(int studentId, String courseName, Date registrationDate) throws SQLException{
             statement.executeUpdate("INSERT INTO Registration(StudentId, CourseId, RegistrationDate, CertificateId) VALUES ('"+studentId+"', (SELECT CourseId FROM Course WHERE CourseName = '"+courseName+"'),'"+registrationDate+"', NULL)");
+        }
+
+        public int getNumberOfCertificatesPerGender(String gender) throws Exception {
+            connect();
+
+            String sql = "(SELECT COUNT(*) AS NumberOfCertificates FROM Registration INNER JOIN Student ON Registration.StudentId = Student.StudentId WHERE Student.Gender = '"+gender+"' AND Registration.CertificateId IS NOT NULL) ";
+            statement = connection.createStatement();
+
+            // Run query
+            resultSet = statement.executeQuery(sql);
+
+            // Save data
+            while (resultSet.next()) {
+                numberOfCertificates = resultSet.getInt("NumberOfCertificates");
+            }
+
+            return numberOfCertificates;
+        }
+
+        public int getNumberOfNoneCertificatesPerGender(String gender) throws Exception {
+            connect();
+
+            String sql = "(SELECT COUNT(*) AS NumberOfNoneCertificates FROM Registration INNER JOIN Student ON Registration.StudentId = Student.StudentId WHERE Student.Gender = '"+gender+"' AND Registration.CertificateId IS NULL) ";
+            statement = connection.createStatement();
+
+            // Run query
+            resultSet = statement.executeQuery(sql);
+
+            // Save data
+            while (resultSet.next()) {
+                numberOfNoneCertificates = resultSet.getInt("NumberOfNoneCertificates");
+            }
+
+            return numberOfNoneCertificates;
         }
 
        

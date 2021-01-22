@@ -27,6 +27,8 @@ public class ModuleDetailView {
     private Label statusLabel;
     private Label serialNumberLabel;
     private Label creatorNameLabel;
+    private Label creatorEmailLabel;
+    private Label creatorOrganisationLabel;
     private Label nothingLabel;
     private Label progressBarLabel;
     private Label progressBarNumberLabel;
@@ -55,6 +57,8 @@ public class ModuleDetailView {
         statusLabel = new Label("Status: " + courseModule.getStatus());
         serialNumberLabel = new Label("SerialNumber: " + courseModule.getModuleSerialNumber());
         creatorNameLabel = new Label("Creator Name: " + courseModule.getCreatorName());
+        creatorEmailLabel = new Label("Creator E-mail: " + courseModule.getCreatorEmail());
+        creatorOrganisationLabel = new Label ("Creator Organisation: " + courseModule.getCreatorOrganisation());
 
         nothingLabel = new Label("");
 
@@ -78,6 +82,8 @@ public class ModuleDetailView {
         statusLabel.getStyleClass().add("bold-text");
         serialNumberLabel.getStyleClass().add("bold-text");
         creatorNameLabel.getStyleClass().add("bold-text");
+        creatorEmailLabel.getStyleClass().add("bold-text");
+        creatorOrganisationLabel.getStyleClass().add("bold-text");
         progressBarLabel.getStyleClass().add("bold-text");
 
     }
@@ -88,7 +94,7 @@ public class ModuleDetailView {
 
         layout.setPadding(new Insets(10, 10, 10, 15));
         layout.getChildren().addAll(topLayout, titleLabel, versionLabel, themeLabel, descriptionLabel, statusLabel,
-                serialNumberLabel, creatorNameLabel,nothingLabel, progressBarLabel, moduleProgressBar, progressBarNumberLabel);
+                serialNumberLabel, creatorNameLabel,creatorEmailLabel, creatorOrganisationLabel, nothingLabel, progressBarLabel, moduleProgressBar, progressBarNumberLabel);
     }
 
     private void handleActions() {
