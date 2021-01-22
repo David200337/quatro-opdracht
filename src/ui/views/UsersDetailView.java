@@ -61,7 +61,6 @@ public class UsersDetailView {
         databaseRegistration = new DatabaseRegistration("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         viewTitleLabel = new Label(student.getName());
         backButton = new Button("Back");
-<<<<<<< HEAD
         moduleProgressButton = new Button("Module Progress");
         emailLabel = new Label("Email: " + student.getEmail());
         dateOfBirthLabel = new Label("Date of Birth: " + student.getDateOfBirth());
@@ -70,22 +69,6 @@ public class UsersDetailView {
         postalCodeLabel = new Label("Postal Code: " + student.getPostalCode());
         cityLabel = new Label("City: " + student.getCity());
         countryLabel = new Label("Country: " + student.getCountry());
-=======
-        emailLabel = new Label("Email");
-        emailValueLabel = new Label(student.getEmail());
-        dateOfBirthLabel = new Label("Date of Birth");
-        dateOfBirthValueLabel = new Label(student.getDateOfBirth().toString());
-        genderLabel = new Label("Gender");
-        genderValueLabel = new Label(student.getGender());
-        addressLabel = new Label("Address");
-        addressValueLabel = new Label(student.getAddress());
-        postalCodeLabel = new Label("Postal Code");
-        postalCodeValueLabel = new Label(student.getPostalCode());
-        cityLabel = new Label("City");
-        cityValueLabel = new Label(student.getCity());
-        countryLabel = new Label("Country");
-        countryValueLabel = new Label(student.getCountry());
->>>>>>> 7ebd610f74a6629c52f103ca2cb0651b0dfda087
 
         registrationsTitleLabel = new Label("Registrations");
         addRegistrationButton = new Button("Add");
@@ -143,11 +126,7 @@ public class UsersDetailView {
 
 
         layout.setPadding(new Insets(10, 10, 10, 15));
-<<<<<<< HEAD
         layout.getChildren().addAll(topLayout, emailLabel, dateOfBirthLabel, genderLabel, addressLabel, postalCodeLabel, cityLabel, countryLabel, registrationsLayout, registrationsTableView, certificatesTitleLabel, certificatesTableView);
-=======
-        layout.getChildren().addAll(topLayout, emailLabel, emailValueLabel, dateOfBirthLabel, dateOfBirthValueLabel, genderLabel, genderValueLabel, addressLabel, addressValueLabel, postalCodeLabel, postalCodeValueLabel, cityLabel, cityValueLabel, countryLabel, countryValueLabel, registrationsTitleLabel, registrationsTableView, certificatesTitleLabel, certificatesTableView);
->>>>>>> 7ebd610f74a6629c52f103ca2cb0651b0dfda087
     }
 
     private void handleActions() {
