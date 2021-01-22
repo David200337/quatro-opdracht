@@ -6,7 +6,6 @@ import src.domain.ViewStatistics;
 
 public class DatabaseViewStatistics extends Database {
     private ObservableList<ViewStatistics> percentageModuleList;
-    private ObservableList<ViewStatistics> percentageAllAccounts;
     private double totalPercentage;
     // private double totalNumber;
 

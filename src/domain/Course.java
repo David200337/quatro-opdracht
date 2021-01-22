@@ -19,11 +19,25 @@ public class Course {
         this.subject = subject;
         this.introductionText = introductionText;
         this.level = level;
-        this.modules = new ArrayList<>();
-        this.interestingOtherCourses = new ArrayList<>();
+        this.setModules(new ArrayList<>());
+        this.setInterestingOtherCourses(new ArrayList<>());
     }
 
-    
+    public ArrayList<CourseModule> getInterestingOtherCourses() {
+        return interestingOtherCourses;
+    }
+
+    public void setInterestingOtherCourses(ArrayList<CourseModule> interestingOtherCourses) {
+        this.interestingOtherCourses = interestingOtherCourses;
+    }
+
+    public ArrayList<Module> getModules() {
+        return modules;
+    }
+
+    public void setModules(ArrayList<Module> modules) {
+        this.modules = modules;
+    }
 
     public Module getModule() {
         return module;
@@ -32,10 +46,6 @@ public class Course {
     public void setModule(Module module) {
         this.module = module;
     }
-
-    // public void putModuleInList(Module module) {
-    //     modules.add(module);
-    // }
     
 
 
@@ -47,9 +57,6 @@ public class Course {
         this.courseId = courseId;
     }
 
-    // public void addInterestingOtherCourse(Course course) {
-    //     this.interestingOtherCourses.add(course);
-    // }
 
     public String getName(){
         return courseName;

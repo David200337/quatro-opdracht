@@ -16,7 +16,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.ComboBoxTableCell;
-import javafx.scene.control.cell.ProgressBarTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -24,17 +23,14 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import src.db.DatabaseCourseModule;
-import src.db.DatabaseViewStatistics;
 import src.domain.CourseModule;
 import src.domain.EditingCell;
 import src.domain.Status;
-import src.domain.ViewStatistics;
 import src.ui.GUI;
 
 public class CourseDetailView {
     private CourseModule courseModule;
     private DatabaseCourseModule databaseCourseModule;
-    private DatabaseViewStatistics databaseViewStatistics;
     private Label viewTitleLabel;
     private Button backButton;
     private Label subjectLabel;

@@ -8,15 +8,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import src.db.DatabaseCourseModule;
 import src.db.DatabaseViewStatistics;
 import src.domain.CourseModule;
 import src.ui.GUI;
 
 public class ModuleDetailView {
-    private CourseModule courseModule;
-    private DatabaseCourseModule databaseCourseModule;
     private DatabaseViewStatistics databaseViewStatistics;
+    private CourseModule courseModule;
 
     private Button backButton;
     private Label viewTitleLabel;

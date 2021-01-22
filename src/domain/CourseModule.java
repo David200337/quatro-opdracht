@@ -2,10 +2,6 @@ package src.domain;
 
 import java.sql.Date;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-
 public class CourseModule {
     private Module module;
     private Course course;

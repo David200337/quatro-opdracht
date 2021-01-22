@@ -2,7 +2,6 @@ package src.domain;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDate;
 
 public class Webcast {
     private String url;
