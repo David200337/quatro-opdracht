@@ -14,6 +14,11 @@ public class GeneralView {
         viewTitleLabel = new Label("General");
         welcomeLabel = new Label("Hello World!");
         layout = new VBox(10);
+        databaseWebcast = new DatabaseWebcast("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
+        databaseWebcast.loadWebcastTop3();
+
+        webcastTop3TableView = new TableView<>();
+        titleColumn = new TableColumn<>("Title");
     }
 
     private void configureNodes() {
