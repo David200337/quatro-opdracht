@@ -187,10 +187,12 @@ public class CoursesView {
         coursesTableView.getColumns().addAll(courseNameCol, subjectCol, introductionTextCol, levelCol);
 
         //Pie chart female
+        percentageCertificatesFemalePieChart.setTitle("Female certificate ratio");
         percentageCertificatesFemalePieChart.getData().add(withCertificateFemaleDataPieChart);
         percentageCertificatesFemalePieChart.getData().add(withoutCertificateFemaleDataPieChart);
 
         //Pie chart male
+        percentageCertificatesMalePieChart.setTitle("Male certificate ratio");
         percentageCertificatesMalePieChart.getData().add(withCertificateMaleDataPieChart);
         percentageCertificatesMalePieChart.getData().add(withoutCertificateMaleDataPieChart);
     }
