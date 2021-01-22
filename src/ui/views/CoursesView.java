@@ -144,7 +144,6 @@ public class CoursesView {
     private void handleActions() {
         addCourseButton.setOnAction(e -> {
             GUI.getLayout().setCenter(new CourseAddView().getView());
-            System.out.println("Add course");
         });
 
         viewDetailsButton.setOnAction(e -> {

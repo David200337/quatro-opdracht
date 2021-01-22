@@ -34,7 +34,8 @@ public class RecommendedCourseAddView {
 
     public RecommendedCourseAddView(CourseModule courseModule) {
         this.courseModule = courseModule;
-        databaseCourseModule = new DatabaseCourseModule("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
+        databaseCourseModule = new DatabaseCourseModule(
+                "jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseCourseModule.loadCourseModules();
         fcb = new FillComboBox("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
 
@@ -50,12 +51,11 @@ public class RecommendedCourseAddView {
         layout = new VBox(10);
     }
 
-
     private void configureNodes() {
         viewTitleLabel.getStyleClass().add("view-title");
 
         try {
-            fcb.fillListFromDataBaseString(listCourses, "CourseName","Course");
+            fcb.fillListFromDataBaseString(listCourses, "CourseName", "Course");
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -66,14 +66,18 @@ public class RecommendedCourseAddView {
     private void configureLayout() {
         HBox.setHgrow(region, Priority.ALWAYS);
         topLayout.getChildren().addAll(viewTitleLabel, region, closeButton);
-        
+
         layout.setPadding(new Insets(10, 10, 10, 15));
         layout.getChildren().addAll(topLayout, recommendationName, courseComboBox, insertButton);
     }
 
     private void handleActions() {
         closeButton.setOnAction(e -> {
-            GUI.getLayout().setCenter(new CourseDetailView(courseModule).getView());
+            try {
+                GUI.getLayout().setCenter(new CourseDetailView(courseModule).getView());
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
         });
 
         insertButton.setOnAction(e -> {

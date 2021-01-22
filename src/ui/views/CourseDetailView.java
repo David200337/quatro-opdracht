@@ -5,15 +5,18 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.ComboBoxTableCell;
+import javafx.scene.control.cell.ProgressBarTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -21,14 +24,17 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import src.db.DatabaseCourseModule;
+import src.db.DatabaseViewStatistics;
 import src.domain.CourseModule;
 import src.domain.EditingCell;
 import src.domain.Status;
+import src.domain.ViewStatistics;
 import src.ui.GUI;
 
 public class CourseDetailView {
     private CourseModule courseModule;
     private DatabaseCourseModule databaseCourseModule;
+    private DatabaseViewStatistics databaseViewStatistics;
     private Label viewTitleLabel;
     private Button backButton;
     private Label subjectLabel;
@@ -37,6 +43,7 @@ public class CourseDetailView {
     private Label modulesTitleLabel;
     private Button addModuleButton;
     private Button deleteModuleButton;
+    private Button viewDetailsButton;
     private TableView<CourseModule> modulesCourseTableView;
     private Callback<TableColumn<CourseModule, String>, TableCell<CourseModule, String>> stringCellFactory;
     private TableColumn<CourseModule, String> contentIdCol;
@@ -61,10 +68,13 @@ public class CourseDetailView {
     private HBox recommendationsLayout;
     private VBox layout;
     
-    public CourseDetailView(CourseModule courseModule) {
+    public CourseDetailView(CourseModule courseModule) throws Exception {
         this.courseModule = courseModule;
         databaseCourseModule = new DatabaseCourseModule("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
-        
+        databaseCourseModule.loadCourseModules();
+        // databaseViewStatistics = new DatabaseViewStatistics("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
+        // databaseViewStatistics.loadPercentageAllAccounts(courseModule.getContentId());
+
         viewTitleLabel = new Label(courseModule.getCourseName());
         backButton = new Button("Back");
         subjectLabel = new Label("Subject: " + courseModule.getSubject());
@@ -74,6 +84,7 @@ public class CourseDetailView {
         modulesTitleLabel = new Label("Modules");
         addModuleButton = new Button("Add");
         deleteModuleButton = new Button("Delete");
+        viewDetailsButton = new Button("See Progress");
 
         recommendationsTitleLabel = new Label("Recommendations");
         addRecommendationButton = new Button("Add");
@@ -90,6 +101,12 @@ public class CourseDetailView {
         statusCol = new TableColumn<>("Status");
         serialNumberCol = new TableColumn<>("Serialnumber");
         creatorCol = new TableColumn<>("Creator");
+        
+
+        // modulesProgressTableView = new TableView<>();
+        // moduleTitleCol = new TableColumn<>("Title");
+        // moduleVersionCol = new TableColumn<>("Version");
+        // percentageCol = new TableColumn<>("Progress all accounts");
         
         recommendedModulesCourseTableView = new TableView<>();
         courseNameCol = new TableColumn<>("Course Name");
@@ -172,9 +189,21 @@ public class CourseDetailView {
 
         serialNumberCol.setCellValueFactory(new PropertyValueFactory<>("moduleSerialNumber"));
         creatorCol.setCellValueFactory(new PropertyValueFactory<>("creatorName"));
-
+        
         modulesCourseTableView.setItems(databaseCourseModule.getCourseModules());
         modulesCourseTableView.getColumns().addAll(contentIdCol, titleCol, versionCol, themeCol, descriptionCol, statusCol, serialNumberCol, creatorCol);
+
+
+        // modulesProgress.getStyleClass().add("view-subtitle");
+        // moduleTitleCol.setCellValueFactory(new PropertyValueFactory<>("moduleTitle"));
+        // moduleVersionCol.setCellValueFactory(new PropertyValueFactory<>("versionNr"));
+
+        // percentageCol.setCellValueFactory(new PropertyValueFactory<>("totalPercentage"));
+        // percentageCol.setCellFactory(ProgressBarTableCell.<ViewStatistics> forTableColumn());
+        
+        // modulesProgressTableView.setItems(databaseViewStatistics.getPercentageAllAccounts());
+        // modulesProgressTableView.getColumns().addAll(moduleTitleCol, moduleVersionCol, percentageCol);
+
 
         recommendationsTitleLabel.getStyleClass().add("view-subtitle");
 
@@ -189,7 +218,7 @@ public class CourseDetailView {
         topLayout.getChildren().addAll(viewTitleLabel, region, backButton);
 
         HBox.setHgrow(modulesRegion, Priority.ALWAYS);
-        modulesLayout.getChildren().addAll(modulesTitleLabel, modulesRegion, addModuleButton, deleteModuleButton);
+        modulesLayout.getChildren().addAll(modulesTitleLabel, modulesRegion, addModuleButton, viewDetailsButton, deleteModuleButton);
         
         HBox.setHgrow(recommendationsRegion, Priority.ALWAYS);
         recommendationsLayout.getChildren().addAll(recommendationsTitleLabel, recommendationsRegion, addRecommendationButton, deleteRecommendationButton);
@@ -209,6 +238,26 @@ public class CourseDetailView {
 
         addRecommendationButton.setOnAction(e -> {
             GUI.getLayout().setCenter(new RecommendedCourseAddView(courseModule).getView());
+        });
+
+        viewDetailsButton.setOnAction(e -> {
+            try{
+                CourseModule courseModule = modulesCourseTableView.getSelectionModel().getSelectedItem();
+                
+                if(courseModule == null){
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Missing course");
+                    alert.setContentText("You didn't select a module!");
+                    alert.showAndWait();
+                } else{
+                    GUI.getLayout().setCenter(new ModuleDetailView(courseModule).getView());
+                }
+               
+	            
+            }catch(Exception error) {
+                error.printStackTrace();
+            } 
         });
     }
 

@@ -63,7 +63,8 @@ public class ModuleAddView {
 
     public ModuleAddView(CourseModule courseModule) {
         this.courseModule = courseModule;
-        databaseCourseModule = new DatabaseCourseModule("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
+        databaseCourseModule = new DatabaseCourseModule(
+                "jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseCourseModule.loadCourseModules();
         fcb = new FillComboBox("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
 
@@ -82,16 +83,16 @@ public class ModuleAddView {
         publicationDateLabel = new Label("Publication Date");
         datePicker = new DatePicker();
         datePickerConverter = new DatePickerConverter("yyyy-MM-dd");
-        dayCellFactory = new Callback<DatePicker, DateCell>(){
-            public DateCell call(final DatePicker datePicker){
-                return new DateCell(){
+        dayCellFactory = new Callback<DatePicker, DateCell>() {
+            public DateCell call(final DatePicker datePicker) {
+                return new DateCell() {
                     @Override
-                    public void updateItem(LocalDate item, boolean empty){
+                    public void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
 
-                        //Show weekends in blue color
+                        // Show weekends in blue color
                         DayOfWeek day = DayOfWeek.from(item);
-                        if(day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY){
+                        if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY) {
                             this.setTextFill(Color.BLUE);
                         }
                     }
@@ -122,13 +123,13 @@ public class ModuleAddView {
         statusComboBox.getItems().setAll(Status.values());
 
         try {
-            fcb.fillListFromDataBaseString(creatorList, "Name","ContentCreator");
+            fcb.fillListFromDataBaseString(creatorList, "Name", "ContentCreator");
         } catch (Exception e) {
             System.out.println(e);
         }
 
         creatorComboBox.setItems(creatorList);
-        
+
     }
 
     private void configureLayout() {
@@ -136,12 +137,19 @@ public class ModuleAddView {
         topLayout.getChildren().addAll(viewTitleLabel, region, backButton);
 
         layout.setPadding(new Insets(10, 10, 10, 15));
-        layout.getChildren().addAll(topLayout, contentLabel, contentTextField, titleLabel, titleTextField, versionLabel, versionTextField, themeLabel, themeTextField, descriptionLabel, descriptionTextField, publicationDateLabel, datePicker, statusLabel, statusComboBox, serialNumberLabel, serialNumberTextField, creatorLabel, creatorComboBox, insertButton);
+        layout.getChildren().addAll(topLayout, contentLabel, contentTextField, titleLabel, titleTextField, versionLabel,
+                versionTextField, themeLabel, themeTextField, descriptionLabel, descriptionTextField,
+                publicationDateLabel, datePicker, statusLabel, statusComboBox, serialNumberLabel, serialNumberTextField,
+                creatorLabel, creatorComboBox, insertButton);
     }
 
     private void handleActions() {
         backButton.setOnAction(e -> {
-            GUI.getLayout().setCenter(new CourseDetailView(courseModule).getView());
+            try {
+                GUI.getLayout().setCenter(new CourseDetailView(courseModule).getView());
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
         });
 
         insertButton.setOnAction(e -> {
