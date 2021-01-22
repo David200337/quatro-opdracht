@@ -72,8 +72,8 @@ public class DatabaseWebcast extends Database{
             while(resultSet.next()){
                 String webcastTitle = resultSet.getString("Title");
 
-                Webcast webcastTop3 = new Webcast();
-		webcasts.add(webcastTop3);
+                Webcast webcastTop3 = new Webcast(webcastTitle);
+		        webcasts.add(webcastTop3);
             }
         }catch (Exception e) {
             e.printStackTrace();

@@ -27,6 +27,10 @@ public class Webcast {
         this.duration = duration;
     }
 
+    public Webcast(String title){
+        this.title = title;
+    }
+
     public String getCreatorName() {
         return creatorName;
     }

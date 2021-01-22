@@ -58,7 +58,7 @@ public class UsersAddView {
         databaseStudent = new DatabaseStudent("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseStudent.loadStudents();
 
-        viewTitleLabel = new Label("Add user");
+        viewTitleLabel = new Label("Add");
         backButton = new Button("Back");
 
         nameLabel = new Label("Name");
