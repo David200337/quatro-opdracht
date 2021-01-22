@@ -6,11 +6,13 @@ import java.time.LocalDate;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -44,6 +46,7 @@ public class RegistrationAddView {
     public RegistrationAddView(Student student) {
         this.student = student;
         databaseRegistration = new DatabaseRegistration("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
+        databaseRegistration.loadRegistrations(student.getStudentId());
         fcb = new FillComboBox("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
 
         viewTitleLabel = new Label("Add Registration");
@@ -79,8 +82,13 @@ public class RegistrationAddView {
 
     private void configureNodes() {
         viewTitleLabel.getStyleClass().add("view-title");
-
+        try {
+                fcb.fillListFromDataBaseString(listCourses, "CourseName", "Course");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         courseComboBox.setItems(listCourses);
+        
 
         datePicker.setConverter(DatePickerConverter);
         datePicker.setPromptText("yyyy-MM-dd".toLowerCase());
@@ -103,10 +111,16 @@ public class RegistrationAddView {
             try { 
                 databaseRegistration.insertRegistration(student.getStudentId(), String.valueOf(courseComboBox.getValue()), Date.valueOf(datePicker.getValue()));
                 
+                Alert alert = new Alert(AlertType.CONFIRMATION);
+                alert.setTitle("Registrated");
+                alert.setHeaderText("Success!");
+                alert.setContentText("The registration is added!");
+                alert.showAndWait();
+                    
                 datePicker.setValue(null);
                 courseComboBox.setValue(null);
             } catch (Exception error) {
-                System.out.println(error);
+                error.printStackTrace();
             }
         });
     }
