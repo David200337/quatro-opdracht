@@ -76,6 +76,39 @@ public class DatabaseCourseModule extends Database{
         } 
     }
 
+    public void loadModules(int courseId) {
+            try {
+                connect();
+    
+                String sql = "SELECT Content.ContentId, Content.PublicationDate, Content.Theme, Content.Description, Content.Status, Module.SerialNumber, Module.Title, Module.VersionNr, ContentCreator.CreatorId, ContentCreator.Name AS CreatorName, ContentCreator.Email, ContentCreator.Organisation FROM Module  INNER JOIN Content ON Module.ContentId = Content.ContentId  INNER JOIN ContentCreator ON Content.CreatorId = ContentCreator.CreatorId WHERE Module.CourseId = '"+courseId+"';";
+                statement = connection.createStatement();
+                resultSet = statement.executeQuery(sql);
+    
+                
+                while(resultSet.next()){
+                    int contentId = resultSet.getInt("ContentId");
+                    String moduleTitle = resultSet.getString("Title");
+                    int moduleVersion = resultSet.getInt("VersionNr");
+                    String moduleTheme = resultSet.getString("Theme");
+                    String moduleDescription = resultSet.getString("Description");
+                    String status = resultSet.getString("Status");
+                    Date publicationDate = resultSet.getDate("PublicationDate");
+                    int moduleSerialNumber = resultSet.getInt("SerialNumber");
+                    int creatorId = resultSet.getInt("CreatorId");
+                    String creatorName = resultSet.getString("CreatorName");
+                    String creatorEmail = resultSet.getString("Email");
+                    String creatorOrganisation = resultSet.getString("Organisation");
+    
+    
+                    CourseModule courseModule = new CourseModule(contentId, moduleTitle, moduleVersion, moduleTheme, moduleDescription, status, publicationDate, moduleSerialNumber, creatorId, creatorName, creatorEmail, creatorOrganisation);
+                    courseModuleList.add(courseModule);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } 
+        
+    }
+
     public ObservableList<CourseModule> getCourseModules() {
         // Return courseModule array
         return courseModuleList;

@@ -100,7 +100,7 @@ public class ModuleDetailView {
     private void handleActions() {
         backButton.setOnAction(e -> {
             try {
-                GUI.getLayout().setCenter(new CourseDetailView(courseModule).getView());
+                GUI.getLayout().setCenter(new CoursesView().getView());
             } catch (Exception e1) {
                 e1.printStackTrace();
             }

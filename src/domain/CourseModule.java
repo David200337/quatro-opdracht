@@ -5,6 +5,7 @@ import java.sql.Date;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+
 public class CourseModule {
     private Module module;
     private Course course;
@@ -53,6 +54,21 @@ public class CourseModule {
     public CourseModule(int courseId, String courseName){
         this.courseName = courseName;
         this.courseId = courseId;
+    }
+
+    public CourseModule(int contentId, String title, int versionNr, String theme, String description, String status, Date publicationDate, int serialNumber, int creatorId, String creatorName, String creatorEmail, String creatorOrganisation){
+        this.contentId = contentId;
+        this.moduleTitle = title;
+        this.moduleTheme = theme;
+        this.moduleDescription = description;
+        this.status = status;
+        this.moduleVersion = versionNr;
+        this.moduleSerialNumber = serialNumber;
+        this.creatorId = creatorId;
+        this.creatorName = creatorName;
+        this.creatorEmail = creatorEmail;
+        this.creatorOrganisation = creatorOrganisation;
+        this.publicationDate = publicationDate;
     }
 
     public int getModuleVersion() {

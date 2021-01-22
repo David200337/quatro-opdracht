@@ -71,9 +71,8 @@ public class CourseDetailView {
     public CourseDetailView(CourseModule courseModule) throws Exception {
         this.courseModule = courseModule;
         databaseCourseModule = new DatabaseCourseModule("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
-        databaseCourseModule.loadCourseModules();
         databaseCourseModule.loadRecommendedCourses(courseModule);
-     
+        databaseCourseModule.loadModules(courseModule.getCourseId());
 
         viewTitleLabel = new Label(courseModule.getCourseName());
         backButton = new Button("Back");
@@ -119,7 +118,8 @@ public class CourseDetailView {
         viewTitleLabel.getStyleClass().add("view-title");
         
         modulesTitleLabel.getStyleClass().add("view-subtitle");
-
+        
+        modulesCourseTableView.setEditable(true);
         contentIdCol.setCellValueFactory(new PropertyValueFactory<>("contentId"));
 
         titleCol.setCellValueFactory(new PropertyValueFactory<>("moduleTitle"));
@@ -143,6 +143,7 @@ public class CourseDetailView {
             course.setModuleTheme(t.getNewValue());
             databaseCourseModule.updateCourseModuleString("Theme", t.getNewValue(), course.getContentId());
         });
+
 
         descriptionCol.setCellValueFactory(new PropertyValueFactory<>("moduleDescription"));
         descriptionCol.setCellFactory(stringCellFactory);
