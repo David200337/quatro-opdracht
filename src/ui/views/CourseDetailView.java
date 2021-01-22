@@ -72,8 +72,8 @@ public class CourseDetailView {
         this.courseModule = courseModule;
         databaseCourseModule = new DatabaseCourseModule("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseCourseModule.loadCourseModules();
-        // databaseViewStatistics = new DatabaseViewStatistics("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
-        // databaseViewStatistics.loadPercentageAllAccounts(courseModule.getContentId());
+        databaseCourseModule.loadRecommendedCourses(courseModule);
+     
 
         viewTitleLabel = new Label(courseModule.getCourseName());
         backButton = new Button("Back");
@@ -102,11 +102,6 @@ public class CourseDetailView {
         serialNumberCol = new TableColumn<>("Serialnumber");
         creatorCol = new TableColumn<>("Creator");
         
-
-        // modulesProgressTableView = new TableView<>();
-        // moduleTitleCol = new TableColumn<>("Title");
-        // moduleVersionCol = new TableColumn<>("Version");
-        // percentageCol = new TableColumn<>("Progress all accounts");
         
         recommendedModulesCourseTableView = new TableView<>();
         courseNameCol = new TableColumn<>("Course Name");
@@ -192,17 +187,6 @@ public class CourseDetailView {
         
         modulesCourseTableView.setItems(databaseCourseModule.getCourseModules());
         modulesCourseTableView.getColumns().addAll(contentIdCol, titleCol, versionCol, themeCol, descriptionCol, statusCol, serialNumberCol, creatorCol);
-
-
-        // modulesProgress.getStyleClass().add("view-subtitle");
-        // moduleTitleCol.setCellValueFactory(new PropertyValueFactory<>("moduleTitle"));
-        // moduleVersionCol.setCellValueFactory(new PropertyValueFactory<>("versionNr"));
-
-        // percentageCol.setCellValueFactory(new PropertyValueFactory<>("totalPercentage"));
-        // percentageCol.setCellFactory(ProgressBarTableCell.<ViewStatistics> forTableColumn());
-        
-        // modulesProgressTableView.setItems(databaseViewStatistics.getPercentageAllAccounts());
-        // modulesProgressTableView.getColumns().addAll(moduleTitleCol, moduleVersionCol, percentageCol);
 
 
         recommendationsTitleLabel.getStyleClass().add("view-subtitle");
