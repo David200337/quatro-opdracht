@@ -28,6 +28,7 @@ public class GUI extends Application {
         scene.getStylesheets().add("/src/ui/style.css");
         scene.getStylesheets().add("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap");
 
+        primaryStage.setTitle("David van Mourik - 2174508 , Tristan Maltha - 2170581 , Janne Sterk - 2173624");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

@@ -200,13 +200,16 @@ public class WebcastsView {
                     alert = new Alert(AlertType.CONFIRMATION);
                     alert.setTitle("Delete");
                     alert.setHeaderText("Are you sure you want to delete this webcast?");
-                    alert.setContentText("");
 
                     Optional<ButtonType> result = alert.showAndWait();
                     
+<<<<<<< HEAD
                     if (!result.isPresent() || result.get() != ButtonType.OK) {
                        
                     } else {
+=======
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+>>>>>>> 7ebd610f74a6629c52f103ca2cb0651b0dfda087
                         webcastTable.getItems().remove(selectedItem);
                         databaseWebcast.deleteWebcast(selectedItem);
                     }

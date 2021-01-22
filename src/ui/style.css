@@ -36,9 +36,21 @@
     -fx-text-fill: #141C3A;
 }
 
+.view-title,
+.view-subtitle {
+    -fx-font-family: 'Montserrat';
+    -fx-font-weight: 700;
+}
+
 .view-title {
     -fx-font-size: 22pt;
-    -fx-font-family: 'Montserrat';
+}
+
+.view-subtitle {
+    -fx-font-size: 17pt;
+}
+
+.bold-text {
     -fx-font-weight: 700;
 }
 
