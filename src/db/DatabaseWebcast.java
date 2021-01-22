@@ -60,6 +60,25 @@ public class DatabaseWebcast extends Database{
         } 
     }
 
+    public void loadWebcastTop3(){
+        try{
+            connect();
+
+            String sql = "SELECT TOP 3 Webcast.Title FROM Webcast INNER JOIN ViewStatistics ON Webcast.ContentId = ViewStatistics.ContentId GROUP BY ViewStatistics.ContentId, Webcast.Title ORDER BY COUNT(ViewStatistics.StudentId);";
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+
+            
+            while(resultSet.next()){
+                String webcastTitle = resultSet.getString("Title");
+
+                Webcast webcastTop3 = new Webcast();
+		webcasts.add(webcastTop3);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        } 
+    }
 
     public ObservableList<Webcast> getWebcasts() {
         // Return webcasts array
