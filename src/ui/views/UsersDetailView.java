@@ -25,19 +25,12 @@ public class UsersDetailView {
     private Button addRegistrationButton;
     private Button moduleProgressButton;
     private Label emailLabel;
-    private Label emailValueLabel;
     private Label dateOfBirthLabel;
-    private Label dateOfBirthValueLabel;
     private Label genderLabel;
-    private Label genderValueLabel;
     private Label addressLabel;
-    private Label addressValueLabel;
     private Label postalCodeLabel;
-    private Label postalCodeValueLabel;
     private Label cityLabel;
-    private Label cityValueLabel;
     private Label countryLabel;
-    private Label countryValueLabel;
     private Label registrationsTitleLabel;
     private TableView<Registration> registrationsTableView;
     private TableColumn<Registration, String> regCourseNameCol;
@@ -59,6 +52,9 @@ public class UsersDetailView {
     public UsersDetailView(Student student) {
         this.student = student;
         databaseRegistration = new DatabaseRegistration("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
+        databaseRegistration.loadCompletedRegistrations(student.getStudentId());
+        databaseRegistration.loadRegistrations(student.getStudentId());
+
         viewTitleLabel = new Label(student.getName());
         backButton = new Button("Back");
         moduleProgressButton = new Button("Module Progress");
@@ -105,6 +101,7 @@ public class UsersDetailView {
         registrationsTitleLabel.getStyleClass().add("view-subtitle");
         regCourseNameCol.setCellValueFactory(new PropertyValueFactory<>("courseName"));
         regRegistrationDateCol.setCellValueFactory(new PropertyValueFactory<>("registrationDate"));
+        registrationsTableView.setItems(databaseRegistration.getRegistrations());
         registrationsTableView.getColumns().addAll(regCourseNameCol, regRegistrationDateCol);
 
         certificatesTitleLabel.getStyleClass().add("view-subtitle");

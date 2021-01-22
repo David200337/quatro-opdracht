@@ -20,11 +20,11 @@ public class DatabaseRegistration extends Database {
         this.registrationList = FXCollections.observableArrayList();
 	}
     
-    public void loadCompletedRegistrations() {
+    public void loadCompletedRegistrations(int studentId) {
         try {
             connect();
 
-            String sql = "SELECT Course.CourseName, Registration.CourseId, Registration.CertificateId, Registration.StudentId, Registration.RegistrationDate, Certificate.StaffName, Certificate.Grade FROM Registration INNER JOIN Course ON Registration.CourseId = Course.CourseId INNER JOIN Certificate ON Registration.CertificateId = Certificate.CertificateId";
+            String sql = "SELECT Course.CourseName, Registration.CourseId, Registration.CertificateId, Registration.RegistrationDate, Certificate.StaffName, Certificate.Grade FROM Registration INNER JOIN Course ON Registration.CourseId = Course.CourseId INNER JOIN Certificate ON Registration.CertificateId = Certificate.CertificateId WHERE Registration.StudentId = '"+studentId+"';";
             // INNER JOIN Student ON Registration.StudentId = Student.StudentId INNER JOIN Course ON Registration.CourseId = Course.CourseId INNER JOIN Certificate ON Registration.CertificateId = Certificate.CertificateId";
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
@@ -34,7 +34,6 @@ public class DatabaseRegistration extends Database {
                 String courseName = resultSet.getString("CourseName");
                 int courseId = resultSet.getInt("CourseId");
                 int certificateId = resultSet.getInt("CertificateId");
-                int studentId = resultSet.getInt("StudentId");
                 Date registrationDate = resultSet.getDate("RegistrationDate");
 
                 String staffName = resultSet.getString("StaffName");
@@ -52,11 +51,11 @@ public class DatabaseRegistration extends Database {
             return completedRegistrationList;
     }
 
-     public void loadRegistrations(){
+     public void loadRegistrations(int studentId){
             try{
                 connect();
 
-                String sql = "SELECT Course.CourseName, Registration.CourseId, Registration.CertificateId, Registration.StudentId, Registration.RegistrationDate FROM Registration INNER JOIN Course ON Registration.CourseId = Course.CourseId WHERE CertificateId IS NULL";
+                String sql = "SELECT Course.CourseName, Registration.CourseId, Registration.CertificateId, Registration.RegistrationDate FROM Registration INNER JOIN Course ON Registration.CourseId = Course.CourseId WHERE CertificateId IS NULL AND Registration.StudentId = '"+studentId+"';";
                 statement = connection.createStatement();
                 resultSet = statement.executeQuery(sql);
 
@@ -66,7 +65,7 @@ public class DatabaseRegistration extends Database {
                     
                     int certificateId = resultSet.getInt("CertificateId");
                     Date registrationDate = resultSet.getDate("RegistrationDate");
-                    int studentId = resultSet.getInt("StudentId");
+                    
 
                     Registration registration = new Registration(registrationDate, courseId, studentId, certificateId, courseName);
                     registrationList.add(registration);
