@@ -18,9 +18,12 @@ import src.domain.Student;
 import src.ui.GUI;
 
 public class UsersDetailView {
+    private Student student;
     private DatabaseRegistration databaseRegistration;
     private Label viewTitleLabel;
     private Button backButton;
+    private Button addRegistrationButton;
+    private Button moduleProgressButton;
     private Label emailLabel;
     private Label dateOfBirthLabel;
     private Label genderLabel;
@@ -42,12 +45,16 @@ public class UsersDetailView {
 
     private Region region;
     private HBox topLayout;
+    private Region registrationsRegion;
+    private HBox registrationsLayout;
     private VBox layout;
 
     public UsersDetailView(Student student) {
+        this.student = student;
         databaseRegistration = new DatabaseRegistration("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         viewTitleLabel = new Label(student.getName());
         backButton = new Button("Back");
+        moduleProgressButton = new Button("Module Progress");
         emailLabel = new Label("Email: " + student.getEmail());
         dateOfBirthLabel = new Label("Date of Birth: " + student.getDateOfBirth());
         genderLabel = new Label("Gender: " + student.getGender());
@@ -57,7 +64,9 @@ public class UsersDetailView {
         countryLabel = new Label("Country: " + student.getCountry());
 
         registrationsTitleLabel = new Label("Registrations");
+        addRegistrationButton = new Button("Add");
         registrationsTableView = new TableView<>();
+
         regCourseNameCol = new TableColumn<>("Course");
         regRegistrationDateCol = new TableColumn<>("Registration Date");
 
@@ -71,6 +80,8 @@ public class UsersDetailView {
 
         region = new Region();
         topLayout = new HBox(10);
+        registrationsRegion = new Region();
+        registrationsLayout = new HBox(10);
         layout = new VBox(10);
     }
 
@@ -94,15 +105,27 @@ public class UsersDetailView {
 
     private void configureLayout() {
         HBox.setHgrow(region, Priority.ALWAYS);
-        topLayout.getChildren().addAll(viewTitleLabel, region, backButton);
+        topLayout.getChildren().addAll(viewTitleLabel, region, moduleProgressButton, backButton);
+
+        HBox.setHgrow(registrationsRegion, Priority.ALWAYS);
+        registrationsLayout.getChildren().addAll(registrationsTitleLabel, registrationsRegion, addRegistrationButton);
+
 
         layout.setPadding(new Insets(10, 10, 10, 15));
-        layout.getChildren().addAll(topLayout, emailLabel, dateOfBirthLabel, genderLabel, addressLabel, postalCodeLabel, cityLabel, countryLabel, registrationsTitleLabel, registrationsTableView, certificatesTitleLabel, certificatesTableView);
+        layout.getChildren().addAll(topLayout, emailLabel, dateOfBirthLabel, genderLabel, addressLabel, postalCodeLabel, cityLabel, countryLabel, registrationsLayout, registrationsTableView, certificatesTitleLabel, certificatesTableView);
     }
 
     private void handleActions() {
         backButton.setOnAction(e -> {
             GUI.getLayout().setCenter(new UsersView().getView());
+        });
+
+        moduleProgressButton.setOnAction(e -> {
+            GUI.getLayout().setCenter(new ModuleProgressView(student).getView());
+        });
+
+        addRegistrationButton.setOnAction(e -> {
+            GUI.getLayout().setCenter(new RegistrationAddView(student).getView());
         });
     }
 

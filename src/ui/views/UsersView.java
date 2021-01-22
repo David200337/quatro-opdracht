@@ -233,7 +233,7 @@ public class UsersView {
                     GUI.getLayout().setCenter(new UsersDetailView(student).getView());
                 }
             } catch(Exception error) {
-                System.out.println(e);
+                error.printStackTrace();
             } 
         });
 

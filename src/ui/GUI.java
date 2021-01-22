@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import src.ui.components.MenuComponent;
 import src.ui.views.GeneralView;
 
+
 public class GUI extends Application {
     private static BorderPane layout;
 

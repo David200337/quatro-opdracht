@@ -88,6 +88,7 @@ public class WebcastsView {
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("contentId"));
         
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         titleColumn.setCellFactory(stringCellFactory);
         titleColumn.setOnEditCommit((TableColumn.CellEditEvent<Webcast, String> t) -> {
             ((Webcast) t.getTableView().getItems().get(t.getTablePosition().getRow())).setTitle(t.getNewValue());
@@ -204,7 +205,7 @@ public class WebcastsView {
                     Optional<ButtonType> result = alert.showAndWait();
                     
                     if (!result.isPresent() || result.get() != ButtonType.OK) {
-                        // TODO: ??
+                       
                     } else {
                         webcastTable.getItems().remove(selectedItem);
                         databaseWebcast.deleteWebcast(selectedItem);
