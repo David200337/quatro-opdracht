@@ -188,11 +188,13 @@ public class CoursesView {
 
         //Pie chart female
         percentageCertificatesFemalePieChart.setTitle("Female certificate ratio");
+        percentageCertificatesFemalePieChart.setLabelsVisible(false);
         percentageCertificatesFemalePieChart.getData().add(withCertificateFemaleDataPieChart);
         percentageCertificatesFemalePieChart.getData().add(withoutCertificateFemaleDataPieChart);
 
         //Pie chart male
         percentageCertificatesMalePieChart.setTitle("Male certificate ratio");
+        percentageCertificatesMalePieChart.setLabelsVisible(false);
         percentageCertificatesMalePieChart.getData().add(withCertificateMaleDataPieChart);
         percentageCertificatesMalePieChart.getData().add(withoutCertificateMaleDataPieChart);
     }

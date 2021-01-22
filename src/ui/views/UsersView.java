@@ -204,6 +204,7 @@ public class UsersView {
         usersTableView.getColumns().addAll(nameColumn, emailColumn, dateOfBirthColumn, genderColumn, addressColumn, postalCodeColumn, cityColumn, countryColumn);
     
         genderPieChart.setTitle("Ratio female/male users");
+        genderPieChart.setLegendVisible(false);
         genderPieChart.getData().add(femaleDataPieChart);
         genderPieChart.getData().add(maleDataPieChart);
     }
