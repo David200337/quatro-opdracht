@@ -109,6 +109,26 @@ public class DatabaseCourseModule extends Database{
         
     }
 
+    public void loadCourseStudentsPassed(int courseId){
+        try{
+            connect();
+
+            String sql = "SELECT COUNT(StudentId) AS StudentsPassed FROM Registration WHERE CourseId = "+courseId+" AND CertificateId IS NOT NULL;";
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+
+            
+            while(resultSet.next()){
+                int studentsPassed = resultSet.getInt("StudentsPassed");
+
+                CourseModule courseStudentsPassed = new CourseModule(studentsPassed);
+                courseModuleList.add(courseStudentsPassed);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        } 
+    } 	
+
     public ObservableList<CourseModule> getCourseModules() {
         // Return courseModule array
         return courseModuleList;
