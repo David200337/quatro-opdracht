@@ -88,11 +88,6 @@ public class CoursesView {
         
             
         } catch(ArithmeticException e){
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Pie Chart Error");
-            alert.setHeaderText("Cannot divide by zero");
-            alert.setContentText("");
-            alert.showAndWait();
 
             withCertificatePercentageFemale =1;
         }catch (Exception e) {
@@ -110,12 +105,8 @@ public class CoursesView {
             percentageWithCertificateMale = ((withCertificatePercentageMale*100/(withCertificatePercentageMale + noCertificatePercentageMale)));
             percentageWithoutCertificateMale = ((noCertificatePercentageMale*100/(withCertificatePercentageMale + noCertificatePercentageMale)));
             
+            
         } catch(ArithmeticException e){
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Pie Chart Error");
-            alert.setHeaderText("Cannot divide by zero");
-            alert.setContentText("");
-            alert.showAndWait();
             withCertificatePercentageMale = 1;
 
         } catch (Exception e) {

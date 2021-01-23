@@ -106,8 +106,6 @@ public class DatabaseRegistration extends Database {
                     numberOfCertificates = resultSet.getInt("NumberOfCertificates");
                 }
 
-            
-            
             return numberOfCertificates;
         }
 
