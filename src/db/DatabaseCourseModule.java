@@ -8,7 +8,8 @@ import src.domain.*;
 public class DatabaseCourseModule extends Database{
     private ObservableList<CourseModule> courseModuleList;
     private ObservableList<CourseModule> recommendedCourseList;
-	public Object courseComboBox;
+    public Object courseComboBox;
+    private int studentsPassed;
     
     public DatabaseCourseModule(String connectionUrl) {
         super(connectionUrl);
@@ -109,8 +110,7 @@ public class DatabaseCourseModule extends Database{
         
     }
 
-    public void loadCourseStudentsPassed(int courseId){
-        try{
+    public int getCourseStudentsPassed(int courseId) throws Exception {
             connect();
 
             String sql = "SELECT COUNT(StudentId) AS StudentsPassed FROM Registration WHERE CourseId = "+courseId+" AND CertificateId IS NOT NULL;";
@@ -119,14 +119,10 @@ public class DatabaseCourseModule extends Database{
 
             
             while(resultSet.next()){
-                int studentsPassed = resultSet.getInt("StudentsPassed");
-
-                CourseModule courseStudentsPassed = new CourseModule(studentsPassed);
-                courseModuleList.add(courseStudentsPassed);
+                studentsPassed = resultSet.getInt("StudentsPassed");
             }
-        }catch (Exception e) {
-            e.printStackTrace();
-        } 
+
+            return studentsPassed;
     } 	
 
     public ObservableList<CourseModule> getCourseModules() {
