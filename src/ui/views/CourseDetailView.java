@@ -66,13 +66,16 @@ public class CourseDetailView {
     private Region recommendationsRegion;
     private HBox recommendationsLayout;
     private VBox layout;
-    
+    private TableView studentsCoursePassedTableView;
+    private Tablecolumn studentsPassedColumn;
+	
     public CourseDetailView(CourseModule courseModule) throws Exception {
         this.courseModule = courseModule;
         databaseCourseModule = new DatabaseCourseModule("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseCourseModule.loadRecommendedCourses(courseModule);
         databaseCourseModule.loadModules(courseModule.getCourseId());
-
+        databaseCourseModule.loadCourseStudentsPassed(courseModule.getCourseId);
+	
         viewTitleLabel = new Label(courseModule.getCourseName());
         backButton = new Button("Back");
         subjectLabel = new Label("Subject: " + courseModule.getSubject());
@@ -100,6 +103,9 @@ public class CourseDetailView {
         serialNumberCol = new TableColumn<>("Serialnumber");
         creatorCol = new TableColumn<>("Creator");
         
+	studentsCoursePassedTableTitle = new Label("Students Passed:");
+        studentsCoursePassedTableView = new TableView<>();
+        studentsPassedColumn = new TableColumn<>("StudentsPassed");
         
         recommendedModulesCourseTableView = new TableView<>();
         courseNameCol = new TableColumn<>("Course Name");
@@ -208,7 +214,7 @@ public class CourseDetailView {
         recommendationsLayout.getChildren().addAll(recommendationsTitleLabel, recommendationsRegion, addRecommendationButton, deleteRecommendationButton);
 
         layout.setPadding(new Insets(10, 10, 10, 15));
-        layout.getChildren().addAll(topLayout, subjectLabel, introductionTextLabel, levelLabel, modulesLayout, modulesCourseTableView, recommendationsLayout, recommendedModulesCourseTableView);
+        layout.getChildren().addAll(topLayout, subjectLabel, introductionTextLabel, levelLabel, modulesLayout, modulesCourseTableView, recommendationsLayout, recommendedModulesCourseTableView, studentsCoursePassedTableView);
     }
 
     private void handleActions() {
