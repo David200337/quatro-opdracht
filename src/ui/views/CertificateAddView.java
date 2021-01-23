@@ -57,6 +57,7 @@ public class CertificateAddView {
         staffNameTextField = new TextField();
         gradeLabel = new Label("Grade:");
         gradeTextField = new TextField();
+        gradeTextField.setPromptText("0.0");
         
         insertButton = new Button("Insert");
 
