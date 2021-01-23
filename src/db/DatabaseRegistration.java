@@ -92,19 +92,22 @@ public class DatabaseRegistration extends Database {
         }
 
         public int getNumberOfCertificatesPerGender(String gender) throws Exception {
-            connect();
+            
+                connect();
 
-            String sql = "(SELECT COUNT(*) AS NumberOfCertificates FROM Registration INNER JOIN Student ON Registration.StudentId = Student.StudentId WHERE Student.Gender = '"+gender+"' AND Registration.CertificateId IS NOT NULL) ";
-            statement = connection.createStatement();
+                String sql = "(SELECT COUNT(*) AS NumberOfCertificates FROM Registration INNER JOIN Student ON Registration.StudentId = Student.StudentId WHERE Student.Gender = '"+gender+"' AND Registration.CertificateId IS NOT NULL) ";
+                statement = connection.createStatement();
 
-            // Run query
-            resultSet = statement.executeQuery(sql);
+                // Run query
+                resultSet = statement.executeQuery(sql);
 
-            // Save data
-            while (resultSet.next()) {
-                numberOfCertificates = resultSet.getInt("NumberOfCertificates");
-            }
+                // Save data
+                while (resultSet.next()) {
+                    numberOfCertificates = resultSet.getInt("NumberOfCertificates");
+                }
 
+            
+            
             return numberOfCertificates;
         }
 

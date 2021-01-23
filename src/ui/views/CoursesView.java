@@ -86,18 +86,21 @@ public class CoursesView {
             percentageWithoutCertificateFemale = ((noCertificatePercentageFemale*100/(withCertificatePercentageFemale + noCertificatePercentageFemale)));
         
         
-            withCertificateFemaleDataPieChart = new PieChart.Data("With Certificate (" +percentageWithCertificateFemale+"%)", withCertificatePercentageFemale);
-            withoutCertificateFemaleDataPieChart = new PieChart.Data("Without Certificate ("+percentageWithoutCertificateFemale+"%)", noCertificatePercentageFemale);
+            
         } catch(ArithmeticException e){
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Pie Chart Error");
             alert.setHeaderText("Cannot divide by zero");
             alert.setContentText("");
             alert.showAndWait();
+
+            withCertificatePercentageFemale =1;
         }catch (Exception e) {
             e.printStackTrace();
         }
         
+        withCertificateFemaleDataPieChart = new PieChart.Data("With Certificate (" +percentageWithCertificateFemale+"%)", withCertificatePercentageFemale);
+        withoutCertificateFemaleDataPieChart = new PieChart.Data("Without Certificate ("+percentageWithoutCertificateFemale+"%)", noCertificatePercentageFemale);
         
         // Pie chart male
         percentageCertificatesMalePieChart = new PieChart();
@@ -106,19 +109,22 @@ public class CoursesView {
             noCertificatePercentageMale = databaseRegistrations.getNumberOfNoneCertificatesPerGender("Male");
             percentageWithCertificateMale = ((withCertificatePercentageMale*100/(withCertificatePercentageMale + noCertificatePercentageMale)));
             percentageWithoutCertificateMale = ((noCertificatePercentageMale*100/(withCertificatePercentageMale + noCertificatePercentageMale)));
-            withCertificateMaleDataPieChart = new PieChart.Data("With Certificate (" +percentageWithCertificateMale+"%)", withCertificatePercentageMale);
-            withoutCertificateMaleDataPieChart = new PieChart.Data("Without Certificate ("+percentageWithoutCertificateMale+"%)", noCertificatePercentageMale);
-
+            
         } catch(ArithmeticException e){
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Pie Chart Error");
             alert.setHeaderText("Cannot divide by zero");
             alert.setContentText("");
             alert.showAndWait();
+            withCertificatePercentageMale = 1;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         
+        withCertificateMaleDataPieChart = new PieChart.Data("With Certificate (" +percentageWithCertificateMale+"%)", withCertificatePercentageMale);
+        withoutCertificateMaleDataPieChart = new PieChart.Data("Without Certificate ("+percentageWithoutCertificateMale+"%)", noCertificatePercentageMale);
+
         
 
         region = new Region();
