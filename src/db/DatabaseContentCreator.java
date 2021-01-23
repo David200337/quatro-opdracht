@@ -2,6 +2,9 @@ package src.db;
 
 import src.domain.*;
 import javafx.collections.ObservableList;
+
+import java.sql.SQLException;
+
 import javafx.collections.*;
 
 public class DatabaseContentCreator extends Database {
@@ -36,6 +39,24 @@ public class DatabaseContentCreator extends Database {
 
     public ObservableList<ContentCreator> getCreators(){
         return creators;
+    }
+
+    public void insertCreator(String creatorName, String email, String organisation) throws SQLException{
+        statement.executeUpdate("INSERT INTO ContentCreator(Name, Email, Organisation) VALUES ('"+creatorName+"','"+email+"','"+organisation+"')");
+    }
+
+    public void updateCreator(String column, String newValue, int id){
+        try{
+            if(column.equals("Name") || column.equals("Email") || column.equals("Organisation")){
+                statement.executeUpdate("UPDATE ContentCreator SET "+column+" = '"+newValue+"' WHERE CreatorId = "+id);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteCreator(ContentCreator selectedItem) throws SQLException{
+        statement.executeUpdate("DELETE FROM ContentCreator WHERE CreatorId = '"+selectedItem.getCreatorId()+"'");
     }
     
 }

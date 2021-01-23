@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import src.domain.PersistentButtonToggleGroup;
 import src.ui.GUI;
+import src.ui.views.ContentCreatorView;
 import src.ui.views.CoursesView;
 import src.ui.views.GeneralView;
 import src.ui.views.UsersView;
@@ -20,6 +21,7 @@ public class MenuComponent {
     private ToggleButton usersMenuButton;
     private ToggleButton coursesMenuButton;
     private ToggleButton webcastsMenuButton;
+    private ToggleButton contentCreatorsMenuButton;
     private VBox layout;
 
     public MenuComponent() {
@@ -30,6 +32,7 @@ public class MenuComponent {
         usersMenuButton = new ToggleButton("Users");
         coursesMenuButton = new ToggleButton("Courses");
         webcastsMenuButton = new ToggleButton("Webcasts");
+        contentCreatorsMenuButton = new ToggleButton("Content Creators");
         layout = new VBox();
     }
 
@@ -51,13 +54,16 @@ public class MenuComponent {
 
         webcastsMenuButton.setToggleGroup(menuGroup);
         webcastsMenuButton.getStyleClass().add("menu-button");
+
+        contentCreatorsMenuButton.setToggleGroup(menuGroup);
+        contentCreatorsMenuButton.getStyleClass().add("menu-button");
     }
 
     private void configureLayout() {
         layout.getStyleClass().add("menu");
         layout.setPadding(new Insets(0, 0, 0, 15));
         layout.setMaxWidth(150);
-        layout.getChildren().addAll(logoImageView, generalMenuButton, usersMenuButton, coursesMenuButton, webcastsMenuButton);
+        layout.getChildren().addAll(logoImageView, generalMenuButton, usersMenuButton, coursesMenuButton, webcastsMenuButton, contentCreatorsMenuButton);
     }
 
     private void switchScene() {
@@ -76,6 +82,12 @@ public class MenuComponent {
         webcastsMenuButton.setOnAction(e -> {
             GUI.getLayout().setCenter(new WebcastsView().getView());
         });
+
+        contentCreatorsMenuButton.setOnAction(e -> {
+            GUI.getLayout().setCenter(new ContentCreatorView().getView());
+        });
+
+
     }
 
     public VBox getComponent() {

@@ -56,38 +56,4 @@ public class DatabaseViewStatistics extends Database {
         
     }
 
-    // public ObservableList<ViewStatistics> getPercentageAllAccounts(){
-    //     return percentageAllAccounts;
-    // }
-
-
-    // public double getSumPercentage(int courseId) throws Exception {
-    //         connect();
-
-    //         String sql = "SELECT SUM(Percentage) AS TotalPercentage FROM ViewStatistics WHERE ContentId LIKE (SELECT ContentId FROM Module WHERE CourseId = '"+courseId+"');";
-    //         statement = connection.createStatement();
-    //         resultSet = statement.executeQuery(sql);
-
-            
-    //         while(resultSet.next()){
-    //             totalPercentage = resultSet.getDouble("TotalPercentage");
-    //         }
-
-    //     return totalPercentage;
-    // }
-    
-    // public double getCountPercentage(int courseId) throws Exception {
-    //     connect();
-
-    //     String sql = "SELECT COUNT(StudentId) AS TotalNumber FROM ViewStatistics WHERE ContentId LIKE (SELECT ContentId FROM Module WHERE CourseId = '"+courseId+"');";
-    //     statement = connection.createStatement();
-    //     resultSet = statement.executeQuery(sql);
-
-            
-    //     while(resultSet.next()){
-    //         totalNumber = resultSet.getDouble("TotalNumber");
-    //     }
-
-    //     return totalNumber;
-    // }
 }

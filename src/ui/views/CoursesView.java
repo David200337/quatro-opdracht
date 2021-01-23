@@ -149,7 +149,7 @@ public class CoursesView {
 
             CourseModule course = t.getRowValue();
             course.setIntroductionText(t.getNewValue());
-            databaseCourses.updateCourseModuleString("Description", t.getNewValue(), course.getCourseId());
+            databaseCourses.updateCourseModuleString("IntroductionText", t.getNewValue(), course.getCourseId());
         });
 
         TableColumn<CourseModule, Level> levelCol = new TableColumn<>("Level");
