@@ -16,20 +16,20 @@ import src.ui.GUI;
 import src.validators.EmailValidator;
 
 public class CreatorAddView {
-private DatabaseContentCreator databaseCreators;
-private Label viewTitleLabel;
-private Button backButton;
-private Label nameLabel;
-private TextField nameTextField;
-private Label emailLabel;
-private TextField emailTextField;
-private Label organisationLabel;
-private TextField organisationTextField;
-private Button insertButton;
-private Region region;
-private HBox topLayout;
-private VBox layout;
-private Alert alert;
+    private DatabaseContentCreator databaseCreators;
+    private Label viewTitleLabel;
+    private Button backButton;
+    private Label nameLabel;
+    private TextField nameTextField;
+    private Label emailLabel;
+    private TextField emailTextField;
+    private Label organisationLabel;
+    private TextField organisationTextField;
+    private Button insertButton;
+    private Region region;
+    private HBox topLayout;
+    private VBox layout;
+    private Alert alert;
 
 
 
