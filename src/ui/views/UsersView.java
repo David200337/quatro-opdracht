@@ -218,7 +218,7 @@ public class UsersView {
 
     private void handleActions() {
         addUserButton.setOnAction(e -> {
-            GUI.getLayout().setCenter(new UsersAddView().getView());
+            GUI.getLayout().setCenter(new UserAddView().getView());
         });
 
         viewDetailsButton.setOnAction(e -> {
@@ -232,7 +232,7 @@ public class UsersView {
                     alert.setContentText("You didn't select a student!");
                     alert.showAndWait();
                 } else{
-                    GUI.getLayout().setCenter(new UsersDetailView(student).getView());
+                    GUI.getLayout().setCenter(new UserDetailView(student).getView());
                 }
             } catch(Exception error) {
                 error.printStackTrace();

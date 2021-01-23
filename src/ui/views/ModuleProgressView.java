@@ -77,7 +77,7 @@ public class ModuleProgressView {
 
     private void handleActions() {
         backButton.setOnAction(e -> {
-            GUI.getLayout().setCenter(new UsersDetailView(student).getView());
+            GUI.getLayout().setCenter(new UserDetailView(student).getView());
         });
     }
 
