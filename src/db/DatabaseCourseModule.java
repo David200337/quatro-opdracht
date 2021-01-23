@@ -152,6 +152,11 @@ public class DatabaseCourseModule extends Database{
         statement.executeUpdate("DELETE FROM Course WHERE CourseId = '"+selectedItem.getCourseId()+"'");
     }
 
+    public void deleteModule(CourseModule selectedItem) throws SQLException{
+        statement.executeUpdate("DELETE FROM Module WHERE ContentId = '"+selectedItem.getContentId()+"'");
+        statement.executeUpdate("DELETE FROM Content WHERE ContentId = '"+selectedItem.getContentId()+"'");
+    }
+
     public void loadRecommendedCourses(CourseModule selectedItem){
         try {
             connect();

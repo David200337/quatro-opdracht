@@ -89,6 +89,7 @@ public class DatabaseWebcast extends Database{
 
     public void deleteWebcast(Webcast selectedItem) throws SQLException{
         statement.executeUpdate("DELETE FROM Webcast WHERE ContentId = '"+selectedItem.getContentId()+"'");
+        statement.executeUpdate("DELETE FROM Content WHERE ContentId = '"+selectedItem.getContentId()+"'");
     }
 
     public void insertWebcast(int contentId, Date publicationDate, String title, String theme, String description, String status, Time duration, String name, String url) throws SQLException{
