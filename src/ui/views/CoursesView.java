@@ -40,7 +40,7 @@ public class CoursesView {
     private Label viewTitleLabel;
     private Button addCourseButton;
     private Button viewDetailsButton;
-    private Button removeCourseButton;
+    private Button deleteCourseButton;
     private TableView<CourseModule> coursesTableView;
     private Alert alert;
     private Region region;
@@ -73,7 +73,7 @@ public class CoursesView {
         viewTitleLabel = new Label("Courses");
         addCourseButton = new Button("Add");
         viewDetailsButton = new Button("Go to details");
-        removeCourseButton = new Button("Delete");
+        deleteCourseButton = new Button("Delete");
         coursesTableView = new TableView<>();
 
         // Pie chart female
@@ -201,7 +201,7 @@ public class CoursesView {
 
     private void configureLayout() {
         HBox.setHgrow(region, Priority.ALWAYS);
-        topLayout.getChildren().addAll(viewTitleLabel, region, addCourseButton, viewDetailsButton, removeCourseButton);
+        topLayout.getChildren().addAll(viewTitleLabel, region, addCourseButton, viewDetailsButton, deleteCourseButton);
         piecharts.getChildren().addAll(percentageCertificatesFemalePieChart, percentageCertificatesMalePieChart);
         layout.setPadding(new Insets(10, 10, 10, 15));
         layout.getChildren().addAll(topLayout, coursesTableView, piecharts);
@@ -232,7 +232,7 @@ public class CoursesView {
             } 
         });
 
-        removeCourseButton.setOnAction(e -> {
+        deleteCourseButton.setOnAction(e -> {
             try {
                 CourseModule courseModule = coursesTableView.getSelectionModel().getSelectedItem();
 

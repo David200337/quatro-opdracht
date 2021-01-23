@@ -36,7 +36,7 @@ public class UsersView {
     private Label viewTitleLabel;
     private Button addUserButton;
     private Button viewDetailsButton;
-    private Button removeUserButton;
+    private Button deleteUserButton;
     private TableView<Student> usersTableView;
     private TableColumn<Student, String> nameColumn;
     private TableColumn<Student, String> emailColumn;
@@ -66,7 +66,7 @@ public class UsersView {
         viewTitleLabel = new Label("Users");
         addUserButton = new Button("Add");
         viewDetailsButton = new Button("Go to details");
-        removeUserButton = new Button("Delete");
+        deleteUserButton = new Button("Delete");
 
         // Table view
         usersTableView = new TableView<>();
@@ -211,7 +211,7 @@ public class UsersView {
 
     private void configureLayout() {
         HBox.setHgrow(region, Priority.ALWAYS);
-        topLayout.getChildren().addAll(viewTitleLabel, region, addUserButton, viewDetailsButton, removeUserButton);
+        topLayout.getChildren().addAll(viewTitleLabel, region, addUserButton, viewDetailsButton, deleteUserButton);
         layout.setPadding(new Insets(10, 10, 10, 15));
         layout.getChildren().addAll(topLayout, usersTableView, genderPieChart);
     }
@@ -239,7 +239,7 @@ public class UsersView {
             } 
         });
 
-        removeUserButton.setOnAction(e -> {
+        deleteUserButton.setOnAction(e -> {
             try {
                 Student selectedItem = usersTableView.getSelectionModel().getSelectedItem();
 

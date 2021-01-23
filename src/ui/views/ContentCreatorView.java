@@ -27,7 +27,7 @@ public class ContentCreatorView {
     private DatabaseContentCreator databaseCreators;
     private Label viewTitleLabel;
     private Button addCreatorButton;
-    private Button removeCreatorButton;
+    private Button deleteCreatorButton;
     private TableView<ContentCreator> creatorsTableView;
     private Alert alert;
     private Region region;
@@ -41,7 +41,7 @@ public class ContentCreatorView {
         
         viewTitleLabel = new Label("Content Creators");
         addCreatorButton = new Button("Add");
-        removeCreatorButton = new Button("Delete");
+        deleteCreatorButton = new Button("Delete");
         creatorsTableView = new TableView<>();
 
         
@@ -98,7 +98,7 @@ public class ContentCreatorView {
 
     private void configureLayout() {
         HBox.setHgrow(region, Priority.ALWAYS);
-        topLayout.getChildren().addAll(viewTitleLabel, region, addCreatorButton, removeCreatorButton);
+        topLayout.getChildren().addAll(viewTitleLabel, region, addCreatorButton, deleteCreatorButton);
         layout.setPadding(new Insets(10, 10, 10, 15));
         layout.getChildren().addAll(topLayout, creatorsTableView);
     }
@@ -109,7 +109,7 @@ public class ContentCreatorView {
         });
 
 
-        removeCreatorButton.setOnAction(e -> {
+        deleteCreatorButton.setOnAction(e -> {
             try {
                 ContentCreator creator = creatorsTableView.getSelectionModel().getSelectedItem();
 
