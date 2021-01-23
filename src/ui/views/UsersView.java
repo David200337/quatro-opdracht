@@ -36,7 +36,7 @@ public class UsersView {
     private Label viewTitleLabel;
     private Button addUserButton;
     private Button viewDetailsButton;
-    private Button removeUserButton;
+    private Button deleteUserButton;
     private TableView<Student> usersTableView;
     private TableColumn<Student, String> nameColumn;
     private TableColumn<Student, String> emailColumn;
@@ -66,7 +66,7 @@ public class UsersView {
         viewTitleLabel = new Label("Users");
         addUserButton = new Button("Add");
         viewDetailsButton = new Button("Go to details");
-        removeUserButton = new Button("Delete");
+        deleteUserButton = new Button("Delete");
 
         // Table view
         usersTableView = new TableView<>();
@@ -211,14 +211,14 @@ public class UsersView {
 
     private void configureLayout() {
         HBox.setHgrow(region, Priority.ALWAYS);
-        topLayout.getChildren().addAll(viewTitleLabel, region, addUserButton, viewDetailsButton, removeUserButton);
+        topLayout.getChildren().addAll(viewTitleLabel, region, addUserButton, viewDetailsButton, deleteUserButton);
         layout.setPadding(new Insets(10, 10, 10, 15));
         layout.getChildren().addAll(topLayout, usersTableView, genderPieChart);
     }
 
     private void handleActions() {
         addUserButton.setOnAction(e -> {
-            GUI.getLayout().setCenter(new UsersAddView().getView());
+            GUI.getLayout().setCenter(new UserAddView().getView());
         });
 
         viewDetailsButton.setOnAction(e -> {
@@ -232,14 +232,14 @@ public class UsersView {
                     alert.setContentText("You didn't select a student!");
                     alert.showAndWait();
                 } else{
-                    GUI.getLayout().setCenter(new UsersDetailView(student).getView());
+                    GUI.getLayout().setCenter(new UserDetailView(student).getView());
                 }
             } catch(Exception error) {
                 error.printStackTrace();
             } 
         });
 
-        removeUserButton.setOnAction(e -> {
+        deleteUserButton.setOnAction(e -> {
             try {
                 Student selectedItem = usersTableView.getSelectionModel().getSelectedItem();
 

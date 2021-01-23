@@ -104,7 +104,7 @@ public class RegistrationAddView {
 
     private void handleActions() {
         closeButton.setOnAction(e -> {
-            GUI.getLayout().setCenter(new UsersDetailView(student).getView());
+            GUI.getLayout().setCenter(new UserDetailView(student).getView());
         });
 
         insertButton.setOnAction(e -> {

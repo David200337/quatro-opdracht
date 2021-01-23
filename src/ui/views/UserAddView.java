@@ -26,7 +26,7 @@ import src.ui.GUI;
 import src.validators.EmailValidator;
 import src.validators.PostalCodeValidator;
 
-public class UsersAddView {
+public class UserAddView {
     private DatabaseStudent databaseStudent;
     private Label viewTitleLabel;
     private Button backButton;
@@ -54,7 +54,7 @@ public class UsersAddView {
     private HBox topLayout;
     private VBox layout;
 
-    public UsersAddView() {
+    public UserAddView() {
         databaseStudent = new DatabaseStudent("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseStudent.loadStudents();
 

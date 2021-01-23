@@ -57,8 +57,8 @@ public class CourseDetailView {
     private Label recommendationsTitleLabel;
     private Button addRecommendationButton;
     private Button deleteRecommendationButton;
-    private TableColumn<CourseModule, String> courseNameCol;
     private TableView<CourseModule> recommendedModulesCourseTableView;
+    private TableColumn<CourseModule, String> courseNameCol;
     private Region region;
     private HBox topLayout;
     private Region modulesRegion;

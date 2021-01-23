@@ -17,7 +17,7 @@ import src.domain.Registration;
 import src.domain.Student;
 import src.ui.GUI;
 
-public class UsersDetailView {
+public class UserDetailView {
     private Student student;
     private DatabaseRegistration databaseRegistration;
     private Label viewTitleLabel;
@@ -49,7 +49,7 @@ public class UsersDetailView {
     private HBox registrationsLayout;
     private VBox layout;
 
-    public UsersDetailView(Student student) {
+    public UserDetailView(Student student) {
         this.student = student;
         databaseRegistration = new DatabaseRegistration("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseRegistration.loadCompletedRegistrations(student.getStudentId());
