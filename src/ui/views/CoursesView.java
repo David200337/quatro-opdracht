@@ -77,34 +77,49 @@ public class CoursesView {
         coursesTableView = new TableView<>();
 
         // Pie chart female
+        percentageCertificatesFemalePieChart = new PieChart();
         try {
             withCertificatePercentageFemale = databaseRegistrations.getNumberOfCertificatesPerGender("Female");
             noCertificatePercentageFemale = databaseRegistrations.getNumberOfNoneCertificatesPerGender("Female");
-        } catch (Exception e) {
+
+            percentageWithCertificateFemale = ((withCertificatePercentageFemale*100/(withCertificatePercentageFemale + noCertificatePercentageFemale)));
+            percentageWithoutCertificateFemale = ((noCertificatePercentageFemale*100/(withCertificatePercentageFemale + noCertificatePercentageFemale)));
+        
+        
+            withCertificateFemaleDataPieChart = new PieChart.Data("With Certificate (" +percentageWithCertificateFemale+"%)", withCertificatePercentageFemale);
+            withoutCertificateFemaleDataPieChart = new PieChart.Data("Without Certificate ("+percentageWithoutCertificateFemale+"%)", noCertificatePercentageFemale);
+        } catch(ArithmeticException e){
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Pie Chart Error");
+            alert.setHeaderText("Cannot divide by zero");
+            alert.setContentText("");
+            alert.showAndWait();
+        }catch (Exception e) {
             e.printStackTrace();
         }
         
-        percentageWithCertificateFemale = ((withCertificatePercentageFemale*100/(withCertificatePercentageFemale + noCertificatePercentageFemale)));
-        percentageWithoutCertificateFemale = ((noCertificatePercentageFemale*100/(withCertificatePercentageFemale + noCertificatePercentageFemale)));
         
-        percentageCertificatesFemalePieChart = new PieChart();
-        withCertificateFemaleDataPieChart = new PieChart.Data("With Certificate (" +percentageWithCertificateFemale+"%)", withCertificatePercentageFemale);
-        withoutCertificateFemaleDataPieChart = new PieChart.Data("Without Certificate ("+percentageWithoutCertificateFemale+"%)", noCertificatePercentageFemale);
-
         // Pie chart male
+        percentageCertificatesMalePieChart = new PieChart();
         try {
             withCertificatePercentageMale = databaseRegistrations.getNumberOfCertificatesPerGender("Male");
             noCertificatePercentageMale = databaseRegistrations.getNumberOfNoneCertificatesPerGender("Male");
+            percentageWithCertificateMale = ((withCertificatePercentageMale*100/(withCertificatePercentageMale + noCertificatePercentageMale)));
+            percentageWithoutCertificateMale = ((noCertificatePercentageMale*100/(withCertificatePercentageMale + noCertificatePercentageMale)));
+            withCertificateMaleDataPieChart = new PieChart.Data("With Certificate (" +percentageWithCertificateMale+"%)", withCertificatePercentageMale);
+            withoutCertificateMaleDataPieChart = new PieChart.Data("Without Certificate ("+percentageWithoutCertificateMale+"%)", noCertificatePercentageMale);
+
+        } catch(ArithmeticException e){
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Pie Chart Error");
+            alert.setHeaderText("Cannot divide by zero");
+            alert.setContentText("");
+            alert.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
         }
         
-        percentageWithCertificateMale = ((withCertificatePercentageMale*100/(withCertificatePercentageMale + noCertificatePercentageMale)));
-        percentageWithoutCertificateMale = ((noCertificatePercentageMale*100/(withCertificatePercentageMale + noCertificatePercentageMale)));
         
-        percentageCertificatesMalePieChart = new PieChart();
-        withCertificateMaleDataPieChart = new PieChart.Data("With Certificate (" +percentageWithCertificateMale+"%)", withCertificatePercentageMale);
-        withoutCertificateMaleDataPieChart = new PieChart.Data("Without Certificate ("+percentageWithoutCertificateMale+"%)", noCertificatePercentageMale);
 
         region = new Region();
         topLayout = new HBox(10);
