@@ -46,4 +46,20 @@ public class FillComboBox extends Database {
         e.printStackTrace();
       }
     }
+
+    public void fillListFromDataBaseStringCertificates(ObservableList<String> list, int studentId) throws Exception {
+      
+      String sql = "SELECT Course.CourseName FROM Course INNER JOIN Registration ON Course.CourseId = Registration.CourseId WHERE CertificateId IS NULL AND Registration.StudentId = '"+studentId+"';";
+      try {
+        connect();
+
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(sql);
+        while (resultSet.next()) {
+          list.add(resultSet.getString("CourseName"));
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    }
   }

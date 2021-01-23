@@ -81,11 +81,18 @@ public class DatabaseRegistration extends Database {
 
         
 
-        public void deleteRegistration(Registration selectedItem) throws SQLException{
-            statement.executeUpdate("DELETE FROM Registration WHERE CourseId = '"+selectedItem.getCourseId()+"'");
-        }
+    public void deleteRegistration(Registration selectedItem) throws SQLException{
+        statement.executeUpdate("DELETE FROM Registration WHERE CourseId = '"+selectedItem.getCourseId()+"'");
+    }
 
 
+    public void deleteCertificate(Registration selectedItem) throws SQLException {
+        statement.executeUpdate("DELETE FROM Certificate WHERE CertificateId = '"+selectedItem.getCertificateId()+"'");
+    }
+
+    public void updateRegistrationWhenDeleteCertificate(Registration selectedItem) throws SQLException {
+        statement.executeUpdate("UPDATE Registration SET CertificateId = NULL WHERE StudentId = '"+selectedItem.getStudentId()+"' AND CourseId = '"+selectedItem.getCourseId()+"'");
+    }
 
         public void insertRegistration(int studentId, String courseName, Date registrationDate) throws SQLException{
             statement.executeUpdate("INSERT INTO Registration(StudentId, CourseId, RegistrationDate, CertificateId) VALUES ('"+studentId+"', (SELECT CourseId FROM Course WHERE CourseName = '"+courseName+"'),'"+registrationDate+"', NULL)");
@@ -126,5 +133,11 @@ public class DatabaseRegistration extends Database {
             return numberOfNoneCertificates;
         }
 
-       
+       public void insertCertificate(String staffName, double grade) throws SQLException {
+           statement.executeUpdate("INSERT INTO Certificate(StaffName, Grade) VALUES('"+staffName+"','"+grade+"');");
+       }
+
+       public void updateRegistrationWithCertificate(int studentId, String courseName, String staffName, double grade) throws SQLException {
+           statement.executeUpdate("UPDATE Registration SET CertificateId = (SELECT CertificateId FROM Certificate WHERE StaffName = '"+staffName+"' AND Grade = '"+grade+"') WHERE StudentId = '"+studentId+"' AND CourseId = (SELECT CourseId FROM Course WHERE CourseName = '"+courseName+"')");
+       }
 }

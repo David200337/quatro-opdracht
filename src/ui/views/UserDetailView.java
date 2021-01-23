@@ -1,12 +1,16 @@
 package src.ui.views;
 
 import java.sql.Date;
+import java.util.Optional;
 
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -24,6 +28,8 @@ public class UserDetailView {
     private Button backButton;
     private Button addRegistrationButton;
     private Button moduleProgressButton;
+    private Button addCertificateButton;
+    private Button removeCertificateButton;
     private Label emailLabel;
     private Label dateOfBirthLabel;
     private Label genderLabel;
@@ -42,11 +48,14 @@ public class UserDetailView {
     private TableColumn<Registration, Date> certificateIdCol;
     private TableColumn<Registration, Date> certificateStaffName;
     private TableColumn<Registration, Date> certificateGrade;
+    private Alert alert;
 
     private Region region;
     private HBox topLayout;
     private Region registrationsRegion;
     private HBox registrationsLayout;
+    private Region certificateRegion;
+    private HBox certificateLayout;
     private VBox layout;
 
     public UserDetailView(Student student) {
@@ -73,6 +82,8 @@ public class UserDetailView {
         regCourseNameCol = new TableColumn<>("Course");
         regRegistrationDateCol = new TableColumn<>("Registration Date");
 
+        addCertificateButton = new Button("Add");
+        removeCertificateButton = new Button("Remove");
         certificatesTitleLabel = new Label("Certificates");
         certificatesTableView = new TableView<>();
         courseNameCol = new TableColumn<>("Course");
@@ -85,6 +96,8 @@ public class UserDetailView {
         topLayout = new HBox(10);
         registrationsRegion = new Region();
         registrationsLayout = new HBox(10);
+        certificateRegion = new Region();
+        certificateLayout = new HBox(10);
         layout = new VBox(10);
     }
 
@@ -121,9 +134,11 @@ public class UserDetailView {
         HBox.setHgrow(registrationsRegion, Priority.ALWAYS);
         registrationsLayout.getChildren().addAll(registrationsTitleLabel, registrationsRegion, addRegistrationButton);
 
+        HBox.setHgrow(certificateRegion,Priority.ALWAYS);
+        certificateLayout.getChildren().addAll(certificatesTitleLabel, certificateRegion, addCertificateButton, removeCertificateButton);
 
         layout.setPadding(new Insets(10, 10, 10, 15));
-        layout.getChildren().addAll(topLayout, emailLabel, dateOfBirthLabel, genderLabel, addressLabel, postalCodeLabel, cityLabel, countryLabel, registrationsLayout, registrationsTableView, certificatesTitleLabel, certificatesTableView);
+        layout.getChildren().addAll(topLayout, emailLabel, dateOfBirthLabel, genderLabel, addressLabel, postalCodeLabel, cityLabel, countryLabel, registrationsLayout, registrationsTableView, certificateLayout, certificatesTableView);
     }
 
     private void handleActions() {
@@ -137,6 +152,39 @@ public class UserDetailView {
 
         addRegistrationButton.setOnAction(e -> {
             GUI.getLayout().setCenter(new RegistrationAddView(student).getView());
+        });
+
+        addCertificateButton.setOnAction(e -> {
+            GUI.getLayout().setCenter(new CertificateAddView(student).getView());
+        });
+
+        removeCertificateButton.setOnAction(e -> {
+            try {
+                Registration selectedItem = certificatesTableView.getSelectionModel().getSelectedItem();
+                if (selectedItem == null){
+                    alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Missing certificate");
+                    alert.setContentText("You didn't select a certificate!");
+                    alert.showAndWait();
+                } else {
+                    alert = new Alert(AlertType.CONFIRMATION);
+                    alert.setTitle("Delete");
+                    alert.setHeaderText("Are you sure you want to delete this certificate?");
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    
+                    if (!result.isPresent() || result.get() != ButtonType.OK) {
+                       
+                    } else {
+                        certificatesTableView.getItems().remove(selectedItem);
+                        databaseRegistration.deleteCertificate(selectedItem);
+                        databaseRegistration.updateRegistrationWhenDeleteCertificate(selectedItem);
+                    }
+                }
+            } catch(Exception error) {
+                error.printStackTrace();
+            } 
         });
     }
 

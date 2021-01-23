@@ -104,8 +104,6 @@ public class CourseDetailView {
         creatorCol = new TableColumn<>("Creator");
         
 	    studentsCoursePassedTableTitle = new Label("Students Passed: "+databaseCourseModule.getCourseStudentsPassed(courseModule.getCourseId()));
-        // studentsCoursePassedTableView = new TableView<>();
-        // studentsPassedColumn = new TableColumn<>("StudentsPassed");
         
         recommendedModulesCourseTableView = new TableView<>();
         courseNameCol = new TableColumn<>("Course Name");
@@ -237,7 +235,7 @@ public class CourseDetailView {
                 if(courseModule == null){
                     Alert alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Error");
-                    alert.setHeaderText("Missing course");
+                    alert.setHeaderText("Missing module");
                     alert.setContentText("You didn't select a module!");
                     alert.showAndWait();
                 } else{
