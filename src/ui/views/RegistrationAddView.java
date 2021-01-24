@@ -114,16 +114,24 @@ public class RegistrationAddView {
 
         insertButton.setOnAction(e -> {
             try { 
-                databaseRegistration.insertRegistration(student.getStudentId(), String.valueOf(courseComboBox.getValue()), Date.valueOf(datePicker.getValue()));
-                
-                Alert alert = new Alert(AlertType.CONFIRMATION);
-                alert.setTitle("Registrated");
-                alert.setHeaderText("Success!");
-                alert.setContentText("The registration is added!");
-                alert.showAndWait();
+                if (datePicker.getValue() == null || courseComboBox.getValue() == null ){
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Missing field error");
+                    alert.setContentText("You didn't fill in all the necessary fields!");
+                    alert.showAndWait();
+                } else {
+                    databaseRegistration.insertRegistration(student.getStudentId(), String.valueOf(courseComboBox.getValue()), Date.valueOf(datePicker.getValue()));
                     
-                datePicker.setValue(null);
-                courseComboBox.setValue(null);
+                    Alert alert = new Alert(AlertType.CONFIRMATION);
+                    alert.setTitle("Registrated");
+                    alert.setHeaderText("Success!");
+                    alert.setContentText("The registration is added!");
+                    alert.showAndWait();
+                        
+                    datePicker.setValue(null);
+                    courseComboBox.setValue(null);
+                }
             } catch (Exception error) {
                 error.printStackTrace();
             }
