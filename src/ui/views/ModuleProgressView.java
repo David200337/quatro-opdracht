@@ -29,6 +29,11 @@ public class ModuleProgressView {
     private TableColumn<ViewStatistics, Integer> modVersionNrCol;
     private TableColumn<ViewStatistics, Double> modProgressCol;
 
+    private Label webcastProgressTitleLabel;
+    private TableView<ViewStatistics> webcastProgressTableView;
+    private TableColumn<ViewStatistics, String> webTitleCol;
+    private TableColumn<ViewStatistics, Double> webProgressCol;
+
     private Region region;
     private HBox topLayout;
     private VBox layout;
@@ -38,17 +43,24 @@ public class ModuleProgressView {
         this.student = student;
         databaseViewStatistics = new DatabaseViewStatistics("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseViewStatistics.loadPercentageModule(student.getStudentId());
+        databaseViewStatistics.loadPercentageWebcast(student.getStudentId());
 
         viewTitleLabel = new Label("Student: "+ student.getName());
         backButton = new Button("Back");
 
-        moduleProgressTitleLabel = new Label("Progress");
+        moduleProgressTitleLabel = new Label("Progress (Modules)");
         moduleProgressTableView = new TableView<>();
 
         modTitleCol = new TableColumn<>("Title");
         modVersionNrCol = new TableColumn<>("VersionNr");
         modProgressCol = new TableColumn<>("Progress");
         
+        webcastProgressTitleLabel = new Label("Progress (Webcasts)");
+        webcastProgressTableView = new TableView<>();
+
+        webTitleCol = new TableColumn<>("Title");
+        webProgressCol = new TableColumn<>("Progress");
+
         region = new Region();
         topLayout = new HBox(10);
         layout = new VBox(10);
@@ -67,6 +79,14 @@ public class ModuleProgressView {
         moduleProgressTableView.setItems(databaseViewStatistics.getPercentageModules());
         moduleProgressTableView.getColumns().addAll(modTitleCol, modVersionNrCol, modProgressCol);
 
+        webcastProgressTitleLabel.getStyleClass().add("view-title");
+        webTitleCol.setCellValueFactory(new PropertyValueFactory<>("webcastTitle"));
+        webProgressCol.setCellValueFactory(new PropertyValueFactory<>("percentage"));
+        webProgressCol.setCellFactory(ProgressBarTableCell.<ViewStatistics> forTableColumn());
+
+        webcastProgressTableView.setItems(databaseViewStatistics.getPercentageWebcast());
+        webcastProgressTableView.getColumns().addAll(webTitleCol, webProgressCol);
+
     }
 
     //Configure the layout
@@ -75,7 +95,7 @@ public class ModuleProgressView {
         topLayout.getChildren().addAll(viewTitleLabel, region, backButton);
 
         layout.setPadding(new Insets(10, 10, 10, 15));
-        layout.getChildren().addAll(topLayout, moduleProgressTitleLabel, moduleProgressTableView);
+        layout.getChildren().addAll(topLayout, moduleProgressTitleLabel, moduleProgressTableView, webcastProgressTitleLabel, webcastProgressTableView);
     }
 
     //Initialize the actions of the buttons

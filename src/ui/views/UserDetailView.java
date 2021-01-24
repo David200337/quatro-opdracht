@@ -67,7 +67,7 @@ public class UserDetailView {
 
         viewTitleLabel = new Label(student.getName());
         backButton = new Button("Back");
-        moduleProgressButton = new Button("Module Progress");
+        moduleProgressButton = new Button("Progress");
         emailLabel = new Label("Email: " + student.getEmail());
         dateOfBirthLabel = new Label("Date of Birth: " + student.getDateOfBirth());
         genderLabel = new Label("Gender: " + student.getGender());

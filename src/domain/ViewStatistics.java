@@ -3,6 +3,7 @@ package src.domain;
 public class ViewStatistics {
     private String moduleTitle;
     private int versionNr;
+    private String webcastTitle;
     private double percentage;
 
     public ViewStatistics(String moduleTitle, int versionNr, double percentage) {
@@ -10,6 +11,20 @@ public class ViewStatistics {
         this.setVersionNr(versionNr);
         this.setPercentage(percentage);
     }
+    public ViewStatistics(String webcastTitle, double percentage) {
+        this.setWebcastTitle(webcastTitle);
+        this.setPercentage(percentage);
+    }
+
+    public String getWebcastTitle() {
+        return webcastTitle;
+    }
+
+    public void setWebcastTitle(String webcastTitle) {
+        this.webcastTitle = webcastTitle;
+    }
+
+    
 
     public double getPercentage() {
         return percentage;
