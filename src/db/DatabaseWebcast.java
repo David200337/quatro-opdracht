@@ -11,18 +11,17 @@ import src.domain.*;
 public class DatabaseWebcast extends Database{
     private ObservableList<Webcast> webcasts;
 
-
     public DatabaseWebcast(String connectionUrl) {
         super(connectionUrl);
         this.webcasts = FXCollections.observableArrayList();
 
     }
     
+    //Load all attributes from the Webcast table
     public void loadWebcasts() {
         try {
             connect();
 
-            // String sql = "SELECT Webcast.ContentId, Webcast.PublicationDate, Webcast.Status, Webcast.Theme, Webcast.Title, Webcast.Description, ContentCreator.CreatorId, ContentCreator.Name, ContentCreator.Email, ContentCreator.Organisation FROM ContentCreator INNER JOIN Webcast ON Webcast.CreatorId = ContentCreator.CreatorId";
             String sql = "SELECT Content.ContentId, Content.PublicationDate, Content.Status, Content.Theme, Content.Description, Webcast.Title, Webcast.URL, Webcast.Duration, ContentCreator.CreatorId, ContentCreator.Name, ContentCreator.Email, ContentCreator.Organisation FROM Content INNER JOIN Webcast ON Webcast.ContentId = Content.ContentId INNER JOIN ContentCreator ON Content.CreatorId = ContentCreator.CreatorId;";
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
@@ -61,6 +60,7 @@ public class DatabaseWebcast extends Database{
         } 
     }
 
+    //Load the top 3 of most watched webcasts
     public void loadWebcastTop3(){
         try{
             connect();
@@ -81,22 +81,24 @@ public class DatabaseWebcast extends Database{
         } 
     }
 
+    //Return the list of webcasts
     public ObservableList<Webcast> getWebcasts() {
-        // Return webcasts array
         return webcasts;
     }
 
-
+    //Delete a webcast
     public void deleteWebcast(Webcast selectedItem) throws SQLException{
         statement.executeUpdate("DELETE FROM Webcast WHERE ContentId = '"+selectedItem.getContentId()+"'");
         statement.executeUpdate("DELETE FROM Content WHERE ContentId = '"+selectedItem.getContentId()+"'");
     }
 
+    //Insert a webcast
     public void insertWebcast(int contentId, Date publicationDate, String title, String theme, String description, String status, Time duration, String name, String url) throws SQLException{
         statement.executeUpdate("INSERT INTO Content(ContentId, PublicationDate, Status, Theme, Description, CreatorId) VALUES ('"+contentId+"','"+publicationDate+"','"+status+"','"+theme+"','"+description+"',(SELECT CreatorId FROM ContentCreator WHERE Name = '"+name+"'))");
         statement.executeUpdate("INSERT INTO Webcast(ContentId, Title, URL, Duration) VALUES ('"+contentId+"','"+title+"','"+url+"','"+duration+"')");
     }
 
+    //Update a given column in the webcasts table for the type String
     public void updateWebcastString(String column, String newValue, int id){
         try{
             if(column.equals("Theme") || column.equals("Description") || column.equals("Status")){
@@ -110,7 +112,7 @@ public class DatabaseWebcast extends Database{
         }
     }
 
-
+    //Update a given column in the webcasts table for the type String
     public void updateWebcastObject(String column, Object newValue, int id){
         try{
             if(column.equals("Theme") || column.equals("Description") || column.equals("Status")){
@@ -122,6 +124,4 @@ public class DatabaseWebcast extends Database{
             e.printStackTrace();
         }
     }
-    
-
 }

@@ -17,6 +17,7 @@ public class DatabaseCourseModule extends Database{
         this.recommendedCourseList = FXCollections.observableArrayList();
 	}
     
+    //Load all the attributes in the tables Course, Module and Content
     public void loadCourseModules() {
         try {
             connect();
@@ -54,6 +55,7 @@ public class DatabaseCourseModule extends Database{
         } 
     }
 
+    //Load all the attributes from the table Course
     public void loadCourse(){
         try {
             connect();
@@ -77,6 +79,7 @@ public class DatabaseCourseModule extends Database{
         } 
     }
 
+    //Load all the attributes from the table Module
     public void loadModules(int courseId) {
             try {
                 connect();
@@ -110,6 +113,7 @@ public class DatabaseCourseModule extends Database{
         
     }
 
+    //Return the number of students that passed a selected course
     public int getCourseStudentsPassed(int courseId) throws Exception {
             connect();
 
@@ -125,15 +129,18 @@ public class DatabaseCourseModule extends Database{
             return studentsPassed;
     } 	
 
+    //Return the list with attributes from various tables
     public ObservableList<CourseModule> getCourseModules() {
         // Return courseModule array
         return courseModuleList;
     }
 
+    //Insert a course
     public void insertCourse(String courseName, String subject, String introductionText, String level) throws SQLException{
         statement.executeUpdate("INSERT INTO Course(CourseName, Subject, IntroductionText, Level) VALUES ('"+courseName+"','"+subject+"','"+introductionText+"','"+level+"')");
      }
 
+    //Update a selected column from the Course, Module or Content table in a form of a String
     public void updateCourseModuleString(String column, String newValue, int id){
         try{
             if(column.equals("CourseName") || column.equals("Subject") || column.equals("Level")){
@@ -149,7 +156,7 @@ public class DatabaseCourseModule extends Database{
         }
     }
 
-
+    //Update a selected column from the Course, Module or Content table in a form of a Object
     public void updateCourseModuleObject(String column, Object newValue, int id){
         try{
             if(column.equals("CourseName") || column.equals("Subject") || column.equals("Level")){
@@ -164,15 +171,18 @@ public class DatabaseCourseModule extends Database{
         }
     }
 
+    //Delete a selected course
     public void deleteCourse(CourseModule selectedItem) throws SQLException{
         statement.executeUpdate("DELETE FROM Course WHERE CourseId = '"+selectedItem.getCourseId()+"'");
     }
 
+    //Delete a selected module
     public void deleteModule(CourseModule selectedItem) throws SQLException{
         statement.executeUpdate("DELETE FROM Module WHERE ContentId = '"+selectedItem.getContentId()+"'");
         statement.executeUpdate("DELETE FROM Content WHERE ContentId = '"+selectedItem.getContentId()+"'");
     }
 
+    //Load all recommended courses for a selected course
     public void loadRecommendedCourses(CourseModule selectedItem){
         try {
             connect();
@@ -195,19 +205,22 @@ public class DatabaseCourseModule extends Database{
         
     }
 
+    //Return the list of recommended courses
     public ObservableList<CourseModule> getRecommendedCourses(){
         return recommendedCourseList;
     }
 
+    //Insert a recommendation for a certain course
     public void insertRecommendation(int courseId, String courseName) throws SQLException {
         statement.executeUpdate("INSERT INTO RecommendedCourse(CourseId, RecommendedCourseName) VALUES ('"+courseId+"','"+courseName+"')");
     }
 
+    //Delete a recommendation
     public void deleteRecommendation(CourseModule selectedItem) throws SQLException {
         statement.executeUpdate("DELETE FROM RecommendedCourse WHERE CourseId = '"+selectedItem.getCourseId()+"'");
     }
          
-    
+    //Insert a module in the tables Module and Content
     public void insertModule(int courseId, int contentId, Date publicationDate, String title, String theme, String description, Object status, int serialNumber, String name, int moduleVersion) throws SQLException{
         statement.executeUpdate("INSERT INTO Content(ContentId, PublicationDate, Status, Theme, Description, CreatorId) VALUES ('"+contentId+"','"+publicationDate+"','"+status+"','"+theme+"','"+description+"',(SELECT CreatorId FROM ContentCreator WHERE Name = '"+name+"'))");
         statement.executeUpdate("INSERT INTO Module(ContentId, Title, VersionNr, SerialNumber, CourseId) VALUES ('"+contentId+"','"+title+"','"+moduleVersion+"','"+serialNumber+"','"+courseId+"')");

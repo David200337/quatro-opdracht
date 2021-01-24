@@ -116,17 +116,6 @@ public class CourseModule {
         this.creatorId = creatorId;
     }
 
-    
-    
-
-
-    // public Course createCourse(int courseId, String courseName, String subject, String introductionText, Level level){
-    //     Course course = new Course(courseId, courseName, subject, introductionText, level);
-    //     return course;
-    // }
-
-
-
     public String getModuleTheme() {
         return moduleTheme;
     }

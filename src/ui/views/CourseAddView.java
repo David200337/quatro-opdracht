@@ -34,6 +34,7 @@ public class CourseAddView {
     private HBox topLayout;
     private VBox layout;
 
+    //Initialize the variables
     public CourseAddView() {
         databaseCourses = new DatabaseCourseModule("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseCourses.loadCourseModules();
@@ -55,11 +56,13 @@ public class CourseAddView {
         layout = new VBox(10);
     }
 
+    //Configure the nodes
     protected void configureNodes() {
         viewTitleLabel.getStyleClass().add("view-title");
         levelComboBox.getItems().setAll(Level.values());
     }
 
+    //Configure the layout
     protected void configureLayout() {
         HBox.setHgrow(region, Priority.ALWAYS);
         topLayout.getChildren().addAll(viewTitleLabel, region, backButton);
@@ -68,6 +71,7 @@ public class CourseAddView {
         layout.getChildren().addAll(topLayout, nameLabel, nameTextField, subjectLabel, subjectTextField, introductionTextLabel, introductionTextTextField, levelLabel, levelComboBox, insertButton);
     }
 
+    //Initialize the actions of the buttons
     protected void handleActions() {        
         backButton.setOnAction(e -> {
             GUI.getLayout().setCenter(new CoursesView().getView());
@@ -105,6 +109,7 @@ public class CourseAddView {
         });
     }
 
+    //Put everything together and show it
     public Pane getView() {
         configureNodes();
         configureLayout();

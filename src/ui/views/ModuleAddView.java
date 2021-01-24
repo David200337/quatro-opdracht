@@ -61,6 +61,7 @@ public class ModuleAddView {
     private HBox topLayout;
     private VBox layout;
 
+    //Initialize the variables
     public ModuleAddView(CourseModule courseModule) {
         this.courseModule = courseModule;
         databaseCourseModule = new DatabaseCourseModule(
@@ -113,6 +114,7 @@ public class ModuleAddView {
         layout = new VBox(10);
     }
 
+    //Configure the nodes
     private void configureNodes() {
         viewTitleLabel.getStyleClass().add("view-title");
 
@@ -132,6 +134,7 @@ public class ModuleAddView {
 
     }
 
+    //Configure the layout
     private void configureLayout() {
         HBox.setHgrow(region, Priority.ALWAYS);
         topLayout.getChildren().addAll(viewTitleLabel, region, backButton);
@@ -143,6 +146,7 @@ public class ModuleAddView {
                 creatorLabel, creatorComboBox, insertButton);
     }
 
+    //Initialize the actions of the buttons
     private void handleActions() {
         backButton.setOnAction(e -> {
             try {
@@ -185,6 +189,7 @@ public class ModuleAddView {
         });
     }
 
+    //Put everything together and show it
     public VBox getView() {
         configureNodes();
         configureLayout();

@@ -54,6 +54,7 @@ public class UserAddView {
     private HBox topLayout;
     private VBox layout;
 
+    //Initialize the variables
     public UserAddView() {
         databaseStudent = new DatabaseStudent("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseStudent.loadStudents();
@@ -101,6 +102,7 @@ public class UserAddView {
         layout = new VBox(10);
     }
 
+    //Configure the nodes
     private void configureNodes() {
         viewTitleLabel.getStyleClass().add("view-title");
 
@@ -109,6 +111,7 @@ public class UserAddView {
         datePicker.setDayCellFactory(dayCellFactory);
     }
 
+    //Configure the layout
     private void configureLayout() {
         HBox.setHgrow(region, Priority.ALWAYS);
         topLayout.getChildren().addAll(viewTitleLabel, region, backButton);
@@ -117,6 +120,7 @@ public class UserAddView {
         layout.getChildren().addAll(topLayout, nameLabel, nameTextField, emailLabel, emailTextField, dateOfBirthLabel, datePicker, genderLabel, genderComboBox, addressLabel, addressTextField, postalCodeLabel, postalCodeTextField, cityLabel, cityTextField, countryLabel, countryTextField, insertButton);
     }
 
+    //Initialize the actions of the buttons
     private void handleActions() {
         backButton.setOnAction(e -> {
             GUI.getLayout().setCenter(new UsersView().getView());
@@ -182,6 +186,7 @@ public class UserAddView {
         });
     }
 
+    //Put everything together and show it
     public VBox getView() {
         configureNodes();
         configureLayout();

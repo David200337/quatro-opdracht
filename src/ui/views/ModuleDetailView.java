@@ -37,15 +37,12 @@ public class ModuleDetailView {
     private HBox topLayout;
     private VBox layout;
 
+    //Initialize the variables
     public ModuleDetailView(CourseModule courseModule) throws Exception {
         this.courseModule = courseModule;
-        // databaseCourseModule = new
-        // DatabaseCourseModule("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
-        // databaseCourseModule.loadCourseModules();
-        databaseViewStatistics = new DatabaseViewStatistics(
+         databaseViewStatistics = new DatabaseViewStatistics(
                 "jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
-        // databaseViewStatistics.loadPercentageAllAccounts(courseModule.getContentId());
-
+        
         viewTitleLabel = new Label(courseModule.getCourseName());
         backButton = new Button("Back");
         titleLabel = new Label("Title: " + courseModule.getModuleTitle());
@@ -71,6 +68,7 @@ public class ModuleDetailView {
         layout = new VBox(10);
     }
 
+    //Configure the nodes
     private void configureNodes() {
         viewTitleLabel.getStyleClass().add("view-title");
         titleLabel.getStyleClass().add("bold-text");
@@ -86,6 +84,7 @@ public class ModuleDetailView {
 
     }
 
+    //Configure the layout
     private void configureLayout() {
         HBox.setHgrow(region, Priority.ALWAYS);
         topLayout.getChildren().addAll(viewTitleLabel, region, backButton);
@@ -95,6 +94,7 @@ public class ModuleDetailView {
                 serialNumberLabel, creatorNameLabel,creatorEmailLabel, creatorOrganisationLabel, nothingLabel, progressBarLabel, moduleProgressBar, progressBarNumberLabel);
     }
 
+    //Initialize the actions of the buttons
     private void handleActions() {
         backButton.setOnAction(e -> {
             try {
@@ -105,6 +105,7 @@ public class ModuleDetailView {
         });
     }
 
+    //Put everything together and show it
     public VBox getView() {
         configureNodes();
         configureLayout();

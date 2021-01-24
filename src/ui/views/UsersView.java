@@ -56,7 +56,7 @@ public class UsersView {
     private HBox topLayout;
     private VBox layout;
 
-
+    //Initialize the variables
     public UsersView() {
         // Database connection
         databaseStudent = new DatabaseStudent("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
@@ -97,6 +97,7 @@ public class UsersView {
         layout = new VBox(10);
     }
 
+    //Configure the nodes
     private void configureNodes() {
         viewTitleLabel.getStyleClass().add("view-title");
 
@@ -209,6 +210,7 @@ public class UsersView {
         genderPieChart.getData().add(maleDataPieChart);
     }
 
+    //Configure the layout
     private void configureLayout() {
         HBox.setHgrow(region, Priority.ALWAYS);
         topLayout.getChildren().addAll(viewTitleLabel, region, addUserButton, viewDetailsButton, deleteUserButton);
@@ -216,6 +218,7 @@ public class UsersView {
         layout.getChildren().addAll(topLayout, usersTableView, genderPieChart);
     }
 
+    //Initialize the actions of the buttons
     private void handleActions() {
         addUserButton.setOnAction(e -> {
             GUI.getLayout().setCenter(new UserAddView().getView());
@@ -267,6 +270,7 @@ public class UsersView {
         });
     }
 
+    //Put everything together and show it
     public VBox getView() {
         configureNodes();
         configureLayout();

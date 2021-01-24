@@ -58,6 +58,7 @@ public class UserDetailView {
     private HBox certificateLayout;
     private VBox layout;
 
+    //Initialize the variables
     public UserDetailView(Student student) {
         this.student = student;
         databaseRegistration = new DatabaseRegistration("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
@@ -101,6 +102,7 @@ public class UserDetailView {
         layout = new VBox(10);
     }
 
+    //Configure the nodes
     private void configureNodes() {
         viewTitleLabel.getStyleClass().add("view-title");
         emailLabel.getStyleClass().add("bold-text");
@@ -127,6 +129,7 @@ public class UserDetailView {
         certificatesTableView.getColumns().addAll(courseNameCol, registrationDateCol, certificateIdCol, certificateStaffName, certificateGrade);
     }
 
+    //Configure the layout
     private void configureLayout() {
         HBox.setHgrow(region, Priority.ALWAYS);
         topLayout.getChildren().addAll(viewTitleLabel, region, moduleProgressButton, backButton);
@@ -141,6 +144,7 @@ public class UserDetailView {
         layout.getChildren().addAll(topLayout, emailLabel, dateOfBirthLabel, genderLabel, addressLabel, postalCodeLabel, cityLabel, countryLabel, registrationsLayout, registrationsTableView, certificateLayout, certificatesTableView);
     }
 
+    //Initialize the actions of the buttons
     private void handleActions() {
         backButton.setOnAction(e -> {
             GUI.getLayout().setCenter(new UsersView().getView());
@@ -188,6 +192,7 @@ public class UserDetailView {
         });
     }
 
+    //Put everything together and show it
     public VBox getView() {
         configureNodes();
         configureLayout();

@@ -8,6 +8,7 @@ public class URLValidator {
  
     private static final Pattern pattern = Pattern.compile(URL_PATTERN);
  
+    //Check if the given URL is valid for the pattern
     public static boolean isValid(final String urlStr) {
         Matcher matcher = pattern.matcher(urlStr);
         return matcher.matches();

@@ -80,10 +80,6 @@ public class Student {
         this.dateOfBirth = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(date);
     }
 
-    // public ObservableValue<String> getGenderValue(){
-    //     return genderValue;
-    // }
-
 
     public String getGender() {
         return gender;

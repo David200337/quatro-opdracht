@@ -32,6 +32,7 @@ public class RecommendedCourseAddView {
     private HBox topLayout;
     private VBox layout;
 
+    //Initialize the variables
     public RecommendedCourseAddView(CourseModule courseModule) {
         this.courseModule = courseModule;
         databaseCourseModule = new DatabaseCourseModule(
@@ -51,6 +52,7 @@ public class RecommendedCourseAddView {
         layout = new VBox(10);
     }
 
+    //Configure the nodes
     private void configureNodes() {
         viewTitleLabel.getStyleClass().add("view-title");
 
@@ -63,6 +65,7 @@ public class RecommendedCourseAddView {
         courseComboBox.setItems(listCourses);
     }
 
+    //Configure the layout
     private void configureLayout() {
         HBox.setHgrow(region, Priority.ALWAYS);
         topLayout.getChildren().addAll(viewTitleLabel, region, closeButton);
@@ -71,6 +74,7 @@ public class RecommendedCourseAddView {
         layout.getChildren().addAll(topLayout, recommendationName, courseComboBox, insertButton);
     }
 
+    //Initialize the actions of the buttons
     private void handleActions() {
         closeButton.setOnAction(e -> {
             try {
@@ -98,6 +102,7 @@ public class RecommendedCourseAddView {
         });
     }
 
+    //Put everything together and show it
     public VBox getView() {
         configureNodes();
         configureLayout();

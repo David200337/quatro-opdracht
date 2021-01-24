@@ -9,6 +9,7 @@ public class EmailValidator{
 
     private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
  
+    //Check if the given email adres is valid for the pattern
     public static boolean isValid(final String emailStr) {
         Matcher matcher = pattern.matcher(emailStr);
         return matcher.matches();

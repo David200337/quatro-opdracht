@@ -15,6 +15,7 @@ public class DatabaseContentCreator extends Database {
         this.creators = FXCollections.observableArrayList();
     }
 
+    //Load all the creators selected by the query
     public void loadCreators(){
         try{
             connect();
@@ -37,14 +38,17 @@ public class DatabaseContentCreator extends Database {
         }
     }
 
+    //Return the list of creators
     public ObservableList<ContentCreator> getCreators(){
         return creators;
     }
 
+    //Insert a creator
     public void insertCreator(String creatorName, String email, String organisation) throws SQLException{
         statement.executeUpdate("INSERT INTO ContentCreator(Name, Email, Organisation) VALUES ('"+creatorName+"','"+email+"','"+organisation+"')");
     }
 
+    //Update a column from the creator table
     public void updateCreator(String column, String newValue, int id){
         try{
             if(column.equals("Name") || column.equals("Email") || column.equals("Organisation")){
@@ -55,6 +59,7 @@ public class DatabaseContentCreator extends Database {
         }
     }
 
+    //Delete a selected creator
     public void deleteCreator(ContentCreator selectedItem) throws SQLException{
         statement.executeUpdate("DELETE FROM ContentCreator WHERE CreatorId = '"+selectedItem.getCreatorId()+"'");
     }

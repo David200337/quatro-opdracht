@@ -24,6 +24,7 @@ public class MenuComponent {
     private ToggleButton contentCreatorsMenuButton;
     private VBox layout;
 
+    //Initialize the variables
     public MenuComponent() {
         logoImage = new Image("src/resources/codecademy-logo.png");
         logoImageView = new ImageView(logoImage);
@@ -36,6 +37,7 @@ public class MenuComponent {
         layout = new VBox();
     }
 
+    //Configure the nodes
     private void configureNodes() {
         logoImageView.setPreserveRatio(true);
         logoImageView.setFitWidth(150);
@@ -59,6 +61,7 @@ public class MenuComponent {
         contentCreatorsMenuButton.getStyleClass().add("menu-button");
     }
 
+    //Configure the layout
     private void configureLayout() {
         layout.getStyleClass().add("menu");
         layout.setPadding(new Insets(0, 0, 0, 15));
@@ -66,6 +69,7 @@ public class MenuComponent {
         layout.getChildren().addAll(logoImageView, generalMenuButton, usersMenuButton, coursesMenuButton, webcastsMenuButton, contentCreatorsMenuButton);
     }
 
+    //Initialize the actions of the buttons
     private void switchScene() {
         generalMenuButton.setOnAction(e -> {
             GUI.getLayout().setCenter(new GeneralView().getView());
@@ -90,6 +94,7 @@ public class MenuComponent {
 
     }
 
+    //Put everything together and show it
     public VBox getComponent() {
         configureNodes();
         configureLayout();

@@ -33,6 +33,7 @@ public class ModuleProgressView {
     private HBox topLayout;
     private VBox layout;
 
+    //Initialize the variables
     public ModuleProgressView(Student student) {
         this.student = student;
         databaseViewStatistics = new DatabaseViewStatistics("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
@@ -53,6 +54,7 @@ public class ModuleProgressView {
         layout = new VBox(10);
     }
 
+    //Configure the nodes
     private void configureNodes() {
         viewTitleLabel.getStyleClass().add("view-title");
 
@@ -67,6 +69,7 @@ public class ModuleProgressView {
 
     }
 
+    //Configure the layout
     private void configureLayout() {
         HBox.setHgrow(region, Priority.ALWAYS);
         topLayout.getChildren().addAll(viewTitleLabel, region, backButton);
@@ -75,12 +78,14 @@ public class ModuleProgressView {
         layout.getChildren().addAll(topLayout, moduleProgressTitleLabel, moduleProgressTableView);
     }
 
+    //Initialize the actions of the buttons
     private void handleActions() {
         backButton.setOnAction(e -> {
             GUI.getLayout().setCenter(new UserDetailView(student).getView());
         });
     }
 
+    //Put everything together and show it
     public VBox getView() {
         configureNodes();
         configureLayout();

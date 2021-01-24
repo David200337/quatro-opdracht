@@ -11,24 +11,16 @@ abstract class Content {
     private int percentage;
     private String status;
     private ContentCreator creator;
-    // private int creatorId;
-    // private String name;
-    // private String email;
-    // private String organisation;
+
 
     public Content(int contentId, Date publicationDate, String theme, String title, String description, String status,
             ContentCreator creator) {
         this.contentId = contentId;
-        // this.percentage = percentage;
         this.publicationDate = publicationDate;
         this.status = status;
         this.theme = theme;
         this.title = title;
         this.setCreator(creator);
-        // this.creatorId = creatorId;
-        // this.name=name;
-        // this.email = email;
-        // this.organisation = organisation;
         this.description = description;
     }
 
@@ -41,9 +33,7 @@ abstract class Content {
     }
 
     public Content() {
-
     }
-
 
 
     public Integer getContentId(){
@@ -101,36 +91,4 @@ abstract class Content {
     public void setDescription(String description){
         this.description = description;
     }
-
-    // public int getCreatorId(){
-    //     return creatorId;
-    // }
-
-    // public void setCreatorId(int id){
-    //     this.creatorId = id;
-    // }
-
-    // public String getName(){
-    //     return name;
-    // }
-
-    // public void setName(String name){
-    //     this.name = name;
-    // }
-
-    // public String getEmail(){
-    //     return email;
-    // }
-
-    // public void setEmail(String email){
-    //     this.email = email;
-    // }
-
-    // public String getOrganisation(){
-    //     return organisation;
-    // }
-
-    // public void setOrganisation(String organisation){
-    //     this.organisation = organisation;
-    // }
 }

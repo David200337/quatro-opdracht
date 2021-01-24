@@ -7,13 +7,13 @@ import src.domain.ViewStatistics;
 public class DatabaseViewStatistics extends Database {
     private ObservableList<ViewStatistics> percentageModuleList;
     private double totalPercentage;
-    // private double totalNumber;
 
     public DatabaseViewStatistics(String connectionUrl) {
         super(connectionUrl);
         this.percentageModuleList = FXCollections.observableArrayList();
     }
     
+    //Load all attributes from the Registration table
     public void loadPercentageModule(int studentId){
         try{
             connect();
@@ -36,10 +36,12 @@ public class DatabaseViewStatistics extends Database {
         } 
     }
 
+    //Return the list with percentages
     public ObservableList<ViewStatistics> getPercentageModules(){
         return percentageModuleList;
     }
 
+    //Return a percentage from all accounts per module
     public double getPercentageAllAccounts(int contentId) throws Exception {
             connect();
 
@@ -52,8 +54,7 @@ public class DatabaseViewStatistics extends Database {
                 totalPercentage = resultSet.getDouble("TotalPercentage");
             }
 
-            return totalPercentage;
-        
+            return totalPercentage;  
     }
 
 }

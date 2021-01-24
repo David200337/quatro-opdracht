@@ -34,7 +34,7 @@ public class ContentCreatorView {
     private HBox topLayout;
     private VBox layout;
 
-
+    //Initialize the variables
     public ContentCreatorView() {
         databaseCreators = new DatabaseContentCreator("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseCreators.loadCreators();
@@ -50,6 +50,7 @@ public class ContentCreatorView {
         layout = new VBox(10);
     }
 
+    //Configure the nodes
     private void configureNodes() {
         viewTitleLabel.getStyleClass().add("view-title");
 
@@ -96,6 +97,7 @@ public class ContentCreatorView {
 
     }
 
+    //Configure the layout
     private void configureLayout() {
         HBox.setHgrow(region, Priority.ALWAYS);
         topLayout.getChildren().addAll(viewTitleLabel, region, addCreatorButton, deleteCreatorButton);
@@ -103,6 +105,7 @@ public class ContentCreatorView {
         layout.getChildren().addAll(topLayout, creatorsTableView);
     }
 
+    //Initialize the actions of the buttons
     private void handleActions() {
         addCreatorButton.setOnAction(e -> {
             GUI.getLayout().setCenter(new CreatorAddView().getView());
@@ -137,6 +140,7 @@ public class ContentCreatorView {
         });
     }
 
+    //Put everything together and show it
     public Pane getView() {
         configureNodes();
         configureLayout();

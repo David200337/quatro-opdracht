@@ -40,6 +40,7 @@ public class CertificateAddView {
     private VBox layout;
     private FillComboBox fcb;
 
+    //Initialize the variables
     public CertificateAddView(Student student) {
 
         databaseRegistration = new DatabaseRegistration("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
@@ -66,6 +67,7 @@ public class CertificateAddView {
         layout = new VBox(10);
     }
 
+    //Configure the nodes
     protected void configureNodes() {
         viewTitleLabel.getStyleClass().add("view-title");
         
@@ -78,6 +80,7 @@ public class CertificateAddView {
         courseComboBox.setItems(courseList);
     }
 
+    //Configure the layout
     protected void configureLayout() {
         HBox.setHgrow(region, Priority.ALWAYS);
         topLayout.getChildren().addAll(viewTitleLabel, region, backButton);
@@ -86,6 +89,7 @@ public class CertificateAddView {
         layout.getChildren().addAll(topLayout, studentLabel, courseLabel, courseComboBox, staffNameLabel, staffNameTextField, gradeLabel, gradeTextField, insertButton);
     }
 
+    //Initialize the actions of the buttons
     protected void handleActions() {        
         backButton.setOnAction(e -> {
             GUI.getLayout().setCenter(new UserDetailView(student).getView());
@@ -131,6 +135,7 @@ public class CertificateAddView {
         });
     }
 
+    //Put everything together and show it
     public Pane getView() {
         configureNodes();
         configureLayout();

@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.sql.SQLException;
 
 import javafx.collections.*;
-// import src.domain.DatePickerConverter;
 import src.domain.Student;
 
 public class DatabaseStudent extends Database {
@@ -18,6 +17,7 @@ public class DatabaseStudent extends Database {
         this.students = FXCollections.observableArrayList();
     }
 
+    //Load all the students
     public void loadStudents() {
         try {
             connect();
@@ -49,26 +49,24 @@ public class DatabaseStudent extends Database {
         } catch (Exception e) {
             System.out.println("ERROR:\n\n" + e);
         } 
-        //finally {
-        //     if (resultSet != null) try { resultSet.close(); } catch(Exception e) {}
-        //     if (statement != null) try { statement.close(); } catch(Exception e) {}
-        //     if (connection != null) try { connection.close(); } catch(Exception e) {}
-        // }
     }
 
+    //Return the list of students
     public ObservableList<Student> getStudents() {
-        // Return students array
         return students;
     }
 
+    //Insert a student
     public void insertStudent(String name, String email, Date dateOfBirth, String gender, String address, String postalCode, String city, String country) throws SQLException{
        statement.executeUpdate("INSERT INTO Student(StudentName, StudentEmail, DateOfBirth, Gender, Address, PostalCode, City, Country) VALUES ('"+name+"','"+email+"','"+dateOfBirth+"','"+gender+"','"+address+"','"+postalCode+"','"+city+"','"+country+"')");
     }
 
+    //Delete a student
     public void deleteStudent(Student selectedItem) throws SQLException{
         statement.executeUpdate("DELETE FROM Student WHERE StudentId = '"+selectedItem.getStudentId()+"'");
     }
 
+    //Update a given column in the Student table
     public void updateStudentString(String column, String newValue, int id){
         try{
             statement.executeUpdate("UPDATE Student SET "+column+" = '"+newValue+"' WHERE StudentId = "+id);
@@ -76,15 +74,8 @@ public class DatabaseStudent extends Database {
             e.printStackTrace();
         }
     }
-
-    public void updateStudentDate(String column, Date newValue, int id){
-        try{
-            statement.executeUpdate("UPDATE Student SET "+column+" = '"+newValue+"' WHERE StudentId = "+id);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }  
-    
+ 
+    //Return the number of students with the gender Female    
     public int getNumberOfFemales() throws Exception {
         connect();
 
@@ -102,6 +93,7 @@ public class DatabaseStudent extends Database {
         return numberOfFemales;
     }
 
+    //Return the number of students with the gender Female  
     public int getNumberOfMales() throws Exception {
         connect();
 

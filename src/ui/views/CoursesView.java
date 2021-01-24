@@ -64,6 +64,7 @@ public class CoursesView {
     private float percentageWithCertificateMale;
     private float percentageWithoutCertificateMale;
 
+    //Initialize the variables
     public CoursesView() {
         databaseCourses = new DatabaseCourseModule("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseCourses.loadCourse();
@@ -124,6 +125,7 @@ public class CoursesView {
         layout = new VBox(10);
     }
 
+    //Configure the nodes
     private void configureNodes() {
         viewTitleLabel.getStyleClass().add("view-title");
 
@@ -211,6 +213,7 @@ public class CoursesView {
         percentageCertificatesMalePieChart.getData().add(withoutCertificateMaleDataPieChart);
     }
 
+    //Configure the layout
     private void configureLayout() {
         HBox.setHgrow(region, Priority.ALWAYS);
         topLayout.getChildren().addAll(viewTitleLabel, region, addCourseButton, viewDetailsButton, deleteCourseButton);
@@ -219,6 +222,7 @@ public class CoursesView {
         layout.getChildren().addAll(topLayout, coursesTableView, piecharts);
     }
 
+    //Initialize the actions of the buttons
     private void handleActions() {
         addCourseButton.setOnAction(e -> {
             GUI.getLayout().setCenter(new CourseAddView().getView());
@@ -272,6 +276,7 @@ public class CoursesView {
         });
     }
 
+    //Put everything together and show it
     public Pane getView() {
         configureNodes();
         configureLayout();

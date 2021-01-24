@@ -67,9 +67,8 @@ public class CourseDetailView {
     private HBox recommendationsLayout;
     private VBox layout;
     private Label studentsCoursePassedTableTitle;
-    // private TableView studentsCoursePassedTableView;
-    // private TableColumn studentsPassedColumn;
-	
+
+	//Initialize the variables
     public CourseDetailView(CourseModule courseModule) throws Exception {
         this.courseModule = courseModule;
         databaseCourseModule = new DatabaseCourseModule("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
@@ -117,6 +116,7 @@ public class CourseDetailView {
         layout = new VBox(10);
     }
 
+    //Configure the nodes
     private void configureNodes() {
         viewTitleLabel.getStyleClass().add("view-title");
         
@@ -201,6 +201,7 @@ public class CourseDetailView {
         recommendedModulesCourseTableView.getColumns().addAll(courseNameCol);
     }
 
+    //Configure the layout
     private void configureLayout() {
         HBox.setHgrow(region, Priority.ALWAYS);
         topLayout.getChildren().addAll(viewTitleLabel, region, backButton);
@@ -215,6 +216,7 @@ public class CourseDetailView {
         layout.getChildren().addAll(topLayout, subjectLabel, introductionTextLabel, levelLabel, studentsCoursePassedTableTitle, modulesLayout, modulesCourseTableView, recommendationsLayout, recommendedModulesCourseTableView);
     }
 
+    //Initialize the actions of the buttons
     private void handleActions() {
         backButton.setOnAction(e -> {
             GUI.getLayout().setCenter(new CoursesView().getView());
@@ -276,6 +278,7 @@ public class CourseDetailView {
         });
     }
 
+    //Put everything together and show it
     public VBox getView() {
         configureNodes();
         configureLayout();

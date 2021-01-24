@@ -21,6 +21,7 @@ public class GeneralView {
     private TableColumn<Webcast, String> titleColumn;
     private Label webcastTableTitle;
 
+    //Initialize the variables
     public GeneralView() {
         viewTitleLabel = new Label("General");
         welcomeLabel = new Label("Hello World!");
@@ -42,18 +43,19 @@ public class GeneralView {
         webcastTop3TableView.getColumns().addAll(titleColumn);
     }
 
+    //Configure the nodes
     private void configureNodes() {
         viewTitleLabel.getStyleClass().add("view-title");
         webcastTableTitle.getStyleClass().add("view-title");
-        
-        
     }
 
+    //Configure the layout
     private void configureLayout() {
         layout.setPadding(new Insets(10, 10, 10, 15));
         layout.getChildren().addAll(viewTitleLabel, welcomeLabel, webcastTableTitle, webcastTop3TableView);
     }
 
+    //Put everything together and show it
     public Pane getView() {
         configureNodes();
         configureLayout();

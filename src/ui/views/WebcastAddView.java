@@ -61,6 +61,7 @@ public class WebcastAddView {
     private HBox topLayout;
     private VBox layout;
 
+    //Initialize the variables
     public WebcastAddView() {
         databaseWebcast = new DatabaseWebcast("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseWebcast.loadWebcasts();
@@ -112,6 +113,7 @@ public class WebcastAddView {
         layout = new VBox(10);
     }
 
+    //Configure the nodes
     private void configureNodes() {
         viewTitleLabel.getStyleClass().add("view-title");
 
@@ -130,6 +132,7 @@ public class WebcastAddView {
         creatorComboBox.setItems(creatorsList);
     }
 
+    //Configure the layout
     private void configureLayout() {
         HBox.setHgrow(region, Priority.ALWAYS);
         topLayout.getChildren().addAll(viewTitleLabel, region, backButton);
@@ -138,6 +141,7 @@ public class WebcastAddView {
         layout.getChildren().addAll(topLayout, contentItemLabel, contentItemTextField, titleLabel, titleTextField, themeLabel, themeTextField, descriptionLabel, descriptionTextField, publicationDateLabel, publicationDateDatePicker, statusLabel, statusComboBox, urlLabel, urlTextField, durationLabel, durationTextField, creatorLabel, creatorComboBox, insertButton);
     }
 
+    //Initialize the actions of the buttons
     private void handleActions() {
         backButton.setOnAction(e -> {
             GUI.getLayout().setCenter(new WebcastsView().getView());
@@ -182,6 +186,7 @@ public class WebcastAddView {
         });
     }
 
+    //Put everything together and show it
     public VBox getView() {
         configureNodes();
         configureLayout();
