@@ -10,6 +10,7 @@ import src.domain.*;
 
 public class DatabaseWebcast extends Database{
     private ObservableList<Webcast> webcasts;
+    private int lastNumberOfContentId;
 
     public DatabaseWebcast(String connectionUrl) {
         super(connectionUrl);
@@ -123,5 +124,21 @@ public class DatabaseWebcast extends Database{
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    //Return last contentId of the Content table
+    public int getLastIdInContentTable() throws Exception {
+        connect();
+
+        String sql = "SELECT MAX(ContentId) AS ContentId FROM Content";
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(sql);
+
+                
+        while(resultSet.next()){
+            lastNumberOfContentId = resultSet.getInt("ContentId");
+        }
+
+        return lastNumberOfContentId;  
     }
 }

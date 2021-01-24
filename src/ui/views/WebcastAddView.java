@@ -1,6 +1,7 @@
 package src.ui.views;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -61,9 +62,10 @@ public class WebcastAddView {
     private HBox topLayout;
     private VBox layout;
 
-    //Initialize the variables
+    // Initialize the variables
     public WebcastAddView() {
-        databaseWebcast = new DatabaseWebcast("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
+        databaseWebcast = new DatabaseWebcast(
+                "jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
         databaseWebcast.loadWebcasts();
         fcb = new FillComboBox("jdbc:sqlserver://localhost;databaseName=Quatro-opdracht;integratedSecurity=true;");
 
@@ -80,16 +82,16 @@ public class WebcastAddView {
         publicationDateLabel = new Label("Publication Date");
         publicationDateDatePicker = new DatePicker();
         datePickerConverter = new DatePickerConverter("yyyy-MM-dd");
-        dayCellFactory = new Callback<DatePicker, DateCell>(){
-            public DateCell call(final DatePicker datePicker){
-                return new DateCell(){
+        dayCellFactory = new Callback<DatePicker, DateCell>() {
+            public DateCell call(final DatePicker datePicker) {
+                return new DateCell() {
                     @Override
-                    public void updateItem(LocalDate item, boolean empty){
+                    public void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
 
-                        //Show weekends in blue color
+                        // Show weekends in blue color
                         DayOfWeek day = DayOfWeek.from(item);
-                        if(day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY){
+                        if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY) {
                             this.setTextFill(Color.BLUE);
                         }
                     }
@@ -113,7 +115,7 @@ public class WebcastAddView {
         layout = new VBox(10);
     }
 
-    //Configure the nodes
+    // Configure the nodes
     private void configureNodes() {
         viewTitleLabel.getStyleClass().add("view-title");
 
@@ -132,38 +134,47 @@ public class WebcastAddView {
         creatorComboBox.setItems(creatorsList);
     }
 
-    //Configure the layout
+    // Configure the layout
     private void configureLayout() {
         HBox.setHgrow(region, Priority.ALWAYS);
         topLayout.getChildren().addAll(viewTitleLabel, region, backButton);
-        
+
         layout.setPadding(new Insets(10, 10, 10, 15));
-        layout.getChildren().addAll(topLayout, contentItemLabel, contentItemTextField, titleLabel, titleTextField, themeLabel, themeTextField, descriptionLabel, descriptionTextField, publicationDateLabel, publicationDateDatePicker, statusLabel, statusComboBox, urlLabel, urlTextField, durationLabel, durationTextField, creatorLabel, creatorComboBox, insertButton);
+        layout.getChildren().addAll(topLayout, contentItemLabel, contentItemTextField, titleLabel, titleTextField,
+                themeLabel, themeTextField, descriptionLabel, descriptionTextField, publicationDateLabel,
+                publicationDateDatePicker, statusLabel, statusComboBox, urlLabel, urlTextField, durationLabel,
+                durationTextField, creatorLabel, creatorComboBox, insertButton);
     }
 
-    //Initialize the actions of the buttons
+    // Initialize the actions of the buttons
     private void handleActions() {
         backButton.setOnAction(e -> {
             GUI.getLayout().setCenter(new WebcastsView().getView());
         });
 
         insertButton.setOnAction(e -> {
-            try{             
-                if(titleTextField.getText().isEmpty() || durationTextField.getText().isEmpty() || statusComboBox.getValue() == null || creatorComboBox.getValue() == null){
+            try {
+                if (contentItemTextField.getText().isEmpty() || titleTextField.getText().isEmpty()
+                        || durationTextField.getText().isEmpty() || statusComboBox.getValue() == null
+                        || creatorComboBox.getValue() == null) {
                     alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setHeaderText("Missing field error");
                     alert.setContentText("You didn't fill in all the necessary fields!");
                     alert.showAndWait();
-                } else if(urlTextField.getText().isEmpty() || !URLValidator.isValid(urlTextField.getText())){
+                } else if (urlTextField.getText().isEmpty() || !URLValidator.isValid(urlTextField.getText())) {
                     alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setHeaderText("Error in the URL field");
                     alert.setContentText("Your URL is invalid");
                     alert.showAndWait();
                 } else {
-                    databaseWebcast.insertWebcast(Integer.parseInt(contentItemTextField.getText()), Date.valueOf(publicationDateDatePicker.getValue()), titleTextField.getText(), themeTextField.getText(), descriptionTextField.getText(), String.valueOf(statusComboBox.getValue()), Time.valueOf(durationTextField.getText()), String.valueOf(creatorComboBox.getValue()), urlTextField.getText());
-                    
+                    databaseWebcast.insertWebcast(Integer.parseInt(contentItemTextField.getText()),
+                            Date.valueOf(publicationDateDatePicker.getValue()), titleTextField.getText(),
+                            themeTextField.getText(), descriptionTextField.getText(),
+                            String.valueOf(statusComboBox.getValue()), Time.valueOf(durationTextField.getText()),
+                            String.valueOf(creatorComboBox.getValue()), urlTextField.getText());
+
                     alert = new Alert(AlertType.CONFIRMATION);
                     alert.setTitle("Registrated");
                     alert.setHeaderText("Success!");
@@ -180,6 +191,17 @@ public class WebcastAddView {
                     creatorComboBox.setValue(null);
                     urlTextField.clear();
                 }
+            } catch (SQLException e1) {
+                alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error in the ContentId field \n This content ID is already is use.");
+                try {
+                    alert.setContentText("Use a number after this number: "
+                            + databaseWebcast.getLastIdInContentTable());
+                } catch (Exception e2) {
+                    e1.printStackTrace();
+                }
+                alert.showAndWait();
             } catch(Exception error) {
                 System.out.println(error);
             }

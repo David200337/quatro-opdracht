@@ -3,6 +3,7 @@ package src.ui.views;
 import java.sql.Date;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.sql.SQLException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -183,6 +184,17 @@ public class ModuleAddView {
                     alert.setContentText("The module is added!");
                     alert.showAndWait();
                 }
+             } catch (SQLException e1) {
+                    alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Error in the ContentId field \n This content ID is already is use.");
+                    try {
+                        alert.setContentText("Use a number after this number: "
+                                + databaseCourseModule.getLastIdInContentTable());
+                    } catch (Exception e2) {
+                        e1.printStackTrace();
+                    }
+                    alert.showAndWait();
             } catch (Exception error) {
                 System.out.println(error);
             }

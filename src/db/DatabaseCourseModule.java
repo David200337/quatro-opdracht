@@ -10,6 +10,7 @@ public class DatabaseCourseModule extends Database{
     private ObservableList<CourseModule> recommendedCourseList;
     public Object courseComboBox;
     private int studentsPassed;
+    private int lastNumberOfContentId;
     
     public DatabaseCourseModule(String connectionUrl) {
         super(connectionUrl);
@@ -224,6 +225,22 @@ public class DatabaseCourseModule extends Database{
     public void insertModule(int courseId, int contentId, Date publicationDate, String title, String theme, String description, Object status, int serialNumber, String name, int moduleVersion) throws SQLException{
         statement.executeUpdate("INSERT INTO Content(ContentId, PublicationDate, Status, Theme, Description, CreatorId) VALUES ('"+contentId+"','"+publicationDate+"','"+status+"','"+theme+"','"+description+"',(SELECT CreatorId FROM ContentCreator WHERE Name = '"+name+"'))");
         statement.executeUpdate("INSERT INTO Module(ContentId, Title, VersionNr, SerialNumber, CourseId) VALUES ('"+contentId+"','"+title+"','"+moduleVersion+"','"+serialNumber+"','"+courseId+"')");
+    }
+
+    //Return last contentId of the Content table
+    public int getLastIdInContentTable() throws Exception {
+        connect();
+
+        String sql = "SELECT MAX(ContentId) AS ContentId FROM Content";
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(sql);
+
+                
+        while(resultSet.next()){
+            lastNumberOfContentId = resultSet.getInt("ContentId");
+        }
+
+        return lastNumberOfContentId;  
     }
 }
 
