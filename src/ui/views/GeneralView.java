@@ -1,7 +1,5 @@
 package src.ui.views;
 
-import javafx.beans.binding.Bindings;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
