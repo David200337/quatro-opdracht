@@ -86,7 +86,6 @@ public class ModuleProgressView {
 
         webcastProgressTableView.setItems(databaseViewStatistics.getPercentageWebcast());
         webcastProgressTableView.getColumns().addAll(webTitleCol, webProgressCol);
-
     }
 
     //Configure the layout

@@ -27,6 +27,7 @@ public class UserDetailView {
     private Label viewTitleLabel;
     private Button backButton;
     private Button addRegistrationButton;
+    private Button removeRegistrationButton;
     private Button moduleProgressButton;
     private Button addCertificateButton;
     private Button removeCertificateButton;
@@ -78,6 +79,7 @@ public class UserDetailView {
 
         registrationsTitleLabel = new Label("Registrations");
         addRegistrationButton = new Button("Add");
+        removeRegistrationButton = new Button("Remove");
         registrationsTableView = new TableView<>();
 
         regCourseNameCol = new TableColumn<>("Course");
@@ -135,7 +137,7 @@ public class UserDetailView {
         topLayout.getChildren().addAll(viewTitleLabel, region, moduleProgressButton, backButton);
 
         HBox.setHgrow(registrationsRegion, Priority.ALWAYS);
-        registrationsLayout.getChildren().addAll(registrationsTitleLabel, registrationsRegion, addRegistrationButton);
+        registrationsLayout.getChildren().addAll(registrationsTitleLabel, registrationsRegion, addRegistrationButton, removeRegistrationButton);
 
         HBox.setHgrow(certificateRegion,Priority.ALWAYS);
         certificateLayout.getChildren().addAll(certificatesTitleLabel, certificateRegion, addCertificateButton, removeCertificateButton);
@@ -156,6 +158,34 @@ public class UserDetailView {
 
         addRegistrationButton.setOnAction(e -> {
             GUI.getLayout().setCenter(new RegistrationAddView(student).getView());
+        });
+
+        removeRegistrationButton.setOnAction(e -> {
+            try {
+                Registration selectedItem = registrationsTableView.getSelectionModel().getSelectedItem();
+                if (selectedItem == null){
+                    alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Missing registration");
+                    alert.setContentText("You didn't select a registration!");
+                    alert.showAndWait();
+                } else {
+                    alert = new Alert(AlertType.CONFIRMATION);
+                    alert.setTitle("Delete");
+                    alert.setHeaderText("Are you sure you want to delete this registration?");
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    
+                    if (!result.isPresent() || result.get() != ButtonType.OK) {
+                       
+                    } else {
+                        registrationsTableView.getItems().remove(selectedItem);
+                        databaseRegistration.deleteRegistration(selectedItem);
+                    }
+                }
+            } catch(Exception error) {
+                error.printStackTrace();
+            } 
         });
 
         addCertificateButton.setOnAction(e -> {
